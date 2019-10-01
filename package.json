@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "rollup --config",
+    "watch": "rollup --config --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

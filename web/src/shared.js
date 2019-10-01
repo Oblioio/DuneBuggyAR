@@ -251,8 +251,8 @@ var DynamicTerrain = (function(){
       for(var y = 0; y<this.numRows; y++){
         ptArr.push(
           -this.xPos[x],
-          this.yPos[y],
-          this.ptInfo[x][y].z
+          this.ptInfo[x][y].z,
+          this.yPos[y]
         );
       }
     }
@@ -265,8 +265,8 @@ var DynamicTerrain = (function(){
       for(var y = 0; y<this.numRows; y++){
         ptArr.push(
           0,
-          0,
-          1
+          1,
+          0
         );
       }
     }
