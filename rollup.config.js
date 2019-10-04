@@ -1,3 +1,5 @@
+import { terser } from "rollup-plugin-terser";
+
 export default [
     {
         input: 'shared/shared_web.js',
@@ -12,5 +14,23 @@ export default [
             file: 'lensStudio/Public/shared.js',
             format: 'umd'
         }
+    },
+    {
+        input: 'shared/shared_sparkAR.js',
+        output: [{
+            name: 'sparkARShared',
+            file: 'sparkAR/scripts/shared.js',
+            format: 'iife'
+        },{
+            name: 'sparkARShared',
+            file: 'sparkAR/scripts/shared.min.js',
+            format: 'iife'
+        }],
+        plugins: [
+          terser({
+            include: [/^.+\.min\.js$/, '*esm*'], 
+            exclude: [ 'some*' ]
+          })
+        ]
     }
 ];

@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "rollup": "^1.22.0"
+    "rollup": "^1.22.0",
+    "rollup-plugin-terser": "^5.1.2"
   }
 }

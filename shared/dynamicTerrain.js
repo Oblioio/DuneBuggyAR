@@ -1,4 +1,4 @@
-import {TerrainHeights as terrainHeights} from './terrainHeights.js';
+import {TerrainHeights as terrainHeights} from './terrainHeights256.js';
 // import * as noise from './perlin.js';
 // let noise = require('./perlin.js');
 /*
@@ -35,6 +35,8 @@ var DynamicTerrain = (function(){
     this.ptInfo = [];
     this.offset = [0,0];
     this.updateList = [];
+
+    this.heightResolution = 256;
   
     // fill with zeros
     var currIndex = 0;
@@ -55,18 +57,22 @@ var DynamicTerrain = (function(){
     }
   
     // attach functions (lens studio doesn't like prototype I guess)
-    this.move = move.bind(this);
-    this.setPosition = setPosition.bind(this);
-    this.slide = slide.bind(this);
-    this.wrap_horizontal = wrap_horizontal.bind(this);
-    this.wrap_vertical = wrap_vertical.bind(this);
-    this.getPt = getPt.bind(this);
-    this.returnPtArray = returnPtArray.bind(this);
-    this.returnNormalArray = returnNormalArray.bind(this);
-    this.returnUVArray = returnUVArray.bind(this);
-    this.returnIndiceArray = returnIndiceArray.bind(this);
-    this.returnIndiceArraySnap = returnIndiceArraySnap.bind(this);
-    this.returnPackedArray = returnPackedArray.bind(this);
+    // why do we have to create a stupid polyfill for function.bind()? ask the facebook devs, they seemed to have removed it
+    // from their implementation
+
+    this.move = bindFn(move, this);
+    this.setPosition = bindFn(setPosition, this);
+    this.slide = bindFn(slide, this);
+    this.wrap_horizontal = bindFn(wrap_horizontal, this);
+    this.wrap_vertical = bindFn(wrap_vertical, this);
+    this.getPt = bindFn(getPt, this);
+    this.getHeightAtIndex = bindFn(getHeightAtIndex, this);
+    this.returnPtArray = bindFn(returnPtArray, this);
+    this.returnNormalArray = bindFn(returnNormalArray, this);
+    this.returnUVArray = bindFn(returnUVArray, this);
+    this.returnIndiceArray = bindFn(returnIndiceArray, this);
+    this.returnIndiceArraySnap = bindFn(returnIndiceArraySnap, this);
+    this.returnPackedArray = bindFn(returnPackedArray, this);
   
     this.setPosition(0,0);
   }
@@ -95,7 +101,7 @@ var DynamicTerrain = (function(){
         // if(this.ptInfo[x][y].update){
           this.ptInfo[x][y].x = this.currentPosition[0] - this.xPos[x];
           this.ptInfo[x][y].y = this.currentPosition[1] - this.yPos[y];
-          var ptData = getPt(this.ptInfo[x][y].x, this.ptInfo[x][y].y);
+          var ptData = this.getPt(this.ptInfo[x][y].x, this.ptInfo[x][y].y);
           this.ptInfo[x][y].u = ptData.u;
           this.ptInfo[x][y].v = ptData.v;
           this.ptInfo[x][y].z = ptData.z;
@@ -199,8 +205,8 @@ var DynamicTerrain = (function(){
   
   function getHeightAtIndex(ind, verbose){
     var _ind = (ind >= 0)?
-      ind%262144:
-      262143-(Math.abs(ind)%262144);
+      ind%(this.heightResolution*this.heightResolution):
+      (this.heightResolution*this.heightResolution)-1-(Math.abs(ind)%(this.heightResolution*this.heightResolution));
     
       if(verbose){
   
@@ -214,13 +220,13 @@ var DynamicTerrain = (function(){
   }
   
   function getPt(x, y, verbose){
-    var _x = x*5.12;
-    var _y = y*5.12;
+    var _x = x*(this.heightResolution/100);
+    var _y = y*(this.heightResolution/100);
     if(verbose)console.log("/////////// GET PT: _x, _y", _x, _y);
-    var pt0 = getHeightAtIndex((Math.floor(_y)*512)+Math.floor(_x), verbose);
-    var pt1 = getHeightAtIndex((Math.floor(_y)*512)+Math.ceil(_x), verbose);
-    var pt2 = getHeightAtIndex((Math.ceil(_y)*512)+Math.floor(_x), verbose);
-    var pt3 = getHeightAtIndex((Math.ceil(_y)*512)+Math.ceil(_x), verbose);
+    var pt0 = this.getHeightAtIndex((Math.floor(_y)*this.heightResolution)+Math.floor(_x), verbose);
+    var pt1 = this.getHeightAtIndex((Math.floor(_y)*this.heightResolution)+Math.ceil(_x), verbose);
+    var pt2 = this.getHeightAtIndex((Math.ceil(_y)*this.heightResolution)+Math.floor(_x), verbose);
+    var pt3 = this.getHeightAtIndex((Math.ceil(_y)*this.heightResolution)+Math.ceil(_x), verbose);
   
     var xMixer = (_x>=0)?(_x%1):1+(_x%1);
     var yMixer = (_y>=0)?(_y%1):1+(_y%1);
@@ -340,6 +346,17 @@ var DynamicTerrain = (function(){
       }
     }
     return indices;
+  }
+
+  function bindFn(fn, scope){
+    if(fn.bind)return fn.bind(scope);
+
+    /// v1
+    return function () {
+      var args = Array.prototype.slice.call(arguments, 0);
+      return fn.apply(scope, args);
+    };  
+
   }
 
   return DynamicTerrain;
