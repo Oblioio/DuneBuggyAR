@@ -37,7 +37,8 @@ function init(){
 
     
     // TERRAIN
-    this.terrain = new DynamicTerrain(50, 50)
+    // this.terrain = new DynamicTerrain(50, 50)
+    this.terrain = new DynamicTerrain(25, 50);
     this.terrain.setPosition(0,0);
 
     this.terrainObj = createEmptyObject("terrain", this.masterGroup.obj);
@@ -96,13 +97,15 @@ function createObject(id, meshObj, mat, parent){
 
 function onUpdate(e){
     
-    this.terrain.move(this.duneBuggy.velocity[0], -this.duneBuggy.velocity[1]);
-    this.terrain.move(this.duneBuggy.velocity[0], -this.duneBuggy.velocity[1]);
+    this.terrain.move(this.duneBuggy.velocity[0]/10, -this.duneBuggy.velocity[1]/10);
+    // this.terrain.move(this.duneBuggy.velocity[0], -this.duneBuggy.velocity[1]);
+    // this.terrain.move(this.duneBuggy.velocity[0], -this.duneBuggy.velocity[1]);
+
     this.terrainObj.mb.eraseVertices(0, this.terrainObj.mb.getVerticesCount());
     this.terrainObj.mb.appendVerticesInterleaved(this.terrain.returnPackedArray());
     this.terrainObj.mb.updateMesh()
 
-    this.duneBuggy.rotate(0.00675);
+    // this.duneBuggy.rotate(0.00675);
 
     this.duneBuggy.setWheelHeights(
         this.terrain.getPt(this.terrain.currentPosition[0]+this.duneBuggy.wheelPositions[0][0]*this.buggyScale, this.terrain.currentPosition[1]-this.duneBuggy.wheelPositions[0][1]*this.buggyScale).z,

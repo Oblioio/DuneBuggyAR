@@ -3,7 +3,7 @@
     "document_id": "Z5nw-cwveArJnxY8fl9C",
     "original_document_id": "IFozyxVws_JbA89mUI9G",
     "version": "16",
-    "lastChanged": "1569893572879",
+    "lastChanged": "1570233873488",
     "preview": "",
     "videoPreview": "",
     "videoPreviewUpdateTime": "",
@@ -634,194 +634,6 @@
         }
     },
     "controller": {
-        "InspectorController": {
-            "selection": {
-                "objects": [
-                    "1517446348228144:84822"
-                ]
-            }
-        },
-        "EffectsController": {
-            "1": "",
-            "2": "",
-            "3": "",
-            "4": "",
-            "5": "",
-            "6": "",
-            "7": "",
-            "8": "",
-            "10": "",
-            "11": "",
-            "12": "",
-            "13": "",
-            "14": "",
-            "15": "",
-            "16": "",
-            "17": "",
-            "18": "",
-            "19": "",
-            "20": ""
-        },
-        "ObjectPrefabController": {
-            "state": {
-                "objectToInfo": ""
-            },
-            "importInfo": [
-                {
-                    "k": "1565051840926072:17637",
-                    "v": [
-                        {
-                            "k": "",
-                            "v": "1565136893215996:18648"
-                        },
-                        {
-                            "k": [
-                                "Cube"
-                            ],
-                            "v": "1565136893216390:18655"
-                        },
-                        {
-                            "k": [
-                                "Cube",
-                                "Component.MeshVisual"
-                            ],
-                            "v": "1565136893216622:18659"
-                        }
-                    ]
-                },
-                {
-                    "k": "1569618080268236:3306",
-                    "v": [
-                        {
-                            "k": "",
-                            "v": "1569887011813434:20811"
-                        },
-                        {
-                            "k": [
-                                "Scenes"
-                            ],
-                            "v": "1569887011813774:20818"
-                        },
-                        {
-                            "k": [
-                                "Scenes",
-                                "Scene"
-                            ],
-                            "v": "1569887011813988:20822"
-                        },
-                        {
-                            "k": [
-                                "Scenes",
-                                "Scene",
-                                "BackLeftWheel"
-                            ],
-                            "v": "1569887011815536:20858"
-                        },
-                        {
-                            "k": [
-                                "Scenes",
-                                "Scene",
-                                "BackLeftWheel",
-                                "Component.MeshVisual"
-                            ],
-                            "v": "1569887011815743:20862"
-                        },
-                        {
-                            "k": [
-                                "Scenes",
-                                "Scene",
-                                "BackRightWheel"
-                            ],
-                            "v": "1569887011818386:20934"
-                        },
-                        {
-                            "k": [
-                                "Scenes",
-                                "Scene",
-                                "BackRightWheel",
-                                "Component.MeshVisual"
-                            ],
-                            "v": "1569887011818615:20938"
-                        },
-                        {
-                            "k": [
-                                "Scenes",
-                                "Scene",
-                                "Camera"
-                            ],
-                            "v": "1569887011815318:20854"
-                        },
-                        {
-                            "k": [
-                                "Scenes",
-                                "Scene",
-                                "Frame"
-                            ],
-                            "v": "1569887011814196:20826"
-                        },
-                        {
-                            "k": [
-                                "Scenes",
-                                "Scene",
-                                "Frame",
-                                "Component.MeshVisual"
-                            ],
-                            "v": "1569887011814393:20830"
-                        },
-                        {
-                            "k": [
-                                "Scenes",
-                                "Scene",
-                                "FrontLeftWheel"
-                            ],
-                            "v": "1569887011816632:20886"
-                        },
-                        {
-                            "k": [
-                                "Scenes",
-                                "Scene",
-                                "FrontLeftWheel",
-                                "Component.MeshVisual"
-                            ],
-                            "v": "1569887011816842:20890"
-                        },
-                        {
-                            "k": [
-                                "Scenes",
-                                "Scene",
-                                "FrontRightWheel"
-                            ],
-                            "v": "1569887011817517:20910"
-                        },
-                        {
-                            "k": [
-                                "Scenes",
-                                "Scene",
-                                "FrontRightWheel",
-                                "Component.MeshVisual"
-                            ],
-                            "v": "1569887011817737:20914"
-                        },
-                        {
-                            "k": [
-                                "Scenes",
-                                "Scene",
-                                "Light"
-                            ],
-                            "v": "1569887011815114:20850"
-                        },
-                        {
-                            "k": [
-                                "Scenes",
-                                "Scene",
-                                "Origin"
-                            ],
-                            "v": "1569887011816413:20882"
-                        }
-                    ]
-                }
-            ]
-        },
         "IResourceController": {
             "public": {
                 "pathes": [
@@ -965,7 +777,7 @@
                     },
                     {
                         "k": "15",
-                        "v": "5132ddcc59ff05738248263606549c0c"
+                        "v": "9a8b98b66ada53cffca5f5b61c166ec5"
                     },
                     {
                         "k": "16",
@@ -1001,7 +813,7 @@
                     },
                     {
                         "k": "733",
-                        "v": "2013f95cb322de753016e6887db44c67"
+                        "v": "5acc824ac6f09284c2201190f569c8bf"
                     }
                 ],
                 "publicState": {
@@ -1009,7 +821,7 @@
                         "isFolder": "true",
                         "lastModified": "2019-09-30T16:19:10",
                         "name": "Public",
-                        "hash": "d93195d500687a0a3aa93443f787b9e5",
+                        "hash": "0f0a88b5a767bf33753b082894cfce8f",
                         "children": [
                             {
                                 "isFolder": "false",
@@ -1041,9 +853,9 @@
                             },
                             {
                                 "isFolder": "false",
-                                "lastModified": "2019-09-30T18:25:18",
+                                "lastModified": "2019-10-04T17:03:41",
                                 "name": "DuneBuggy.js",
-                                "hash": "5132ddcc59ff05738248263606549c0c",
+                                "hash": "9a8b98b66ada53cffca5f5b61c166ec5",
                                 "children": ""
                             },
                             {
@@ -1090,9 +902,9 @@
                             },
                             {
                                 "isFolder": "false",
-                                "lastModified": "2019-09-30T17:53:17",
+                                "lastModified": "2019-10-04T15:10:00",
                                 "name": "shared.js",
-                                "hash": "2013f95cb322de753016e6887db44c67",
+                                "hash": "5acc824ac6f09284c2201190f569c8bf",
                                 "children": ""
                             },
                             {
@@ -1682,6 +1494,194 @@
                     }
                 ]
             }
+        },
+        "InspectorController": {
+            "selection": {
+                "objects": [
+                    "1517446348228144:84822"
+                ]
+            }
+        },
+        "EffectsController": {
+            "1": "",
+            "2": "",
+            "3": "",
+            "4": "",
+            "5": "",
+            "6": "",
+            "7": "",
+            "8": "",
+            "10": "",
+            "11": "",
+            "12": "",
+            "13": "",
+            "14": "",
+            "15": "",
+            "16": "",
+            "17": "",
+            "18": "",
+            "19": "",
+            "20": ""
+        },
+        "ObjectPrefabController": {
+            "state": {
+                "objectToInfo": ""
+            },
+            "importInfo": [
+                {
+                    "k": "1565051840926072:17637",
+                    "v": [
+                        {
+                            "k": "",
+                            "v": "1565136893215996:18648"
+                        },
+                        {
+                            "k": [
+                                "Cube"
+                            ],
+                            "v": "1565136893216390:18655"
+                        },
+                        {
+                            "k": [
+                                "Cube",
+                                "Component.MeshVisual"
+                            ],
+                            "v": "1565136893216622:18659"
+                        }
+                    ]
+                },
+                {
+                    "k": "1569618080268236:3306",
+                    "v": [
+                        {
+                            "k": "",
+                            "v": "1569887011813434:20811"
+                        },
+                        {
+                            "k": [
+                                "Scenes"
+                            ],
+                            "v": "1569887011813774:20818"
+                        },
+                        {
+                            "k": [
+                                "Scenes",
+                                "Scene"
+                            ],
+                            "v": "1569887011813988:20822"
+                        },
+                        {
+                            "k": [
+                                "Scenes",
+                                "Scene",
+                                "BackLeftWheel"
+                            ],
+                            "v": "1569887011815536:20858"
+                        },
+                        {
+                            "k": [
+                                "Scenes",
+                                "Scene",
+                                "BackLeftWheel",
+                                "Component.MeshVisual"
+                            ],
+                            "v": "1569887011815743:20862"
+                        },
+                        {
+                            "k": [
+                                "Scenes",
+                                "Scene",
+                                "BackRightWheel"
+                            ],
+                            "v": "1569887011818386:20934"
+                        },
+                        {
+                            "k": [
+                                "Scenes",
+                                "Scene",
+                                "BackRightWheel",
+                                "Component.MeshVisual"
+                            ],
+                            "v": "1569887011818615:20938"
+                        },
+                        {
+                            "k": [
+                                "Scenes",
+                                "Scene",
+                                "Camera"
+                            ],
+                            "v": "1569887011815318:20854"
+                        },
+                        {
+                            "k": [
+                                "Scenes",
+                                "Scene",
+                                "Frame"
+                            ],
+                            "v": "1569887011814196:20826"
+                        },
+                        {
+                            "k": [
+                                "Scenes",
+                                "Scene",
+                                "Frame",
+                                "Component.MeshVisual"
+                            ],
+                            "v": "1569887011814393:20830"
+                        },
+                        {
+                            "k": [
+                                "Scenes",
+                                "Scene",
+                                "FrontLeftWheel"
+                            ],
+                            "v": "1569887011816632:20886"
+                        },
+                        {
+                            "k": [
+                                "Scenes",
+                                "Scene",
+                                "FrontLeftWheel",
+                                "Component.MeshVisual"
+                            ],
+                            "v": "1569887011816842:20890"
+                        },
+                        {
+                            "k": [
+                                "Scenes",
+                                "Scene",
+                                "FrontRightWheel"
+                            ],
+                            "v": "1569887011817517:20910"
+                        },
+                        {
+                            "k": [
+                                "Scenes",
+                                "Scene",
+                                "FrontRightWheel",
+                                "Component.MeshVisual"
+                            ],
+                            "v": "1569887011817737:20914"
+                        },
+                        {
+                            "k": [
+                                "Scenes",
+                                "Scene",
+                                "Light"
+                            ],
+                            "v": "1569887011815114:20850"
+                        },
+                        {
+                            "k": [
+                                "Scenes",
+                                "Scene",
+                                "Origin"
+                            ],
+                            "v": "1569887011816413:20882"
+                        }
+                    ]
+                }
+            ]
         }
     }
 }
