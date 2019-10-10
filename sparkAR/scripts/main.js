@@ -25,13 +25,16 @@ const Time = require('Time');
 
 const masterContainer = Scene.root.find('masterContainer');
 const XAxisUnit = Scene.root.find('XAxisUnit');
+const YAxisUnit = Scene.root.find('YAxisUnit');
 const ZAxisUnit = Scene.root.find('ZAxisUnit');
 
 const XAxisUnitConvert = XAxisUnit.worldTransform.position.sub(masterContainer.worldTransform.toSignal().position);
+const YAxisUnitConvert = YAxisUnit.worldTransform.position.sub(masterContainer.worldTransform.toSignal().position);
 const ZAxisUnitConvert = ZAxisUnit.worldTransform.position.sub(masterContainer.worldTransform.toSignal().position);
 
 Patches.setPointValue('scene_position', masterContainer.worldTransform.toSignal().position);
 Patches.setVectorValue('scene_xAxis', XAxisUnitConvert);
+Patches.setVectorValue('scene_yAxis', YAxisUnitConvert);
 Patches.setVectorValue('scene_zAxis', ZAxisUnitConvert);
 
 // Diagnostics.log(sparkARShared.DuneBuggy());
@@ -51,12 +54,19 @@ function init(){
     this.buggy_backLeftWheel = Scene.root.find('duneBuggy_backWheelLeft');
     this.buggy_backRightWheel = Scene.root.find('duneBuggy_backWheelRight');
 
-    var timer = Time.ms.sub(Time.ms.pin()).interval(30).subscribe(bindFn(animate, this));
+    // var timer = Time.ms.sub(Time.ms.pin()).interval(30).subscribe(bindFn(animate, this));
+    // var timer = Time.setInterval(bindFn(animate, this), 33);
 
+    Time.ms.interval(33).subscribeWithSnapshot({'ms':Time.ms}, bindFn(animate, this));
+    // Time.ms.interval(33).subscribe(bindFn(animate, this));
+
+    // var timeInterval = Time.ms.sub(Time.ms.pin());
+    // var timer = timeInterval.interval(33).subscribe(bindFn(animate, this));
+    this.currTime = Time.ms.pinLastValue();
+    
     this.terrain.setPosition(50,50);
+    this.duneBuggy.rotate(Math.PI/2);
 
-    // this.terrain.setPosition(-176.2560000000046/5.12, -375.8159999999982/5.12)
-    // this.duneBuggy.rotate(Math.PI);
 }
 
 // why do we have to create a stupid polyfill for function.bind()? ask the facebook devs
@@ -80,11 +90,15 @@ function wrapVal(val, range){
 
 const rad2Deg = 180/Math.PI;
 
-function animate(elapsedTime) {
+function animate(_currTime2, snapshot) {
+    var _currTime = Time.ms.pinLastValue();
+    var _elapsedTime = snapshot.ms-this.currTime;
+    this.currTime = snapshot.ms;
 
-    this.terrain.move(this.duneBuggy.velocity[0], -this.duneBuggy.velocity[1]);
-    // this.terrain.move(this.duneBuggy.velocity[0]/10, -this.duneBuggy.velocity[1]/10);
-    // this.terrain.move(0, -0.135);
+    // Diagnostics.log(_elapsedTime);
+    // Diagnostics.watch("elapsedTime", elapsedTime);
+    this.terrain.move(this.duneBuggy.velocity[0]*_elapsedTime/1000, -this.duneBuggy.velocity[1]*_elapsedTime/1000);
+    this.duneBuggy.rotate(0.675*_elapsedTime/1000);
 
 
     // we need to adjust the coordinate
@@ -94,7 +108,6 @@ function animate(elapsedTime) {
     Patches.setScalarValue('terrain_zPos', Reactive.val(wrapVal(this.terrain.currentPosition[1], 100)-50));
 
 
-    // this.duneBuggy.rotate(0.00675);
     
     this.duneBuggy.setWheelHeights(
         this.terrain.getPt(this.terrain.currentPosition[0]+this.duneBuggy.wheelPositions[0][0]*this.buggyScale, this.terrain.currentPosition[1]-this.duneBuggy.wheelPositions[0][1]*this.buggyScale).z,
@@ -111,7 +124,7 @@ function animate(elapsedTime) {
     ));
 
     
-    Patches.setScalarValue('buggy_frame_rotationY', Reactive.val(rad2Deg*(this.duneBuggy.rotation)));
+    Patches.setScalarValue('buggy_frame_rotationY', Reactive.val(rad2Deg*(-this.duneBuggy.rotation)));
     Patches.setScalarValue('buggy_frame_rotationX', Reactive.val(rad2Deg*this.duneBuggy.tilt));
     Patches.setScalarValue('buggy_frame_rotationZ', Reactive.val(rad2Deg*this.duneBuggy.roll));
 

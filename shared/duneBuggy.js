@@ -9,7 +9,7 @@ function DuneBuggy() {
     var backWheelRadius = 1.56141/4;
     // var backWheelRadius = 0;
 
-    this.speed = 0.35;
+    this.speed = 30;
     // this.speed = 0.01;
     this.velocity = [0, this.speed];
 
@@ -21,6 +21,11 @@ function DuneBuggy() {
     ]
 
     // same but with a height too
+    
+    this.velocityZ = [0,0,0,0];
+    this.positionsZ = [0,0,0,0];
+    this.prev_positionsZ = [0,0,0,0];
+
     this.wheelPositions = [
         [-this.frontWheelSpace, this.frontWheelX,0],
         [this.frontWheelSpace, this.frontWheelX,0],
@@ -36,19 +41,68 @@ function DuneBuggy() {
     this.midHeight = 0;
 
     this.wheelHeights = [0,0,0,0];
+    this.acceleration = -50;
 
+    var first = true;
+
+    var lerp = function(a,b,amt){
+        return a+((b-a)*amt);
+    }
     // save the wheel heights, determine frame height, tilt, and roll
-    this.setWheelHeights = function(FL,FR,BL,BR){
-        this.wheelPositions[0][2] = FL+frontWheelRadius;
-        this.wheelPositions[1][2] = FR+frontWheelRadius;
-        this.wheelPositions[2][2] = BL+backWheelRadius;
-        this.wheelPositions[3][2] = BR+backWheelRadius;
+    this.update = function(elapsedTime, FL, FR, BL, BR){
+        if(first){
+            this.positionsZ[0] = FL+frontWheelRadius;
+            this.positionsZ[1] = FR+frontWheelRadius;
+            this.positionsZ[2] = BL+backWheelRadius;
+            this.positionsZ[3] = BR+backWheelRadius;
+            first = false;
+        }
+        // update velocities
+        this.velocityZ[0] += this.acceleration*elapsedTime;
+        this.velocityZ[1] += this.acceleration*elapsedTime;
+        this.velocityZ[2] += this.acceleration*elapsedTime;
+        this.velocityZ[3] += this.acceleration*elapsedTime;
 
-        var midFront = (FL+FR)/2;
-        var midBack = (BL+BR)/2;
+        // save previous positions
+        this.prev_positionsZ[0] = this.positionsZ[0];
+        this.prev_positionsZ[1] = this.positionsZ[1];
+        this.prev_positionsZ[2] = this.positionsZ[2];
+        this.prev_positionsZ[3] = this.positionsZ[3];
 
-        this.midHeight = (this.wheelPositions[0][2]+this.wheelPositions[1][2]+this.wheelPositions[2][2]+this.wheelPositions[3][2])/4;
-        // tan = opp/adj
+        // update positions heights
+        this.positionsZ[0] = Math.max(this.positionsZ[0] + this.velocityZ[0]*elapsedTime, FL+frontWheelRadius);
+        this.positionsZ[1] = Math.max(this.positionsZ[1] + this.velocityZ[1]*elapsedTime, FR+frontWheelRadius);
+        
+        this.positionsZ[2] = Math.max(this.positionsZ[2] + this.velocityZ[2]*elapsedTime, BL+backWheelRadius);
+        this.positionsZ[3] = Math.max(this.positionsZ[3] + this.velocityZ[3]*elapsedTime, BR+backWheelRadius);
+
+        this.positionsZ[0] = lerp(this.positionsZ[0], (this.positionsZ[0]+this.positionsZ[1])/2, 0.5);
+        this.positionsZ[0] = lerp(this.positionsZ[1], (this.positionsZ[0]+this.positionsZ[1])/2, 0.5);
+        this.positionsZ[2] = lerp(this.positionsZ[2], (this.positionsZ[2]+this.positionsZ[3])/2, 0.5);
+        this.positionsZ[3] = lerp(this.positionsZ[3], (this.positionsZ[2]+this.positionsZ[3])/2, 0.5);
+
+        // this.positionsZ[0] = FL+frontWheelRadius;
+        // this.positionsZ[1] = FR+frontWheelRadius;
+        // this.positionsZ[2] = BL+backWheelRadius;
+        // this.positionsZ[3] = BR+backWheelRadius;
+        
+        // save new velocity
+        this.velocityZ[0] = Math.min((this.positionsZ[0]-this.prev_positionsZ[0])/elapsedTime, 20);
+        this.velocityZ[1] = Math.min((this.positionsZ[1]-this.prev_positionsZ[1])/elapsedTime, 20);
+        this.velocityZ[2] = Math.min((this.positionsZ[2]-this.prev_positionsZ[2])/elapsedTime, 20);
+        this.velocityZ[3] = Math.min((this.positionsZ[3]-this.prev_positionsZ[3])/elapsedTime, 20);
+        // console.log(this.velocityZ)
+
+        var shockLength = 0.75;
+        this.wheelPositions[0][2] = Math.max(this.positionsZ[0]-shockLength, FL+frontWheelRadius);
+        this.wheelPositions[1][2] = Math.max(this.positionsZ[1]-shockLength, FR+frontWheelRadius);
+        this.wheelPositions[2][2] = Math.max(this.positionsZ[2]-shockLength, BL+backWheelRadius);
+        this.wheelPositions[3][2] = Math.max(this.positionsZ[3]-shockLength, BR+backWheelRadius);
+
+        var midFront = (this.positionsZ[0]+this.positionsZ[1])/2;
+        var midBack = (this.positionsZ[2]+this.positionsZ[3])/2;
+
+        this.midHeight = (this.positionsZ[0]+this.positionsZ[1]+this.positionsZ[2]+this.positionsZ[3])/4;
         this.tilt = Math.atan((midFront-midBack)/wheelDist);
 
         this.roll = (Math.atan((FL-FR)/(this.frontWheelSpace*2))+Math.atan((BL-BR)/(this.backWheelSpace*2)))/2;

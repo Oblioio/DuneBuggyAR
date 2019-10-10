@@ -86,26 +86,63 @@ var sparkARShared = (function (exports) {
     }
     
     function setPosition(x, y) {
-      // console.log('////// set position', x, y, this.currentPosition[0], this.currentPosition[1]);
-      // x = (x+100)%100;
-      // y = (y+100)%100;
-      // this.currentPosition[0] = (this.currentPosition[0]+100)%100;
-      // this.currentPosition[1] = (this.currentPosition[1]+100)%100;
+      // first lets wrap the position coordinates to be in the 0-100 range
+      if(x > 0){
+        x = x%100;
+      } else {
+        x = 100-(Math.abs(x)%100);
+      }
       
+      if(y > 0){
+        y = y%100;
+      } else {
+        y = 100-(Math.abs(y)%100);
+      }
+
+      // now lets check if we should correct the "currentPosition" to fit within 0-100"
+      var modded = false;
+      if(this.currentPosition[0] > 100){
+        modded = true;
+        this.currentPosition[0] -= 100;
+      } else {
+        modded = true;
+        this.currentPosition[0] += 100;
+      }
+
+      if(this.currentPosition[1] > 100){
+        modded = true;
+        this.currentPosition[1] -= 100;
+      } else {
+        modded = true;
+        this.currentPosition[1] += 100;
+      }
+
+
+      // if we modified the "currentPosition" lets update the point values to match
+      if(modded){
+        for(var _x = 0; _x<this.numRows; _x++){
+          for(var _y = 0; _y<this.numRows; _y++){
+            this.ptInfo[_x][_y].x = this.currentPosition[0] - this.xPos[_x];
+            this.ptInfo[_x][_y].y = this.currentPosition[1] - this.yPos[_y];
+          }
+        }
+      }
+
+
       // slide points
       this.slide(x-this.currentPosition[0], 0, this.xPos, this.wrap_horizontal);
       this.slide(y-this.currentPosition[1], 1, this.yPos, this.wrap_vertical);
-      for(var x = 0; x<this.numRows; x++){
-        for(var y = 0; y<this.numRows; y++){
-          if(x==0 || y==0 || x==this.lastRow || y==this.lastRow || this.ptInfo[x][y].update){
+      for(var _x = 0; _x<this.numRows; _x++){
+        for(var _y = 0; _y<this.numRows; _y++){
+          if(_x==0 || _y==0 || _x==this.lastRow || _y==this.lastRow || this.ptInfo[_x][_y].update){
           // if(this.ptInfo[x][y].update){
-            this.ptInfo[x][y].x = this.currentPosition[0] - this.xPos[x];
-            this.ptInfo[x][y].y = this.currentPosition[1] - this.yPos[y];
-            var ptData = this.getPt(this.ptInfo[x][y].x, this.ptInfo[x][y].y);
-            this.ptInfo[x][y].u = ptData.u;
-            this.ptInfo[x][y].v = ptData.v;
-            this.ptInfo[x][y].z = ptData.z;
-            this.ptInfo[x][y].update = false;          
+            this.ptInfo[_x][_y].x = this.currentPosition[0] - this.xPos[_x];
+            this.ptInfo[_x][_y].y = this.currentPosition[1] - this.yPos[_y];
+            var ptData = this.getPt(this.ptInfo[_x][_y].x, this.ptInfo[_x][_y].y);
+            this.ptInfo[_x][_y].u = ptData.u;
+            this.ptInfo[_x][_y].v = ptData.v;
+            this.ptInfo[_x][_y].z = ptData.z;
+            this.ptInfo[_x][_y].update = false;          
           }
         }
       }
@@ -372,7 +409,7 @@ var sparkARShared = (function (exports) {
       var backWheelRadius = 1.56141/4;
       // var backWheelRadius = 0;
 
-      this.speed = 0.35;
+      this.speed = 30;
       // this.speed = 0.01;
       this.velocity = [0, this.speed];
 
@@ -384,6 +421,11 @@ var sparkARShared = (function (exports) {
       ];
 
       // same but with a height too
+      
+      this.velocityZ = [0,0,0,0];
+      this.positionsZ = [0,0,0,0];
+      this.prev_positionsZ = [0,0,0,0];
+
       this.wheelPositions = [
           [-this.frontWheelSpace, this.frontWheelX,0],
           [this.frontWheelSpace, this.frontWheelX,0],
@@ -399,19 +441,68 @@ var sparkARShared = (function (exports) {
       this.midHeight = 0;
 
       this.wheelHeights = [0,0,0,0];
+      this.acceleration = -50;
 
+      var first = true;
+
+      var lerp = function(a,b,amt){
+          return a+((b-a)*amt);
+      };
       // save the wheel heights, determine frame height, tilt, and roll
-      this.setWheelHeights = function(FL,FR,BL,BR){
-          this.wheelPositions[0][2] = FL+frontWheelRadius;
-          this.wheelPositions[1][2] = FR+frontWheelRadius;
-          this.wheelPositions[2][2] = BL+backWheelRadius;
-          this.wheelPositions[3][2] = BR+backWheelRadius;
+      this.update = function(elapsedTime, FL, FR, BL, BR){
+          if(first){
+              this.positionsZ[0] = FL+frontWheelRadius;
+              this.positionsZ[1] = FR+frontWheelRadius;
+              this.positionsZ[2] = BL+backWheelRadius;
+              this.positionsZ[3] = BR+backWheelRadius;
+              first = false;
+          }
+          // update velocities
+          this.velocityZ[0] += this.acceleration*elapsedTime;
+          this.velocityZ[1] += this.acceleration*elapsedTime;
+          this.velocityZ[2] += this.acceleration*elapsedTime;
+          this.velocityZ[3] += this.acceleration*elapsedTime;
 
-          var midFront = (FL+FR)/2;
-          var midBack = (BL+BR)/2;
+          // save previous positions
+          this.prev_positionsZ[0] = this.positionsZ[0];
+          this.prev_positionsZ[1] = this.positionsZ[1];
+          this.prev_positionsZ[2] = this.positionsZ[2];
+          this.prev_positionsZ[3] = this.positionsZ[3];
 
-          this.midHeight = (this.wheelPositions[0][2]+this.wheelPositions[1][2]+this.wheelPositions[2][2]+this.wheelPositions[3][2])/4;
-          // tan = opp/adj
+          // update positions heights
+          this.positionsZ[0] = Math.max(this.positionsZ[0] + this.velocityZ[0]*elapsedTime, FL+frontWheelRadius);
+          this.positionsZ[1] = Math.max(this.positionsZ[1] + this.velocityZ[1]*elapsedTime, FR+frontWheelRadius);
+          
+          this.positionsZ[2] = Math.max(this.positionsZ[2] + this.velocityZ[2]*elapsedTime, BL+backWheelRadius);
+          this.positionsZ[3] = Math.max(this.positionsZ[3] + this.velocityZ[3]*elapsedTime, BR+backWheelRadius);
+
+          this.positionsZ[0] = lerp(this.positionsZ[0], (this.positionsZ[0]+this.positionsZ[1])/2, 0.5);
+          this.positionsZ[0] = lerp(this.positionsZ[1], (this.positionsZ[0]+this.positionsZ[1])/2, 0.5);
+          this.positionsZ[2] = lerp(this.positionsZ[2], (this.positionsZ[2]+this.positionsZ[3])/2, 0.5);
+          this.positionsZ[3] = lerp(this.positionsZ[3], (this.positionsZ[2]+this.positionsZ[3])/2, 0.5);
+
+          // this.positionsZ[0] = FL+frontWheelRadius;
+          // this.positionsZ[1] = FR+frontWheelRadius;
+          // this.positionsZ[2] = BL+backWheelRadius;
+          // this.positionsZ[3] = BR+backWheelRadius;
+          
+          // save new velocity
+          this.velocityZ[0] = Math.min((this.positionsZ[0]-this.prev_positionsZ[0])/elapsedTime, 20);
+          this.velocityZ[1] = Math.min((this.positionsZ[1]-this.prev_positionsZ[1])/elapsedTime, 20);
+          this.velocityZ[2] = Math.min((this.positionsZ[2]-this.prev_positionsZ[2])/elapsedTime, 20);
+          this.velocityZ[3] = Math.min((this.positionsZ[3]-this.prev_positionsZ[3])/elapsedTime, 20);
+          // console.log(this.velocityZ)
+
+          var shockLength = 0.75;
+          this.wheelPositions[0][2] = Math.max(this.positionsZ[0]-shockLength, FL+frontWheelRadius);
+          this.wheelPositions[1][2] = Math.max(this.positionsZ[1]-shockLength, FR+frontWheelRadius);
+          this.wheelPositions[2][2] = Math.max(this.positionsZ[2]-shockLength, BL+backWheelRadius);
+          this.wheelPositions[3][2] = Math.max(this.positionsZ[3]-shockLength, BR+backWheelRadius);
+
+          var midFront = (this.positionsZ[0]+this.positionsZ[1])/2;
+          var midBack = (this.positionsZ[2]+this.positionsZ[3])/2;
+
+          this.midHeight = (this.positionsZ[0]+this.positionsZ[1]+this.positionsZ[2]+this.positionsZ[3])/4;
           this.tilt = Math.atan((midFront-midBack)/wheelDist);
 
           this.roll = (Math.atan((FL-FR)/(this.frontWheelSpace*2))+Math.atan((BL-BR)/(this.backWheelSpace*2)))/2;
@@ -473,13 +564,16 @@ const Time = require('Time');
 
 const masterContainer = Scene.root.find('masterContainer');
 const XAxisUnit = Scene.root.find('XAxisUnit');
+const YAxisUnit = Scene.root.find('YAxisUnit');
 const ZAxisUnit = Scene.root.find('ZAxisUnit');
 
 const XAxisUnitConvert = XAxisUnit.worldTransform.position.sub(masterContainer.worldTransform.toSignal().position);
+const YAxisUnitConvert = YAxisUnit.worldTransform.position.sub(masterContainer.worldTransform.toSignal().position);
 const ZAxisUnitConvert = ZAxisUnit.worldTransform.position.sub(masterContainer.worldTransform.toSignal().position);
 
 Patches.setPointValue('scene_position', masterContainer.worldTransform.toSignal().position);
 Patches.setVectorValue('scene_xAxis', XAxisUnitConvert);
+Patches.setVectorValue('scene_yAxis', YAxisUnitConvert);
 Patches.setVectorValue('scene_zAxis', ZAxisUnitConvert);
 
 // Diagnostics.log(sparkARShared.DuneBuggy());
@@ -499,12 +593,19 @@ function init(){
     this.buggy_backLeftWheel = Scene.root.find('duneBuggy_backWheelLeft');
     this.buggy_backRightWheel = Scene.root.find('duneBuggy_backWheelRight');
 
-    var timer = Time.ms.sub(Time.ms.pin()).interval(30).subscribe(bindFn(animate, this));
+    // var timer = Time.ms.sub(Time.ms.pin()).interval(30).subscribe(bindFn(animate, this));
+    // var timer = Time.setInterval(bindFn(animate, this), 33);
 
+    Time.ms.interval(33).subscribeWithSnapshot({'ms':Time.ms}, bindFn(animate, this));
+    // Time.ms.interval(33).subscribe(bindFn(animate, this));
+
+    // var timeInterval = Time.ms.sub(Time.ms.pin());
+    // var timer = timeInterval.interval(33).subscribe(bindFn(animate, this));
+    this.currTime = Time.ms.pinLastValue();
+    
     this.terrain.setPosition(50,50);
+    this.duneBuggy.rotate(Math.PI/2);
 
-    // this.terrain.setPosition(-176.2560000000046/5.12, -375.8159999999982/5.12)
-    // this.duneBuggy.rotate(Math.PI);
 }
 
 // why do we have to create a stupid polyfill for function.bind()? ask the facebook devs
@@ -528,11 +629,15 @@ function wrapVal(val, range){
 
 const rad2Deg = 180/Math.PI;
 
-function animate(elapsedTime) {
+function animate(_currTime2, snapshot) {
+    var _currTime = Time.ms.pinLastValue();
+    var _elapsedTime = snapshot.ms-this.currTime;
+    this.currTime = snapshot.ms;
 
-    this.terrain.move(this.duneBuggy.velocity[0], -this.duneBuggy.velocity[1]);
-    // this.terrain.move(this.duneBuggy.velocity[0]/10, -this.duneBuggy.velocity[1]/10);
-    // this.terrain.move(0, -0.135);
+    // Diagnostics.log(_elapsedTime);
+    // Diagnostics.watch("elapsedTime", elapsedTime);
+    this.terrain.move(this.duneBuggy.velocity[0]*_elapsedTime/1000, -this.duneBuggy.velocity[1]*_elapsedTime/1000);
+    this.duneBuggy.rotate(0.675*_elapsedTime/1000);
 
 
     // we need to adjust the coordinate
@@ -542,7 +647,6 @@ function animate(elapsedTime) {
     Patches.setScalarValue('terrain_zPos', Reactive.val(wrapVal(this.terrain.currentPosition[1], 100)-50));
 
 
-    // this.duneBuggy.rotate(0.00675);
     
     this.duneBuggy.setWheelHeights(
         this.terrain.getPt(this.terrain.currentPosition[0]+this.duneBuggy.wheelPositions[0][0]*this.buggyScale, this.terrain.currentPosition[1]-this.duneBuggy.wheelPositions[0][1]*this.buggyScale).z,
@@ -559,7 +663,7 @@ function animate(elapsedTime) {
     ));
 
     
-    Patches.setScalarValue('buggy_frame_rotationY', Reactive.val(rad2Deg*(this.duneBuggy.rotation)));
+    Patches.setScalarValue('buggy_frame_rotationY', Reactive.val(rad2Deg*(-this.duneBuggy.rotation)));
     Patches.setScalarValue('buggy_frame_rotationX', Reactive.val(rad2Deg*this.duneBuggy.tilt));
     Patches.setScalarValue('buggy_frame_rotationZ', Reactive.val(rad2Deg*this.duneBuggy.roll));
 
