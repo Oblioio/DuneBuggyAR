@@ -67,7 +67,7 @@ function Main () {
     // directionalLight.rotation.z = Math.PI/4;
     this.scene.add( directionalLight );
 
-    this.terrain = new DynamicTerrain(Math.round(25*1.75), 5);
+    this.terrain = new DynamicTerrain(Math.round(25*1.75), 50);
     // this.terrain = new DynamicTerrain(50, 100);
     this.masterGroup = new Group();
     this.masterGroup.scale.set(2,2,2);
@@ -150,7 +150,7 @@ function Main () {
     this.currTime = new Date().getTime();
     
     this.terrain.setPosition(50,50);
-    this.duneBuggy.rotate(Math.PI/2);
+    // this.duneBuggy.rotate(Math.PI/2);
 }
 var frameIndex = 0;
 function animate() {    
@@ -164,10 +164,10 @@ function animate() {
     this.currTime = _currTime;
 
 
-    // this.terrain.move(this.duneBuggy.velocity[0]*_elapsedTime/1000, -this.duneBuggy.velocity[1]*_elapsedTime/1000);
+    this.terrain.move(this.duneBuggy.velocity[0]*_elapsedTime/1000, -this.duneBuggy.velocity[1]*_elapsedTime/1000);
+    this.duneBuggy.rotate(((Math.sin(3+this.currTime/8000)+Math.sin(this.currTime/800))*0.65)*_elapsedTime/1000);
     // this.terrain.setPosition(Math.sin((this.currTime-(Math.PI/4))/100), Math.sin(this.currTime/100));
-    this.terrain.setPosition(95, Math.sin(this.currTime/100));
-    this.duneBuggy.rotate(0.475*_elapsedTime/1000);
+    // this.terrain.setPosition(95, Math.sin(this.currTime/100));
 
     // next set wheelHeights
     this.duneBuggy.update(

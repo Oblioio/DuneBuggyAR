@@ -103,18 +103,22 @@ var DynamicTerrain = (function(){
     var dX = x-this.currentPosition[0];
     var dY = y-this.currentPosition[1];
     while(dX > 50){
+      modded = true;
       this.currentPosition[0] += 100;
       dX = x-this.currentPosition[0];
     }
     while(dX < -50){
+      modded = true;
       this.currentPosition[0] -= 100;
       dX = x-this.currentPosition[0];
     }
     while(dY > 50){
+      modded = true;
       this.currentPosition[1] += 100;
       dY = y-this.currentPosition[1];
     }
     while(dY < -50){
+      modded = true;
       this.currentPosition[1] -= 100;
       dY = y-this.currentPosition[1];
     }
@@ -139,14 +143,16 @@ var DynamicTerrain = (function(){
 
 
     // if we modified the "currentPosition" lets update the point values to match
-    // if(modded){
-    //   for(var _x = 0; _x<this.numRows; _x++){
-    //     for(var _y = 0; _y<this.numRows; _y++){
-    //       this.ptInfo[_x][_y].x = this.currentPosition[0] - this.xPos[_x];
-    //       this.ptInfo[_x][_y].y = this.currentPosition[1] - this.yPos[_y];
-    //     }
-    //   }
-    // }
+    if(modded){
+      for(var _x = 0; _x<this.numRows; _x++){
+        for(var _y = 0; _y<this.numRows; _y++){
+          this.ptInfo[_x][_y].x = this.currentPosition[0] - this.xPos[_x];
+          this.ptInfo[_x][_y].y = this.currentPosition[1] - this.yPos[_y];
+          this.ptInfo[_x][_y].u = (0.5/2048)+(2047/2048)*(this.ptInfo[_x][_y].x/100);
+          this.ptInfo[_x][_y].v = 1-((0.5/2048)+(2047/2048)*(this.ptInfo[_x][_y].y/100));
+        }
+      }
+    }
 
     // slide points
     this.slide(dX, 0, this.xPos, this.wrap_horizontal);
@@ -180,7 +186,7 @@ var DynamicTerrain = (function(){
     if(this.offset[dimIndex] < 0){
       wrapNum = Math.min(this.numRows-1, Math.ceil(Math.abs(this.offset[dimIndex])/this.spacing));
 
-      console.log('wrap: '+'amt: '+amt+" wrapNum: "+wrapNum+" dim: "+((dimIndex == 0)?"H":"V")+" movement: "+this.spacing*wrapNum);
+      // console.log('wrap: '+'amt: '+amt+" wrapNum: "+wrapNum+" dim: "+((dimIndex == 0)?"H":"V")+" movement: "+this.spacing*wrapNum);
       for(var w=0; w<wrapNum; w++){
         wrapFn(1); 
       }
@@ -188,7 +194,7 @@ var DynamicTerrain = (function(){
 
     } else if(this.offset[dimIndex] >= this.spacing){
       wrapNum = Math.min(this.numRows-1, Math.floor(this.offset[dimIndex]/this.spacing))
-      console.log('wrap: '+'amt: '+amt+" wrapNum: "+wrapNum+" dim: "+((dimIndex == 0)?"H":"V")+" movement: "+this.spacing*wrapNum);
+      // console.log('wrap: '+'amt: '+amt+" wrapNum: "+wrapNum+" dim: "+((dimIndex == 0)?"H":"V")+" movement: "+this.spacing*wrapNum);
       for(var w=0; w<wrapNum; w++){
         wrapFn(0);
       }

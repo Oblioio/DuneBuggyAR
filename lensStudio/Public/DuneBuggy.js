@@ -29,16 +29,16 @@ function init(){
     this.buggy_backLeftWheel = createObject("buggyFrame", script.DuneBuggy_BL, script.DuneBuggy_mat, this.buggy.obj);
     this.buggy_backRightWheel = createObject("buggyFrame", script.DuneBuggy_BR, script.DuneBuggy_mat, this.buggy.obj);
     
-    // this.buggy_frame.mv.meshShadowMode = 1;
-    // this.buggy_frontLeftWheel.mv.meshShadowMode = 1;
-    // this.buggy_frontRightWheel.mv.meshShadowMode = 1;
-    // this.buggy_backLeftWheel.mv.meshShadowMode = 1;
-    // this.buggy_backRightWheel.mv.meshShadowMode = 1;
+    this.buggy_frame.mv.meshShadowMode = 1;
+    this.buggy_frontLeftWheel.mv.meshShadowMode = 1;
+    this.buggy_frontRightWheel.mv.meshShadowMode = 1;
+    this.buggy_backLeftWheel.mv.meshShadowMode = 1;
+    this.buggy_backRightWheel.mv.meshShadowMode = 1;
 
     
     // TERRAIN
     // this.terrain = new DynamicTerrain(50, 50)
-    this.terrain = new DynamicTerrain(Math.round(25*1.75), 5);
+    this.terrain = new DynamicTerrain(Math.round(25*1.75), 50);
     // this.terrain = new DynamicTerrain(25, 50);
     this.terrain.setPosition(0,0);
 
@@ -98,11 +98,11 @@ function createObject(id, meshObj, mat, parent){
     
 
 function onUpdate(e){
-    var _elapsedTime = e.getDeltaTime();
+    var _elapsedTime = e.getDeltaTime()*1000;
     if(_elapsedTime == 0)return;
 
-    this.terrain.move(this.duneBuggy.velocity[0]*_elapsedTime, -this.duneBuggy.velocity[1]*_elapsedTime);
-    this.duneBuggy.rotate(0.475*_elapsedTime);
+    this.terrain.move(this.duneBuggy.velocity[0]*_elapsedTime/1000, -this.duneBuggy.velocity[1]*_elapsedTime/1000);
+    this.duneBuggy.rotate(0.475*_elapsedTime/1000);
 
     this.terrainObj.mb.eraseVertices(0, this.terrainObj.mb.getVerticesCount());
     this.terrainObj.mb.appendVerticesInterleaved(this.terrain.returnPackedArray());
@@ -111,7 +111,7 @@ function onUpdate(e){
 
     // next set wheelHeights
     this.duneBuggy.update(
-        _elapsedTime,
+        _elapsedTime/1000,
         this.terrain.getPt(this.terrain.currentPosition[0]+this.duneBuggy.wheelPositions[0][0]*this.buggyScale, this.terrain.currentPosition[1]-this.duneBuggy.wheelPositions[0][1]*this.buggyScale).z,
         this.terrain.getPt(this.terrain.currentPosition[0]+this.duneBuggy.wheelPositions[1][0]*this.buggyScale, this.terrain.currentPosition[1]-this.duneBuggy.wheelPositions[1][1]*this.buggyScale).z,
         this.terrain.getPt(this.terrain.currentPosition[0]+this.duneBuggy.wheelPositions[2][0]*this.buggyScale, this.terrain.currentPosition[1]-this.duneBuggy.wheelPositions[2][1]*this.buggyScale).z,
@@ -119,21 +119,21 @@ function onUpdate(e){
     );
 
     var buggyRotation = quat.fromEulerVec(new vec3(0, Math.PI-this.duneBuggy.rotation,0));
-    // this.buggySpin.transform.setLocalRotation(buggyRotation);
-    // this.buggy_frame.transform.setLocalRotation(quat.fromEulerVec(new vec3(this.duneBuggy.tilt, 0, this.duneBuggy.roll)));
-    // this.buggy_frame.transform.setLocalPosition(new vec3(0, this.duneBuggy.midHeight/this.buggyScale, 0));
+    this.buggySpin.transform.setLocalRotation(buggyRotation);
+    this.buggy_frame.transform.setLocalRotation(quat.fromEulerVec(new vec3(this.duneBuggy.tilt, 0, this.duneBuggy.roll)));
+    this.buggy_frame.transform.setLocalPosition(new vec3(0, this.duneBuggy.midHeight/this.buggyScale, 0));
     
     // this.buggy_frontLeftWheel.transform.setLocalPosition(new vec3(this.duneBuggy.wheelPositions[0][0], this.duneBuggy.wheelPositions[0][2]/this.buggyScale, this.duneBuggy.wheelPositions[0][1]));
     
-    // this.buggy_frontLeftWheel.transform.setLocalPosition(new vec3(this.duneBuggy.wheelPositions[0][0], this.duneBuggy.wheelPositions[0][2]/this.buggyScale, this.duneBuggy.wheelPositions[0][1]));
-    // this.buggy_frontRightWheel.transform.setLocalPosition(new vec3(this.duneBuggy.wheelPositions[1][0], this.duneBuggy.wheelPositions[1][2]/this.buggyScale, this.duneBuggy.wheelPositions[1][1]));
-    // this.buggy_backLeftWheel.transform.setLocalPosition(new vec3(this.duneBuggy.wheelPositions[2][0], this.duneBuggy.wheelPositions[2][2]/this.buggyScale, this.duneBuggy.wheelPositions[2][1]));
-    // this.buggy_backRightWheel.transform.setLocalPosition(new vec3(this.duneBuggy.wheelPositions[3][0], this.duneBuggy.wheelPositions[3][2]/this.buggyScale, this.duneBuggy.wheelPositions[3][1]));
+    this.buggy_frontLeftWheel.transform.setLocalPosition(new vec3(this.duneBuggy.wheelPositions[0][0], this.duneBuggy.wheelPositions[0][2]/this.buggyScale, this.duneBuggy.wheelPositions[0][1]));
+    this.buggy_frontRightWheel.transform.setLocalPosition(new vec3(this.duneBuggy.wheelPositions[1][0], this.duneBuggy.wheelPositions[1][2]/this.buggyScale, this.duneBuggy.wheelPositions[1][1]));
+    this.buggy_backLeftWheel.transform.setLocalPosition(new vec3(this.duneBuggy.wheelPositions[2][0], this.duneBuggy.wheelPositions[2][2]/this.buggyScale, this.duneBuggy.wheelPositions[2][1]));
+    this.buggy_backRightWheel.transform.setLocalPosition(new vec3(this.duneBuggy.wheelPositions[3][0], this.duneBuggy.wheelPositions[3][2]/this.buggyScale, this.duneBuggy.wheelPositions[3][1]));
     
     
-    this.buggy_frontLeftWheel.transform.setLocalPosition(new vec3(0, this.terrain.getPt(this.terrain.currentPosition[0], this.terrain.currentPosition[1]).z, 0));
+    // this.buggy_frontLeftWheel.transform.setLocalPosition(new vec3(0, this.terrain.getPt(this.terrain.currentPosition[0], this.terrain.currentPosition[1]).z/this.buggyScale, 0));
 
-    global.logToScreen(this.buggy_frontLeftWheel.transform.getLocalPosition().y);
+    // global.logToScreen(this.buggy_frontLeftWheel.transform.getLocalPosition().y);
     // global.logToScreen(this.duneBuggy.wheelPositions[1][2]/this.buggyScale);
     // global.logToScreen(this.duneBuggy.wheelPositions[2][2]/this.buggyScale);
     // global.logToScreen(this.duneBuggy.wheelPositions[3][2]/this.buggyScale);
