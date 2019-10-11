@@ -82,54 +82,76 @@ var DynamicTerrain = (function(){
   }
   
   function setPosition(x, y) {
+    var wrapPt = 100;
+    // console.log('setPosition 1',x,y);
     // first lets wrap the position coordinates to be in the 0-100 range
-    if(x > 0){
-      x = x%100;
-    } else {
-      x = 100-(Math.abs(x)%100);
+    if(x >= wrapPt){
+      x = x%wrapPt;
+    } else if (x<0){
+      x = wrapPt-(Math.abs(x)%wrapPt);
     }
     
-    if(y > 0){
-      y = y%100;
-    } else {
-      y = 100-(Math.abs(y)%100);
+    if(y >= wrapPt){
+      y = y%wrapPt;
+    } else if (y<0){
+      y = wrapPt-(Math.abs(y)%wrapPt);
     }
-
-    // now lets check if we should correct the "currentPosition" to fit within 0-100"
+    
     var modded = false;
-    if(this.currentPosition[0] > 100){
-      modded = true;
-      this.currentPosition[0] -= 100;
-    } else {
-      modded = true;
-      this.currentPosition[0] += 100;
-    }
 
-    if(this.currentPosition[1] > 100){
-      modded = true;
-      this.currentPosition[1] -= 100;
-    } else {
-      modded = true;
-      this.currentPosition[1] += 100;
+    // console.log('setPosition 2',x,y);
+    var dX = x-this.currentPosition[0];
+    var dY = y-this.currentPosition[1];
+    while(dX > 50){
+      this.currentPosition[0] += 100;
+      dX = x-this.currentPosition[0];
     }
+    while(dX < -50){
+      this.currentPosition[0] -= 100;
+      dX = x-this.currentPosition[0];
+    }
+    while(dY > 50){
+      this.currentPosition[1] += 100;
+      dY = y-this.currentPosition[1];
+    }
+    while(dY < -50){
+      this.currentPosition[1] -= 100;
+      dY = y-this.currentPosition[1];
+    }
+    // // now lets check if we should correct the "currentPosition" to fit within 0-100"
+    // if(this.currentPosition[0] >= 100){
+    //   modded = true;
+    //   this.currentPosition[0] -= 100;
+    // } else if(this.currentPosition[0] < 0) {
+    // // } else {
+    //   modded = true;
+    //   this.currentPosition[0] += 100;
+    // }
+
+    // if(this.currentPosition[1] >= 100){
+    //   modded = true;
+    //   this.currentPosition[1] -= 100;
+    // } else if(this.currentPosition[1] < 0) {
+    // // } else {
+    //   modded = true;
+    //   this.currentPosition[1] += 100;
+    // }
 
 
     // if we modified the "currentPosition" lets update the point values to match
-    if(modded){
-      for(var _x = 0; _x<this.numRows; _x++){
-        for(var _y = 0; _y<this.numRows; _y++){
-          this.ptInfo[_x][_y].x = this.currentPosition[0] - this.xPos[_x];
-          this.ptInfo[_x][_y].y = this.currentPosition[1] - this.yPos[_y];
-        }
-      }
-    }
-
+    // if(modded){
+    //   for(var _x = 0; _x<this.numRows; _x++){
+    //     for(var _y = 0; _y<this.numRows; _y++){
+    //       this.ptInfo[_x][_y].x = this.currentPosition[0] - this.xPos[_x];
+    //       this.ptInfo[_x][_y].y = this.currentPosition[1] - this.yPos[_y];
+    //     }
+    //   }
+    // }
 
     // slide points
-    this.slide(x-this.currentPosition[0], 0, this.xPos, this.wrap_horizontal);
-    this.slide(y-this.currentPosition[1], 1, this.yPos, this.wrap_vertical);
+    this.slide(dX, 0, this.xPos, this.wrap_horizontal);
+    this.slide(dY, 1, this.yPos, this.wrap_vertical);
   
-    
     // update points
     var pt;
     for(var _x = 0; _x<this.numRows; _x++){
@@ -142,7 +164,7 @@ var DynamicTerrain = (function(){
           this.ptInfo[_x][_y].u = ptData.u;
           this.ptInfo[_x][_y].v = ptData.v;
           this.ptInfo[_x][_y].z = ptData.z;
-          this.ptInfo[_x][_y].update = false;          
+          this.ptInfo[_x][_y].update = false;  
         }
       }
     }
@@ -156,25 +178,22 @@ var DynamicTerrain = (function(){
     // wrap rows as neccesary and set their update status
     var wrapNum;
     if(this.offset[dimIndex] < 0){
-      wrapNum =  Math.min(this.numRows-1, Math.ceil(Math.abs(this.offset[dimIndex])/this.spacing));
-      // wrapNum = 0;
-      // modulo
-      // this.offset[dimIndex] += wrapNum * this.spacing;
+      wrapNum = Math.min(this.numRows-1, Math.ceil(Math.abs(this.offset[dimIndex])/this.spacing));
+
+      console.log('wrap: '+'amt: '+amt+" wrapNum: "+wrapNum+" dim: "+((dimIndex == 0)?"H":"V")+" movement: "+this.spacing*wrapNum);
       for(var w=0; w<wrapNum; w++){
         wrapFn(1); 
       }
       while(this.offset[dimIndex] < 0)this.offset[dimIndex] += this.spacing;
-      // this.offset[dimIndex]
-    } else if(this.offset[dimIndex] > this.spacing){
+
+    } else if(this.offset[dimIndex] >= this.spacing){
       wrapNum = Math.min(this.numRows-1, Math.floor(this.offset[dimIndex]/this.spacing))
-      // modulo
-      // this.offset[dimIndex] -= wrapNum * this.spacing;
+      console.log('wrap: '+'amt: '+amt+" wrapNum: "+wrapNum+" dim: "+((dimIndex == 0)?"H":"V")+" movement: "+this.spacing*wrapNum);
       for(var w=0; w<wrapNum; w++){
         wrapFn(0);
       }
-      while(this.offset[dimIndex] > this.spacing)this.offset[dimIndex] -= this.spacing;
+      while(this.offset[dimIndex] >= this.spacing)this.offset[dimIndex] -= this.spacing;
     }
-  
   
     this.currentPosition[dimIndex] += amt;
     // this.currentPosition[dimIndex] = (this.currentPosition[dimIndex]+100)%100;
@@ -183,7 +202,8 @@ var DynamicTerrain = (function(){
     // first, always the edge
     var currPos = -this.halfSize;
     posArray[0] = currPos;
-  
+    
+    // if(dimIndex == 1)console.log(this.offset[dimIndex]);
     // middle
     currPos += this.offset[dimIndex];      
     for(var i = 1; i<this.numRows-1; i++){

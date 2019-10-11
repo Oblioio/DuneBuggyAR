@@ -67,7 +67,7 @@ function Main () {
     // directionalLight.rotation.z = Math.PI/4;
     this.scene.add( directionalLight );
 
-    this.terrain = new DynamicTerrain(Math.round(25*1.75), 50);
+    this.terrain = new DynamicTerrain(Math.round(25*1.75), 5);
     // this.terrain = new DynamicTerrain(50, 100);
     this.masterGroup = new Group();
     this.masterGroup.scale.set(2,2,2);
@@ -95,9 +95,7 @@ function Main () {
         metalness: 0,
         roughness: 0.75
     } );
-    // this.terrainMat = new MeshBasicMaterial({
-    //     map: texture
-    // })
+    // this.terrainMat.wireframe = true;
 
     this.duneBuggy = new DuneBuggy();
     this.buggyScale = 0.5;
@@ -154,50 +152,36 @@ function Main () {
     this.terrain.setPosition(50,50);
     this.duneBuggy.rotate(Math.PI/2);
 }
+var frameIndex = 0;
+function animate() {    
+    requestAnimationFrame( animate.bind(this) );
 
-function animate() {
+    // frameIndex++;
+    // if(frameIndex % 4 !== 0)return;
+
     var _currTime = new Date().getTime();
     var _elapsedTime = _currTime-this.currTime;
     this.currTime = _currTime;
 
-    requestAnimationFrame( animate.bind(this) );
-    // console.log(_currTime);
 
-    this.terrain.move(this.duneBuggy.velocity[0]*_elapsedTime/1000, -this.duneBuggy.velocity[1]*_elapsedTime/1000);
+    // this.terrain.move(this.duneBuggy.velocity[0]*_elapsedTime/1000, -this.duneBuggy.velocity[1]*_elapsedTime/1000);
+    // this.terrain.setPosition(Math.sin((this.currTime-(Math.PI/4))/100), Math.sin(this.currTime/100));
+    this.terrain.setPosition(95, Math.sin(this.currTime/100));
     this.duneBuggy.rotate(0.475*_elapsedTime/1000);
-    // this.terrain.move(this.duneBuggy.velocity[0]/10, -this.duneBuggy.velocity[1]/10);
-// 
-    // this.terrain.move(0.135, 0.135);
-    // this.terrain.move(0, -0.135);
-
-    // this.terrain.setPosition(this.terrain.currentPosition[0]+0, this.terrain.currentPosition[1]+0.15)
-
-    // this.buggy.position.z = this.terrain.getPt(this.terrain.currentPosition[0], this.terrain.currentPosition[1]).z;
-    // this.buggy.position.z = 18;
-
-    // first we apply rotation
-    // this.duneBuggy.rotate(0.00675);
-    // this.duneBuggy.rotate(0.05);
-    // this.masterGroup.rotation.z += 0.001;
-    // this.masterGroup.rotation.z += 0.001;
 
     // next set wheelHeights
     this.duneBuggy.update(
         _elapsedTime/1000,
-        // this.terrain.getPt(this.terrain.currentPosition[0], this.terrain.currentPosition[1]).z,
         this.terrain.getPt(this.terrain.currentPosition[0]+this.duneBuggy.wheelPositions[0][0]*this.buggyScale, this.terrain.currentPosition[1]-this.duneBuggy.wheelPositions[0][1]*this.buggyScale).z,
         this.terrain.getPt(this.terrain.currentPosition[0]+this.duneBuggy.wheelPositions[1][0]*this.buggyScale, this.terrain.currentPosition[1]-this.duneBuggy.wheelPositions[1][1]*this.buggyScale).z,
         this.terrain.getPt(this.terrain.currentPosition[0]+this.duneBuggy.wheelPositions[2][0]*this.buggyScale, this.terrain.currentPosition[1]-this.duneBuggy.wheelPositions[2][1]*this.buggyScale).z,
         this.terrain.getPt(this.terrain.currentPosition[0]+this.duneBuggy.wheelPositions[3][0]*this.buggyScale, this.terrain.currentPosition[1]-this.duneBuggy.wheelPositions[3][1]*this.buggyScale).z
     );
-    // console.log(this.terrain.currentPosition[0]*5.12, this.terrain.currentPosition[1]*5.12);
 
     this.buggySpin.rotation.y = Math.PI-this.duneBuggy.rotation;
     this.buggy_frame.rotation.x = this.duneBuggy.tilt; // tilt
     this.buggy_frame.rotation.z = this.duneBuggy.roll; // roll
     this.buggy_frame.position.y = this.duneBuggy.midHeight/this.buggyScale;
-    this.directionalLight.position.y = 50+this.buggy_frame.position.y;
-    this.directionalLight.target.y = this.buggy_frame.position.y;
     
     this.buggy_frontLeftWheel.position.set(this.duneBuggy.wheelPositions[0][0], this.duneBuggy.wheelPositions[0][2]/this.buggyScale, this.duneBuggy.wheelPositions[0][1]);
     this.buggy_frontRightWheel.position.set(this.duneBuggy.wheelPositions[1][0], this.duneBuggy.wheelPositions[1][2]/this.buggyScale, this.duneBuggy.wheelPositions[1][1]);
@@ -209,6 +193,9 @@ function animate() {
     this.buggy_backLeftWheel.rotation.y = Math.PI-this.duneBuggy.rotation;
     this.buggy_backRightWheel.rotation.y = Math.PI-this.duneBuggy.rotation;
 
+
+    this.directionalLight.position.y = 50+this.buggy_frame.position.y;
+    this.directionalLight.target.y = this.buggy_frame.position.y;
 
     this.geoPositions.set(this.terrain.returnPtArray(), 0);
     this.geoPositions.needsUpdate = true;

@@ -67,6 +67,8 @@ function init(){
     this.terrain.setPosition(50,50);
     this.duneBuggy.rotate(Math.PI/2);
 
+    Diagnostics.watch("midHeight", Reactive.val(this.duneBuggy.midHeight));
+    Diagnostics.watch("buggy_rotation", Reactive.val(this.duneBuggy.rotation));
 }
 
 // why do we have to create a stupid polyfill for function.bind()? ask the facebook devs
@@ -95,6 +97,8 @@ function animate(_currTime2, snapshot) {
     var _elapsedTime = snapshot.ms-this.currTime;
     this.currTime = snapshot.ms;
 
+    if(_elapsedTime == 0)return;
+
     // Diagnostics.log(_elapsedTime);
     // Diagnostics.watch("elapsedTime", elapsedTime);
     this.terrain.move(this.duneBuggy.velocity[0]*_elapsedTime/1000, -this.duneBuggy.velocity[1]*_elapsedTime/1000);
@@ -109,12 +113,15 @@ function animate(_currTime2, snapshot) {
 
 
     
-    this.duneBuggy.setWheelHeights(
+    this.duneBuggy.update(
+        _elapsedTime/1000,
         this.terrain.getPt(this.terrain.currentPosition[0]+this.duneBuggy.wheelPositions[0][0]*this.buggyScale, this.terrain.currentPosition[1]-this.duneBuggy.wheelPositions[0][1]*this.buggyScale).z,
         this.terrain.getPt(this.terrain.currentPosition[0]+this.duneBuggy.wheelPositions[1][0]*this.buggyScale, this.terrain.currentPosition[1]-this.duneBuggy.wheelPositions[1][1]*this.buggyScale).z,
         this.terrain.getPt(this.terrain.currentPosition[0]+this.duneBuggy.wheelPositions[2][0]*this.buggyScale, this.terrain.currentPosition[1]-this.duneBuggy.wheelPositions[2][1]*this.buggyScale).z,
         this.terrain.getPt(this.terrain.currentPosition[0]+this.duneBuggy.wheelPositions[3][0]*this.buggyScale, this.terrain.currentPosition[1]-this.duneBuggy.wheelPositions[3][1]*this.buggyScale).z
     );
+    Diagnostics.log(_elapsedTime/1000);
+    Diagnostics.log(this.duneBuggy.midHeight);
 
     
     Patches.setVectorValue('buggy_frame_position', Reactive.vector(

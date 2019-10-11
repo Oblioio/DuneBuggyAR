@@ -80,17 +80,17 @@ function DuneBuggy() {
         this.positionsZ[0] = lerp(this.positionsZ[1], (this.positionsZ[0]+this.positionsZ[1])/2, 0.5);
         this.positionsZ[2] = lerp(this.positionsZ[2], (this.positionsZ[2]+this.positionsZ[3])/2, 0.5);
         this.positionsZ[3] = lerp(this.positionsZ[3], (this.positionsZ[2]+this.positionsZ[3])/2, 0.5);
-
+        
         // this.positionsZ[0] = FL+frontWheelRadius;
         // this.positionsZ[1] = FR+frontWheelRadius;
         // this.positionsZ[2] = BL+backWheelRadius;
         // this.positionsZ[3] = BR+backWheelRadius;
         
         // save new velocity
-        this.velocityZ[0] = Math.min((this.positionsZ[0]-this.prev_positionsZ[0])/elapsedTime, 20);
-        this.velocityZ[1] = Math.min((this.positionsZ[1]-this.prev_positionsZ[1])/elapsedTime, 20);
-        this.velocityZ[2] = Math.min((this.positionsZ[2]-this.prev_positionsZ[2])/elapsedTime, 20);
-        this.velocityZ[3] = Math.min((this.positionsZ[3]-this.prev_positionsZ[3])/elapsedTime, 20);
+        this.velocityZ[0] = Math.min((this.positionsZ[0]-this.prev_positionsZ[0])/elapsedTime, 30);
+        this.velocityZ[1] = Math.min((this.positionsZ[1]-this.prev_positionsZ[1])/elapsedTime, 30);
+        this.velocityZ[2] = Math.min((this.positionsZ[2]-this.prev_positionsZ[2])/elapsedTime, 30);
+        this.velocityZ[3] = Math.min((this.positionsZ[3]-this.prev_positionsZ[3])/elapsedTime, 30);
         // console.log(this.velocityZ)
 
         var shockLength = 0.75;
