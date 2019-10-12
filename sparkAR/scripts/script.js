@@ -430,15 +430,18 @@ var sparkARShared = (function (exports) {
       this.frontWheelX = 2.6077;
       this.frontWheelSpace = 1.36649;
       var frontWheelRadius = 1.30245/4;
-      // var frontWheelRadius = 0;
       this.backWheelX = -2.25336;
       this.backWheelSpace = 1.82944;
       var backWheelRadius = 1.56141/4;
-      // var backWheelRadius = 0;
 
-      this.speed = 30;
-      // this.speed = 0.01;
-      this.velocity = [0, this.speed];
+      this.topSpeedXY = 40;
+      this.speedXY = 0;
+      this.vectorXY = [0, 1];
+      this.accelerationXY = 15;
+      this.accelerationXY_Mult = 0;
+      this.frictionXY = 0.98; // slow down if accelerationXY_Mult is 0
+
+      this.onGround = [true, true];
 
       var wheelPositions_orig = [
           [-this.frontWheelSpace, this.frontWheelX],
@@ -452,6 +455,7 @@ var sparkARShared = (function (exports) {
       this.velocityZ = [0,0,0,0];
       this.positionsZ = [0,0,0,0];
       this.prev_positionsZ = [0,0,0,0];
+      this.accelerationZ = -65;
 
       this.wheelPositions = [
           [-this.frontWheelSpace, this.frontWheelX,0],
@@ -463,12 +467,13 @@ var sparkARShared = (function (exports) {
       var wheelDist = this.frontWheelX - this.backWheelX;
 
       this.rotation = 0;
+
       this.tilt = 0;
       this.roll = 0;
       this.midHeight = 0;
 
       this.wheelHeights = [0,0,0,0];
-      this.acceleration = -50;
+
 
       var first = true;
 
@@ -484,11 +489,27 @@ var sparkARShared = (function (exports) {
               this.positionsZ[3] = BR+backWheelRadius;
               first = false;
           }
+          ////////////// XY Axis Update //////////////////
+
+          // speed only changes if we are on the ground
+          if(this.onGround[0] || this.onGround[1]){
+              // we apply friction if the car doesn't have any forward or backward accelerations
+              if(this.accelerationXY_Mult == 0)this.speedXY *= this.frictionXY;
+              // if the car is going a different way than it's acceleration
+              // we exponentially slow it down. It was just a bit sluggish when 
+              // go from forwards to reverse and vise versa.
+              if((this.speedXY)/Math.abs(this.speedXY) == -(this.accelerationXY_Mult/Math.abs(this.accelerationXY_Mult)))this.speedXY *= Math.pow(this.frictionXY, 3);
+              // now apply acceleration
+              this.speedXY = Math.min(this.topSpeedXY, Math.max(-this.topSpeedXY, this.speedXY+this.accelerationXY*this.accelerationXY_Mult*elapsedTime)); 
+          }
+
+
+          ////////////// Z Axis Update //////////////////
           // update velocities
-          this.velocityZ[0] += this.acceleration*elapsedTime;
-          this.velocityZ[1] += this.acceleration*elapsedTime;
-          this.velocityZ[2] += this.acceleration*elapsedTime;
-          this.velocityZ[3] += this.acceleration*elapsedTime;
+          this.velocityZ[0] += this.accelerationZ*elapsedTime;
+          this.velocityZ[1] += this.accelerationZ*elapsedTime;
+          this.velocityZ[2] += this.accelerationZ*elapsedTime;
+          this.velocityZ[3] += this.accelerationZ*elapsedTime;
 
           // save previous positions
           this.prev_positionsZ[0] = this.positionsZ[0];
@@ -498,33 +519,37 @@ var sparkARShared = (function (exports) {
 
           // update positions heights
           this.positionsZ[0] = Math.max(this.positionsZ[0] + this.velocityZ[0]*elapsedTime, FL+frontWheelRadius);
-          this.positionsZ[1] = Math.max(this.positionsZ[1] + this.velocityZ[1]*elapsedTime, FR+frontWheelRadius);
-          
+          this.positionsZ[1] = Math.max(this.positionsZ[1] + this.velocityZ[1]*elapsedTime, FR+frontWheelRadius);        
           this.positionsZ[2] = Math.max(this.positionsZ[2] + this.velocityZ[2]*elapsedTime, BL+backWheelRadius);
           this.positionsZ[3] = Math.max(this.positionsZ[3] + this.velocityZ[3]*elapsedTime, BR+backWheelRadius);
 
+          // this smooths out the positions a bit
           this.positionsZ[0] = lerp(this.positionsZ[0], (this.positionsZ[0]+this.positionsZ[1])/2, 0.5);
           this.positionsZ[0] = lerp(this.positionsZ[1], (this.positionsZ[0]+this.positionsZ[1])/2, 0.5);
           this.positionsZ[2] = lerp(this.positionsZ[2], (this.positionsZ[2]+this.positionsZ[3])/2, 0.5);
           this.positionsZ[3] = lerp(this.positionsZ[3], (this.positionsZ[2]+this.positionsZ[3])/2, 0.5);
           
-          // this.positionsZ[0] = FL+frontWheelRadius;
-          // this.positionsZ[1] = FR+frontWheelRadius;
-          // this.positionsZ[2] = BL+backWheelRadius;
-          // this.positionsZ[3] = BR+backWheelRadius;
-          
-          // save new velocity
+          // save new velocityZ
           this.velocityZ[0] = Math.min((this.positionsZ[0]-this.prev_positionsZ[0])/elapsedTime, 30);
           this.velocityZ[1] = Math.min((this.positionsZ[1]-this.prev_positionsZ[1])/elapsedTime, 30);
           this.velocityZ[2] = Math.min((this.positionsZ[2]-this.prev_positionsZ[2])/elapsedTime, 30);
           this.velocityZ[3] = Math.min((this.positionsZ[3]-this.prev_positionsZ[3])/elapsedTime, 30);
-          // console.log(this.velocityZ)
 
           var shockLength = 0.75;
           this.wheelPositions[0][2] = Math.max(this.positionsZ[0]-shockLength, FL+frontWheelRadius);
           this.wheelPositions[1][2] = Math.max(this.positionsZ[1]-shockLength, FR+frontWheelRadius);
           this.wheelPositions[2][2] = Math.max(this.positionsZ[2]-shockLength, BL+backWheelRadius);
           this.wheelPositions[3][2] = Math.max(this.positionsZ[3]-shockLength, BR+backWheelRadius);
+
+          this.onGround[0] = (
+              this.wheelPositions[0][2] == FL+frontWheelRadius ||
+              this.wheelPositions[1][2] == FR+frontWheelRadius
+          )?true:false;
+
+          this.onGround[1] = (
+              this.wheelPositions[2][2] == BL+backWheelRadius ||
+              this.wheelPositions[3][2] == BR+backWheelRadius 
+          )?true:false;
 
           var midFront = (this.positionsZ[0]+this.positionsZ[1])/2;
           var midBack = (this.positionsZ[2]+this.positionsZ[3])/2;
@@ -535,24 +560,21 @@ var sparkARShared = (function (exports) {
           this.roll = (Math.atan((FL-FR)/(this.frontWheelSpace*2))+Math.atan((BL-BR)/(this.backWheelSpace*2)))/2;
       };
 
-      this.getWheelPos = function(index){
-          return this.wheels[index];
-      };
-
       // update zRotation, determine new wheel positions
       this.rotate = function(amt){
-          this.rotation += amt;
+          this.rotation += amt*Math.min(10, Math.abs(this.speedXY))/10;
 
           // update wheel x and y positions
-          // px = x * cs - y * sn;
-          // py = x * sn + y * cs;
           for(var i=0; i<4; i++){
               this.wheelPositions[i][0] = (wheelPositions_orig[i][0]*Math.cos(this.rotation)) - (wheelPositions_orig[i][1]*Math.sin(this.rotation));
               this.wheelPositions[i][1] = (wheelPositions_orig[i][0]*Math.sin(this.rotation)) + (wheelPositions_orig[i][1]*Math.cos(this.rotation));
           }
 
-          this.velocity[0] = -this.speed*Math.sin(this.rotation);
-          this.velocity[1] = this.speed*Math.cos(this.rotation);
+          // allow the car to turn, but do not change vector direction unless we are touching the ground
+          if(this.onGround[0]){    
+              this.vectorXY[0] = -Math.sin(this.rotation);
+              this.vectorXY[1] = Math.cos(this.rotation);
+          }
       };
 
   }
@@ -564,30 +586,13 @@ var sparkARShared = (function (exports) {
 
 }({}));
 
-//==============================================================================
-// Welcome to scripting in Spark AR Studio! Helpful links:
-//
-// Scripting Basics - https://fb.me/spark-scripting-basics
-// Reactive Programming - https://fb.me/spark-reactive-programming
-// Scripting Object Reference - https://fb.me/spark-scripting-reference
-// Changelogs - https://fb.me/spark-changelog
-//==============================================================================
 
-// How to load in modules
 const Diagnostics = require('Diagnostics');
 const Scene = require('Scene');
 const Reactive = require('Reactive');
 const Patches = require('Patches'); 
 const Time = require('Time'); 
-
-// How to access scene objects (uncomment line below to activate)
-// const directionalLight = Scene.root.find('directionalLight0');
-
-// How to access class properties (uncomment line below to activate)
-// const directionalLightIntensity = directionalLight.intensity;
-
-// How to log messages to the console (uncomment line below to activate)
-// Diagnostics.log('Console message logged from the script.');
+const TouchGestures = require('TouchGestures');
 
 const masterContainer = Scene.root.find('masterContainer');
 const XAxisUnit = Scene.root.find('XAxisUnit');
@@ -603,12 +608,6 @@ Patches.setVectorValue('scene_xAxis', XAxisUnitConvert);
 Patches.setVectorValue('scene_yAxis', YAxisUnitConvert);
 Patches.setVectorValue('scene_zAxis', ZAxisUnitConvert);
 
-// Diagnostics.log(sparkARShared.DuneBuggy());
-// Time.ms.sub(Time.ms.pin()).trigger(delay).subscribeWithSnapshot(snapshot, callback)
-
-const terrainContainer = Scene.root.find('terrainContainer');
-
-
 function init(){
 
     this.terrain = new sparkARShared.DynamicTerrain(25, 50);
@@ -620,21 +619,26 @@ function init(){
     this.buggy_backLeftWheel = Scene.root.find('duneBuggy_backWheelLeft');
     this.buggy_backRightWheel = Scene.root.find('duneBuggy_backWheelRight');
 
-    // var timer = Time.ms.sub(Time.ms.pin()).interval(30).subscribe(bindFn(animate, this));
-    // var timer = Time.setInterval(bindFn(animate, this), 33);
-
     Time.ms.interval(33).subscribeWithSnapshot({'ms':Time.ms}, bindFn(animate, this));
-    // Time.ms.interval(33).subscribe(bindFn(animate, this));
-
-    // var timeInterval = Time.ms.sub(Time.ms.pin());
-    // var timer = timeInterval.interval(33).subscribe(bindFn(animate, this));
     this.currTime = Time.ms.pinLastValue();
     
     this.terrain.setPosition(50,50);
     this.duneBuggy.rotate(Math.PI/2);
 
-    Diagnostics.watch("midHeight", Reactive.val(this.duneBuggy.midHeight));
-    Diagnostics.watch("buggy_rotation", Reactive.val(this.duneBuggy.rotation));
+    this.autoDrive = false;
+    this.accelerate = 1;
+    this.dragVector = [0,0];
+    this.touching = false;
+
+    
+    Patches.getBooleanValue("isTouching").monitor().subscribe(bindFn(function(event) {
+        this.touching = event.newValue;
+    }, this));
+
+    
+    // Diagnostics.watch("Gesture state", TouchGestures.Gesture.state)
+    // Patches.getVectorValue("touchPosition")
+
 }
 
 // why do we have to create a stupid polyfill for function.bind()? ask the facebook devs
@@ -659,17 +663,27 @@ function wrapVal(val, range){
 const rad2Deg = 180/Math.PI;
 
 function animate(_currTime2, snapshot) {
-    var _currTime = Time.ms.pinLastValue();
     var _elapsedTime = snapshot.ms-this.currTime;
     this.currTime = snapshot.ms;
 
     if(_elapsedTime == 0)return;
 
-    // Diagnostics.log(_elapsedTime);
-    // Diagnostics.watch("elapsedTime", elapsedTime);
-    this.terrain.move(this.duneBuggy.velocity[0]*_elapsedTime/1000, -this.duneBuggy.velocity[1]*_elapsedTime/1000);
-    this.duneBuggy.rotate(0.675*_elapsedTime/1000);
+    ////////// Update terrain and dune buggy //////////
+    this.terrain.move(
+        this.duneBuggy.vectorXY[0]*this.duneBuggy.speedXY*_elapsedTime/1000, 
+        -this.duneBuggy.vectorXY[1]*this.duneBuggy.speedXY*_elapsedTime/1000
+    );
 
+    if(this.autoDrive){
+        this.duneBuggy.accelerationXY_Mult = 1;
+        this.duneBuggy.rotate(((Math.sin(3+this.currTime/8000)+Math.sin(this.currTime/800))*0.65)*_elapsedTime/1000);
+    } else {
+        // Diagnostics.log(TouchGestures.Gesture.State.BEGAN)
+        // TouchGestures.Gesture.state == TouchGestures.Gesture.State.BEGAN
+        this.duneBuggy.accelerationXY_Mult = ((this.touching)?1:0);
+        this.duneBuggy.rotate( Patches.getScalarValue("touchRotation").pinLastValue()/20 );
+
+    }
 
     // we need to adjust the coordinate
     // if the car is at 0,0, then we need to be at 50,50
@@ -677,8 +691,6 @@ function animate(_currTime2, snapshot) {
     Patches.setScalarValue('terrain_xPos', Reactive.val(wrapVal(this.terrain.currentPosition[0], 100)-50));
     Patches.setScalarValue('terrain_zPos', Reactive.val(wrapVal(this.terrain.currentPosition[1], 100)-50));
 
-
-    
     this.duneBuggy.update(
         _elapsedTime/1000,
         this.terrain.getPt(this.terrain.currentPosition[0]+this.duneBuggy.wheelPositions[0][0]*this.buggyScale, this.terrain.currentPosition[1]-this.duneBuggy.wheelPositions[0][1]*this.buggyScale).z,
@@ -686,8 +698,6 @@ function animate(_currTime2, snapshot) {
         this.terrain.getPt(this.terrain.currentPosition[0]+this.duneBuggy.wheelPositions[2][0]*this.buggyScale, this.terrain.currentPosition[1]-this.duneBuggy.wheelPositions[2][1]*this.buggyScale).z,
         this.terrain.getPt(this.terrain.currentPosition[0]+this.duneBuggy.wheelPositions[3][0]*this.buggyScale, this.terrain.currentPosition[1]-this.duneBuggy.wheelPositions[3][1]*this.buggyScale).z
     );
-    Diagnostics.log(_elapsedTime/1000);
-    Diagnostics.log(this.duneBuggy.midHeight);
 
     
     Patches.setVectorValue('buggy_frame_position', Reactive.vector(
@@ -695,59 +705,34 @@ function animate(_currTime2, snapshot) {
         Reactive.val(this.duneBuggy.midHeight/this.buggyScale), 
         Reactive.val(0)
     ));
-
     
     Patches.setScalarValue('buggy_frame_rotationY', Reactive.val(rad2Deg*(-this.duneBuggy.rotation)));
     Patches.setScalarValue('buggy_frame_rotationX', Reactive.val(rad2Deg*this.duneBuggy.tilt));
     Patches.setScalarValue('buggy_frame_rotationZ', Reactive.val(rad2Deg*this.duneBuggy.roll));
 
-    // this.buggySpin.rotation.y = Math.PI-this.duneBuggy.rotation;
-    // this.buggy_frame.rotation.x = this.duneBuggy.tilt; // tilt
-    // this.buggy_frame.rotation.z = this.duneBuggy.roll; // roll
-    // this.buggy_frame.position.y = this.duneBuggy.midHeight/this.buggyScale;
-    
-    // Patches.setVectorValue('buggy_FL_Position', Reactive.vector(
-    //     Reactive.val(0), 
-    //     Reactive.val(this.duneBuggy.wheelPositions[0][2]/this.buggyScale), 
-    //     Reactive.val(0)
-    // ));
     Patches.setVectorValue('buggy_FL_Position', Reactive.vector(
         Reactive.val(-this.duneBuggy.wheelPositions[0][0]), 
-        Reactive.val(this.duneBuggy.wheelPositions[0][2]/this.buggyScale), 
-        // Reactive.val(this.duneBuggy.midHeight/this.buggyScale), 
+        Reactive.val(this.duneBuggy.wheelPositions[0][2]/this.buggyScale),
         Reactive.val(-this.duneBuggy.wheelPositions[0][1])
     ));
     Patches.setVectorValue('buggy_FR_Position', Reactive.vector(
         Reactive.val(-this.duneBuggy.wheelPositions[1][0]), 
         Reactive.val(this.duneBuggy.wheelPositions[1][2]/this.buggyScale), 
-        // Reactive.val(this.duneBuggy.midHeight/this.buggyScale), 
         Reactive.val(-this.duneBuggy.wheelPositions[1][1])
     ));
     Patches.setVectorValue('buggy_BL_Position', Reactive.vector(
         Reactive.val(-this.duneBuggy.wheelPositions[2][0]), 
         Reactive.val(this.duneBuggy.wheelPositions[2][2]/this.buggyScale), 
-        // Reactive.val(this.duneBuggy.midHeight/this.buggyScale), 
         Reactive.val(-this.duneBuggy.wheelPositions[2][1])
     ));
     Patches.setVectorValue('buggy_BR_Position', Reactive.vector(
         Reactive.val(-this.duneBuggy.wheelPositions[3][0]), 
         Reactive.val(this.duneBuggy.wheelPositions[3][2]/this.buggyScale), 
-        // Reactive.val(this.duneBuggy.midHeight/this.buggyScale), 
         Reactive.val(-this.duneBuggy.wheelPositions[3][1])
     ));
-    // this.buggy_frontLeftWheel.position.set(this.duneBuggy.wheelPositions[0][0], this.duneBuggy.wheelPositions[0][2]/this.buggyScale, this.duneBuggy.wheelPositions[0][1]);
-    // this.buggy_frontRightWheel.position.set(this.duneBuggy.wheelPositions[1][0], this.duneBuggy.wheelPositions[1][2]/this.buggyScale, this.duneBuggy.wheelPositions[1][1]);
-    // this.buggy_backLeftWheel.position.set(this.duneBuggy.wheelPositions[2][0], this.duneBuggy.wheelPositions[2][2]/this.buggyScale, this.duneBuggy.wheelPositions[2][1]);
-    // this.buggy_backRightWheel.position.set(this.duneBuggy.wheelPositions[3][0], this.duneBuggy.wheelPositions[3][2]/this.buggyScale, this.duneBuggy.wheelPositions[3][1]);
 
     Patches.setScalarValue('buggy_FrontWheel_rotationY', Reactive.val(rad2Deg*(Math.PI-this.duneBuggy.rotation)));
     Patches.setScalarValue('buggy_BackWheel_rotationY', Reactive.val(rad2Deg*(Math.PI-this.duneBuggy.rotation)));
-    // this.buggy_frontLeftWheel.rotation.y = Math.PI-this.duneBuggy.rotation;
-    // this.buggy_frontRightWheel.rotation.y = Math.PI-this.duneBuggy.rotation;
-    // this.buggy_backLeftWheel.rotation.y = Math.PI-this.duneBuggy.rotation;
-    // this.buggy_backRightWheel.rotation.y = Math.PI-this.duneBuggy.rotation;
-
-    // Patches.setVectorValue()
 }
 
 init.call({});

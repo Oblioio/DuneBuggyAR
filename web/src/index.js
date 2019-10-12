@@ -1,4 +1,5 @@
 import { DynamicTerrain, DuneBuggy} from "./shared.js";
+import { Interaction} from "./interaction.js";
 
 import { 
     Scene,
@@ -98,6 +99,8 @@ function Main () {
     // this.terrainMat.wireframe = true;
 
     this.duneBuggy = new DuneBuggy();
+    this.duneBuggy.rotate(Math.PI); // default start direction
+
     this.buggyScale = 0.5;
 
     this.terrainMesh = new Mesh(this.terrainGeo, this.terrainMat);
@@ -150,22 +153,46 @@ function Main () {
     this.currTime = new Date().getTime();
     
     this.terrain.setPosition(50,50);
-    // this.duneBuggy.rotate(Math.PI/2);
+    this.autoDrive = false;
+    this.accelerate = 1;
+    this.dragVector = [0,0];
+    this.touching = false;
+
+    // this is a class I often reuse to capture user input
+    this.interaction = new Interaction({
+        onDown: onDown.bind(this),
+        onDrag: onDown.bind(this),
+        onUp: onUp.bind(this)
+    });
 }
+
+function clamp(min, max, val){
+    return Math.min(max, Math.max(min, val));
+}
+
 var frameIndex = 0;
 function animate() {    
     requestAnimationFrame( animate.bind(this) );
 
-    // frameIndex++;
-    // if(frameIndex % 4 !== 0)return;
-
+    // get elapsed time
     var _currTime = new Date().getTime();
     var _elapsedTime = _currTime-this.currTime;
     this.currTime = _currTime;
 
+    ////////// Update terrain and dune buggy //////////
+    this.terrain.move(
+        this.duneBuggy.vectorXY[0]*this.duneBuggy.speedXY*_elapsedTime/1000, 
+        -this.duneBuggy.vectorXY[1]*this.duneBuggy.speedXY*_elapsedTime/1000
+    );
 
-    this.terrain.move(this.duneBuggy.velocity[0]*_elapsedTime/1000, -this.duneBuggy.velocity[1]*_elapsedTime/1000);
-    this.duneBuggy.rotate(((Math.sin(3+this.currTime/8000)+Math.sin(this.currTime/800))*0.65)*_elapsedTime/1000);
+    if(this.autoDrive){
+        this.duneBuggy.accelerationXY_Mult = 1;
+        this.duneBuggy.rotate(((Math.sin(3+this.currTime/8000)+Math.sin(this.currTime/800))*0.65)*_elapsedTime/1000);
+    } else {
+        
+        this.duneBuggy.accelerationXY_Mult = ((this.touching)?1:0)+(this.interaction.arrows.up?1:0)-(this.interaction.arrows.down?1:0);
+        this.duneBuggy.rotate( (this.dragVector[0]/20)+((this.interaction.arrows.left?-1:0)+(this.interaction.arrows.right?1:0))/20 );
+    }
     // this.terrain.setPosition(Math.sin((this.currTime-(Math.PI/4))/100), Math.sin(this.currTime/100));
     // this.terrain.setPosition(95, Math.sin(this.currTime/100));
 
@@ -177,6 +204,8 @@ function animate() {
         this.terrain.getPt(this.terrain.currentPosition[0]+this.duneBuggy.wheelPositions[2][0]*this.buggyScale, this.terrain.currentPosition[1]-this.duneBuggy.wheelPositions[2][1]*this.buggyScale).z,
         this.terrain.getPt(this.terrain.currentPosition[0]+this.duneBuggy.wheelPositions[3][0]*this.buggyScale, this.terrain.currentPosition[1]-this.duneBuggy.wheelPositions[3][1]*this.buggyScale).z
     );
+
+    ////////// Update Dune Buggy transforms //////////
 
     this.buggySpin.rotation.y = Math.PI-this.duneBuggy.rotation;
     this.buggy_frame.rotation.x = this.duneBuggy.tilt; // tilt
@@ -194,23 +223,35 @@ function animate() {
     this.buggy_backRightWheel.rotation.y = Math.PI-this.duneBuggy.rotation;
 
 
+    // update light position to follow the dune buggy
+    // this keeps the shadow from clipping
     this.directionalLight.position.y = 50+this.buggy_frame.position.y;
     this.directionalLight.target.y = this.buggy_frame.position.y;
-
+    
+    ////////// Update terrain geometry //////////
     this.geoPositions.set(this.terrain.returnPtArray(), 0);
     this.geoPositions.needsUpdate = true;
     this.geoUVs.set(this.terrain.returnUVArray(), 0);
     this.geoUVs.needsUpdate = true;
 
-    this.render();
-}
-
-function render() {
     this.renderer.render( this.scene, this.camera );
 }
 
-function onWindowResize() {
+function onDown(x, y){
+    this.touching = true;
+    this.dragVector[0] = (2*x/window.innerWidth)-1;
+    // this.dragVector[1] -= dY;
+}
 
+function onUp(x, y, dX, dY){
+    this.touching = false;
+    this.dragVector = [0,0];
+}
+
+
+
+function onWindowResize() {
+    this.size = [window.innerWidth, window.innerHeight]
     this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera.updateProjectionMatrix();
 
@@ -218,9 +259,7 @@ function onWindowResize() {
 
 }
 
-Main.prototype.render = render;
 Main.prototype.animate = animate;
-Main.prototype.render = render;
 Main.prototype.onWindowResize = onWindowResize;
 
 window.main = new Main();
