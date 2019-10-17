@@ -211,7 +211,7 @@ var DynamicTerrain = (function(){
     
     // if(dimIndex == 1)console.log(this.offset[dimIndex]);
     // middle
-    currPos += this.offset[dimIndex];      
+    currPos += this.offset[dimIndex];  
     for(var i = 1; i<this.numRows-1; i++){
       posArray[i] = currPos;
       currPos += this.spacing;

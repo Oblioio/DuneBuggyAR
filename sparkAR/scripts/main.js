@@ -5,7 +5,25 @@ const Reactive = require('Reactive');
 const Patches = require('Patches'); 
 const Time = require('Time'); 
 const TouchGestures = require('TouchGestures');
+const CameraInfo = require('CameraInfo');
+const Materials = require('Materials');
+const Shaders = require('Shaders');
 
+
+/*
+    Some of my shading patches need to know where the px it's drawing is.
+    Not in world space, not in local space, but in my little AR scene's space.
+    
+    I can get world position of the masterContainer and in my shader I
+    can use the vertex position and model matrix to get world position
+    of the vertex. If I subtract those it will give me the vertex position relative to 
+    the masterContainer. But that doesn't factor in the AR scene's scale and rotation.
+
+    Adding nulls into my AR scene with a coord of 1 on each axis allows me to measure
+    each axis as it is in the final scaled and rotated scene. I can use those measurments
+    in the patch editor to finish calculating the coordinate in AR scene space
+
+*/
 const masterContainer = Scene.root.find('masterContainer');
 const XAxisUnit = Scene.root.find('XAxisUnit');
 const YAxisUnit = Scene.root.find('YAxisUnit');
@@ -14,11 +32,50 @@ const ZAxisUnit = Scene.root.find('ZAxisUnit');
 const XAxisUnitConvert = XAxisUnit.worldTransform.position.sub(masterContainer.worldTransform.toSignal().position);
 const YAxisUnitConvert = YAxisUnit.worldTransform.position.sub(masterContainer.worldTransform.toSignal().position);
 const ZAxisUnitConvert = ZAxisUnit.worldTransform.position.sub(masterContainer.worldTransform.toSignal().position);
-
 Patches.setPointValue('scene_position', masterContainer.worldTransform.toSignal().position);
 Patches.setVectorValue('scene_xAxis', XAxisUnitConvert);
 Patches.setVectorValue('scene_yAxis', YAxisUnitConvert);
 Patches.setVectorValue('scene_zAxis', ZAxisUnitConvert);
+
+/*
+    I want to control the camera by turning your phone like a steering wheel.
+    Unfortunately the camera transform isn't going to give me a number that is
+    directly usable for that.
+
+    I'm adding a null object ('YAxisUnit_Cam') underneath the camera with a coordinate of 
+    (0,1,0) that will let me know what the UP vector is for the camera.
+    I can then do some coordinate conversion to figure out what that vector
+    is in relation to looking directly at the center of the AR scene.
+
+    I can use this to isolate the camera's Z Axis "roll"
+    (easier that euler order conversion!)
+*/
+
+const planeTracker = Scene.root.find('planeTracker0');
+const YAxisUnit_Cam = Scene.root.find('YAxisUnit_Cam');
+const duneBuggy_frameObj = Scene.root.find('duneBuggy_frame');
+const camOrigin = Scene.root.find('camOrigin');
+const cameraObj = Scene.root.find('Camera');
+
+
+const YAxisPlaneTracker = Scene.root.find('YAxisPlaneTracker');
+const YAxisPlane = YAxisPlaneTracker.worldTransform.position.sub(planeTracker.worldTransform.toSignal().position).normalize();
+
+const CamUpVector = YAxisUnit_Cam.worldTransform.position.sub(cameraObj.worldTransform.toSignal().position).normalize();
+
+const CamToScene_ForwardVec = duneBuggy_frameObj.worldTransform.position.sub(cameraObj.worldTransform.toSignal().position);
+const CamToScene_SideVec = CamToScene_ForwardVec.normalize().cross(YAxisPlane).normalize();
+const CamToScene_UpVec = CamToScene_ForwardVec.normalize().cross(CamToScene_SideVec).normalize();
+
+const CamSceneRotationPtX = CamUpVector.dot(CamToScene_SideVec);
+const CamSceneRotationPtY = CamUpVector.dot(CamToScene_UpVec);
+
+
+
+
+TouchGestures.onTap().subscribe( function (gesture, snapshot) {
+
+});
 
 function init(){
 
@@ -42,34 +99,10 @@ function init(){
     this.dragVector = [0,0];
     this.touching = false;
 
-    
-    Patches.getBooleanValue("isTouching").monitor().subscribe(bindFn(function(event) {
-        this.touching = event.newValue;
-    }, this));
-
-    
+        
     // Diagnostics.watch("Gesture state", TouchGestures.Gesture.state)
     // Patches.getVectorValue("touchPosition")
 
-}
-
-// why do we have to create a stupid polyfill for function.bind()? ask the facebook devs
-function bindFn(fn, scope){
-    if(fn.bind)return fn.bind(scope);
-
-    /// v1
-    return function () {
-        var args = Array.prototype.slice.call(arguments, 0);
-        return fn.apply(scope, args);
-    };  
-}
-
-function wrapVal(val, range){
-    if(val >=0){
-        return val%range;
-    } else {
-        return range-(Math.abs(val)%range)
-    }
 }
 
 const rad2Deg = 180/Math.PI;
@@ -92,8 +125,16 @@ function animate(_currTime2, snapshot) {
     } else {
         // Diagnostics.log(TouchGestures.Gesture.State.BEGAN)
         // TouchGestures.Gesture.state == TouchGestures.Gesture.State.BEGAN
-        this.duneBuggy.accelerationXY_Mult = ((this.touching)?1:0);
-        this.duneBuggy.rotate( Patches.getScalarValue("touchRotation").pinLastValue()/20 );
+        // this.duneBuggy.accelerationXY_Mult = ((this.touching)?1:0);
+
+        this.duneBuggy.accelerationXY_Mult = 1;
+        if(CamSceneRotationPtX.pinLastValue() != NaN && CamSceneRotationPtY.pinLastValue() != NaN){
+            // this.duneBuggy.rotate( Patches.getScalarValue("touchRotation").pinLastValue()/20 );
+
+            var rotValue = Math.min(1, Math.atan(CamSceneRotationPtX.pinLastValue()/Math.abs(CamSceneRotationPtY.pinLastValue()))*1.75 )/20;
+            if(rotValue) this.duneBuggy.rotate( rotValue );
+
+        }
 
     }
 
@@ -148,3 +189,42 @@ function animate(_currTime2, snapshot) {
 }
 
 init.call({});
+
+
+
+
+//////////////////// HELPER FUNCTIONS ////////////////////
+// (I put these at the bottom to keep them out of the way)
+
+
+// why do we have to create a stupid polyfill for function.bind()? ask the facebook devs
+function bindFn(fn, scope){
+    if(fn.bind)return fn.bind(scope);
+
+    /// v1
+    return function () {
+        var args = Array.prototype.slice.call(arguments, 0);
+        return fn.apply(scope, args);
+    };  
+}
+
+// this is basically Modulo, but it works with negative numbers
+function wrapVal(val, range){
+    if(val >=0){
+        return val%range;
+    } else {
+        return range-(Math.abs(val)%range)
+    }
+}
+
+
+// Debbuging visualizers
+// function rotationDebugger(){
+//     const sdfStar = Shaders.sdfStar(Reactive.pack2(0.5,0.5), 0.01, 0.001, 5);
+//     const sdfRect = Shaders.sdfRectangle(Reactive.pack2(0.5,0.5), Reactive.pack2(0.1,0.1));
+//     Shaders.sdfRotation(sdfRect)
+//     const step = Reactive.step(sdfRect,0);
+//     const sdfMix = Shaders.sdfMix(sdfStar,0,step);
+//     const material = Materials.get('overlays');
+//     material.setTexture(step, {textureSlotName: Shaders.DefaultMaterialTextures.DIFFUSE});
+// }
