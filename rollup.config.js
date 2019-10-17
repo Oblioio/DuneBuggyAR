@@ -21,10 +21,6 @@ export default [
             name: 'sparkARShared',
             file: 'sparkAR/scripts/shared.js',
             format: 'iife'
-        },{
-            name: 'sparkARShared',
-            file: 'sparkAR/scripts/shared.min.js',
-            format: 'iife'
         }],
         plugins: [
           terser({
