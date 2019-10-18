@@ -11,15 +11,17 @@
 var DynamicTerrain = script.sharedScript.api.DynamicTerrain;
 var DuneBuggy = script.sharedScript.api.DuneBuggy;
 
-function init(){    
-    this.masterGroup = createEmptyObject("masterGroup");
-    this.masterGroup.transform.setLocalScale(new vec3(2,2,2));
-    
+function init(){
+    // FIND THE MASTER GROUP OBJECT
+    for(var i=0; i<global.scene.getRootObjectsCount(); i++)
+        if(global.scene.getRootObject(i).name == "masterGroup")
+            this.masterGroup = global.scene.getRootObject(i);
+
     // DUNE BUGGY
     this.duneBuggy = new DuneBuggy();
     this.buggyScale = 0.5;
     
-    this.buggy = createEmptyObject("buggySpin", this.masterGroup.obj);
+    this.buggy = createEmptyObject("buggySpin", this.masterGroup);
     this.buggy.transform.setLocalScale(new vec3(this.buggyScale, this.buggyScale, this.buggyScale));
     this.buggySpin = createEmptyObject("buggySpin", this.buggy.obj);
     this.buggy_frame = createObject("buggyFrame", script.DuneBuggy_Frame, script.DuneBuggy_mat, this.buggySpin.obj);
@@ -42,7 +44,7 @@ function init(){
     // this.terrain = new DynamicTerrain(25, 50);
     this.terrain.setPosition(0,0);
 
-    this.terrainObj = createEmptyObject("terrain", this.masterGroup.obj);
+    this.terrainObj = createEmptyObject("terrain", this.masterGroup);
     this.terrainObj.mv = this.terrainObj.obj.createComponent("Component.MeshVisual");
     this.terrainObj.mv.addMaterial(script.terrainMat);
     this.terrainObj.mv.meshShadowMode = 2;
@@ -69,7 +71,15 @@ function init(){
         print("Mesh data invalid!");
     }
     
+    this.currTime = 0;
+    this.autoDrive = true;
+    this.terrain.setPosition(50,50);
+    this.duneBuggy.rotate(Math.PI/2);
 
+    this.autoDrive = false;
+    this.accelerate = 1;
+    this.dragVector = [0,0];
+    this.touching = false;
 }
 
 function createEmptyObject(id, parent){
@@ -99,10 +109,33 @@ function createObject(id, meshObj, mat, parent){
 
 function onUpdate(e){
     var _elapsedTime = e.getDeltaTime()*1000;
+    this.currTime += _elapsedTime;
     if(_elapsedTime == 0)return;
+    
+    ////////// Update terrain and dune buggy //////////
+    this.terrain.move(
+        this.duneBuggy.vectorXY[0]*this.duneBuggy.speedXY*_elapsedTime/1000, 
+        -this.duneBuggy.vectorXY[1]*this.duneBuggy.speedXY*_elapsedTime/1000
+    );
 
-    this.terrain.move(this.duneBuggy.velocity[0]*_elapsedTime/1000, -this.duneBuggy.velocity[1]*_elapsedTime/1000);
-    this.duneBuggy.rotate(0.475*_elapsedTime/1000);
+    // if(this.autoDrive){
+        this.duneBuggy.accelerationXY_Mult = 1;
+        this.duneBuggy.rotate(((Math.sin(3+this.currTime/8000)+Math.sin(this.currTime/800))*0.65)*_elapsedTime/1000);
+    // } else {
+
+        // this.duneBuggy.accelerationXY_Mult = 1;
+        // if(CamSceneRotationPtX.pinLastValue() != NaN && CamSceneRotationPtY.pinLastValue() != NaN){
+        //     // this.duneBuggy.rotate( Patches.getScalarValue("touchRotation").pinLastValue()/20 );
+
+        //     var rotValue = Math.min(1, Math.atan(CamSceneRotationPtX.pinLastValue()/Math.abs(CamSceneRotationPtY.pinLastValue()))*1.75 )/20;
+        //     if(rotValue) this.duneBuggy.rotate( rotValue );
+
+        // }
+
+    // }
+
+    // this.terrain.move(this.duneBuggy.velocity[0]*_elapsedTime/1000, -this.duneBuggy.velocity[1]*_elapsedTime/1000);
+    // this.duneBuggy.rotate(0.475*_elapsedTime/1000);
 
     this.terrainObj.mb.eraseVertices(0, this.terrainObj.mb.getVerticesCount());
     this.terrainObj.mb.appendVerticesInterleaved(this.terrain.returnPackedArray());

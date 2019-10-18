@@ -3,7 +3,7 @@
     "document_id": "Z5nw-cwveArJnxY8fl9C",
     "original_document_id": "IFozyxVws_JbA89mUI9G",
     "version": "16",
-    "lastChanged": "1570759432731",
+    "lastChanged": "1571360175597",
     "preview": "",
     "videoPreview": "",
     "videoPreviewUpdateTime": "",
@@ -40,6 +40,9 @@
                     ],
                     [
                         "DuneBuggy"
+                    ],
+                    [
+                        "Log_To_Screen"
                     ],
                     [
                         "Log_To_Screen",
@@ -514,10 +517,16 @@
                         "Matte Shadow"
                     ],
                     [
+                        "Occluder"
+                    ],
+                    [
                         "PBR"
                     ],
                     [
                         "Plane"
+                    ],
+                    [
+                        "SandBox_Unlit"
                     ],
                     [
                         "Sphere"
@@ -535,6 +544,14 @@
                     ],
                     [
                         "Textures",
+                        "Base 3"
+                    ],
+                    [
+                        "Textures",
+                        "Desert_lightBaked"
+                    ],
+                    [
+                        "Textures",
                         "MaterialParams"
                     ],
                     [
@@ -542,10 +559,17 @@
                         "Normal"
                     ],
                     [
+                        "Textures",
+                        "Sandbox"
+                    ],
+                    [
                         "Unlit"
                     ],
                     [
                         "VertexColMat"
+                    ],
+                    [
+                        "duneBuggy"
                     ],
                     [
                         "duneBuggy",
@@ -555,6 +579,10 @@
                         "duneBuggy",
                         "Materials",
                         "VertexColor"
+                    ],
+                    [
+                        "duneBuggy",
+                        "Meshes"
                     ],
                     [
                         "duneBuggy",
@@ -584,6 +612,9 @@
                     [
                         "duneBuggy",
                         "duneBuggy"
+                    ],
+                    [
+                        "duneBuggy 2"
                     ],
                     [
                         "duneBuggy 2",
@@ -632,6 +663,82 @@
                     ],
                     [
                         "echopark_spec"
+                    ],
+                    [
+                        "frame_outerOccluder"
+                    ],
+                    [
+                        "frame_outerOccluder",
+                        "Animations"
+                    ],
+                    [
+                        "frame_outerOccluder",
+                        "Materials"
+                    ],
+                    [
+                        "frame_outerOccluder",
+                        "Materials",
+                        "Material"
+                    ],
+                    [
+                        "frame_outerOccluder",
+                        "Meshes"
+                    ],
+                    [
+                        "frame_outerOccluder",
+                        "Meshes",
+                        "Cube"
+                    ],
+                    [
+                        "frame_outerOccluder",
+                        "frame_outerOccluder"
+                    ],
+                    [
+                        "sandbox"
+                    ],
+                    [
+                        "sandbox",
+                        "Animations"
+                    ],
+                    [
+                        "sandbox",
+                        "Materials"
+                    ],
+                    [
+                        "sandbox",
+                        "Materials",
+                        "Material"
+                    ],
+                    [
+                        "sandbox",
+                        "Meshes"
+                    ],
+                    [
+                        "sandbox",
+                        "Meshes",
+                        "LowPolySandbox"
+                    ],
+                    [
+                        "sandbox",
+                        "Meshes",
+                        "LowPolySandbox_Cube"
+                    ],
+                    [
+                        "sandbox",
+                        "Meshes",
+                        "LowPolySandbox_extension"
+                    ],
+                    [
+                        "sandbox",
+                        "Meshes",
+                        "LowPolySandbox_extension_Cube"
+                    ],
+                    [
+                        "sandbox",
+                        "sandbox"
+                    ],
+                    [
+                        "sandbox 2"
                     ],
                     [
                         "shared"
@@ -1610,6 +1717,126 @@
                     "sourceFilePath": "",
                     "additionalProperties": "",
                     "flags": "0"
+                },
+                {
+                    "resId": "129",
+                    "uid": "1571355918309574:9616",
+                    "name": "Files\/File146.mesh",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
+                },
+                {
+                    "resId": "130",
+                    "uid": "1571355918384754:9632",
+                    "name": "Files\/File147.mesh",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
+                },
+                {
+                    "resId": "131",
+                    "uid": "1571355918445489:9645",
+                    "name": "Files\/File148",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
+                },
+                {
+                    "resId": "132",
+                    "uid": "1571355918908888:9769",
+                    "name": "sandbox",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "0"
+                },
+                {
+                    "resId": "133",
+                    "uid": "1571355945638778:12968",
+                    "name": "Files\/File153.mesh",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
+                },
+                {
+                    "resId": "134",
+                    "uid": "1571355945677654:12981",
+                    "name": "Files\/File154",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
+                },
+                {
+                    "resId": "135",
+                    "uid": "1571355945883153:13029",
+                    "name": "frame_outerOccluder",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "0"
+                },
+                {
+                    "resId": "136",
+                    "uid": "1571356568954713:15213",
+                    "name": "Files\/File159.jpg",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
+                },
+                {
+                    "resId": "137",
+                    "uid": "1571358784744231:79690",
+                    "name": "Files\/File161.jpg",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
+                },
+                {
+                    "resId": "138",
+                    "uid": "1571358857323613:83837",
+                    "name": "Files\/File163",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
+                },
+                {
+                    "resId": "139",
+                    "uid": "1571358857571503:83873",
+                    "name": "Files\/File165.jpg",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
+                },
+                {
+                    "resId": "140",
+                    "uid": "1571359251735076:87948",
+                    "name": "Files\/File167.mtl",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
+                },
+                {
+                    "resId": "141",
+                    "uid": "1571359251838643:87987",
+                    "name": "Files\/File168.mesh",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
+                },
+                {
+                    "resId": "142",
+                    "uid": "1571359251886809:88003",
+                    "name": "Files\/File169.mesh",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
+                },
+                {
+                    "resId": "143",
+                    "uid": "1571359603100146:95222",
+                    "name": "Files\/File170",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
                 }
             ],
             "MaterialUpdateManager": {
@@ -1634,7 +1861,16 @@
                 "2": "1528843813151434:5126",
                 "3": "1565047275505479:12419",
                 "4": "1569885769020401:14877",
-                "5": "1570747966524862:15738"
+                "5": "1570747966524862:15738",
+                "6": "1571355919290267:9813",
+                "7": "1571355946312665:13063",
+                "8": "1571355946313094:13071",
+                "9": "1571357834963448:59437",
+                "10": "1571358671068019:77377",
+                "11": "1571359251930764:88192",
+                "12": "1571359251933918:88217",
+                "13": "1571359251934892:88242",
+                "14": "1571359251935776:88267"
             }
         },
         "LayerComponent": {
@@ -2188,6 +2424,110 @@
                 {
                     "k": "145",
                     "v": "Files\/File145.oprfb"
+                },
+                {
+                    "k": "146",
+                    "v": "Files\/File146.mesh"
+                },
+                {
+                    "k": "147",
+                    "v": "Files\/File147.mesh"
+                },
+                {
+                    "k": "148",
+                    "v": "Files\/File148"
+                },
+                {
+                    "k": "149",
+                    "v": "Files\/File149.lsmat"
+                },
+                {
+                    "k": "150",
+                    "v": "Files\/File150.oprfb"
+                },
+                {
+                    "k": "151",
+                    "v": "Files\/File151.obj"
+                },
+                {
+                    "k": "152",
+                    "v": "Files\/File152.oprfb"
+                },
+                {
+                    "k": "153",
+                    "v": "Files\/File153.mesh"
+                },
+                {
+                    "k": "154",
+                    "v": "Files\/File154"
+                },
+                {
+                    "k": "155",
+                    "v": "Files\/File155.lsmat"
+                },
+                {
+                    "k": "156",
+                    "v": "Files\/File156.oprfb"
+                },
+                {
+                    "k": "157",
+                    "v": "Files\/File157.obj"
+                },
+                {
+                    "k": "158",
+                    "v": "Files\/File158.oprfb"
+                },
+                {
+                    "k": "159",
+                    "v": "Files\/File159.jpg"
+                },
+                {
+                    "k": "160",
+                    "v": "Files\/File160.jpg"
+                },
+                {
+                    "k": "161",
+                    "v": "Files\/File161.jpg"
+                },
+                {
+                    "k": "162",
+                    "v": "Files\/File162.jpg"
+                },
+                {
+                    "k": "163",
+                    "v": "Files\/File163"
+                },
+                {
+                    "k": "164",
+                    "v": "Files\/File164.lsmat"
+                },
+                {
+                    "k": "165",
+                    "v": "Files\/File165.png"
+                },
+                {
+                    "k": "166",
+                    "v": "Files\/File166.png"
+                },
+                {
+                    "k": "167",
+                    "v": "Files\/File167.mtl"
+                },
+                {
+                    "k": "168",
+                    "v": "Files\/File168.mesh"
+                },
+                {
+                    "k": "169",
+                    "v": "Files\/File169.mesh"
+                },
+                {
+                    "k": "170",
+                    "v": "Files\/File170"
+                },
+                {
+                    "k": "171",
+                    "v": "Files\/File171.lsmat"
                 }
             ]
         },
@@ -2623,6 +2963,54 @@
                     {
                         "k": "818",
                         "v": "..\/AdditionalFiles\/duneBuggy 2\/Materials\/VertexColor.lsmat"
+                    },
+                    {
+                        "k": "819",
+                        "v": "sandbox.obj"
+                    },
+                    {
+                        "k": "820",
+                        "v": "..\/AdditionalFiles\/sandbox\/Materials"
+                    },
+                    {
+                        "k": "821",
+                        "v": "..\/AdditionalFiles\/sandbox\/Materials\/Material.lsmat"
+                    },
+                    {
+                        "k": "822",
+                        "v": "frame_outerOccluder.obj"
+                    },
+                    {
+                        "k": "823",
+                        "v": "..\/AdditionalFiles\/frame_outerOccluder\/Materials"
+                    },
+                    {
+                        "k": "824",
+                        "v": "..\/AdditionalFiles\/frame_outerOccluder\/Materials\/Material.lsmat"
+                    },
+                    {
+                        "k": "825",
+                        "v": "Textures\/Desert_lightBaked.jpg"
+                    },
+                    {
+                        "k": "826",
+                        "v": "Textures\/Sandbox.jpg"
+                    },
+                    {
+                        "k": "827",
+                        "v": "Textures\/Base 3.png"
+                    },
+                    {
+                        "k": "828",
+                        "v": "SandBox_Unlit.lsmat"
+                    },
+                    {
+                        "k": "829",
+                        "v": "sandbox 2.mtl"
+                    },
+                    {
+                        "k": "830",
+                        "v": "Occluder.lsmat"
                     }
                 ],
                 "hashes": [
@@ -2656,7 +3044,7 @@
                     },
                     {
                         "k": "9",
-                        "v": "cf5f01de0fc3f417c39f95765b04132c"
+                        "v": "561921f1ebcab882c03c9a17fd407ec4"
                     },
                     {
                         "k": "10",
@@ -2664,7 +3052,7 @@
                     },
                     {
                         "k": "11",
-                        "v": "0ffdcdedd527caf39bcc521332ff1726"
+                        "v": "a5e33aa16dc937d6efe3b0fcd6f4fd15"
                     },
                     {
                         "k": "12",
@@ -2680,7 +3068,7 @@
                     },
                     {
                         "k": "15",
-                        "v": "b56cf8c25913baff9956a538c6fa14f2"
+                        "v": "5b9989397abd8cb17cced0a2e0c0d728"
                     },
                     {
                         "k": "16",
@@ -2716,7 +3104,7 @@
                     },
                     {
                         "k": "733",
-                        "v": "2acd84b989e1a1cbe92e98fd7899c0bb"
+                        "v": "078a8741fd88922ecbb4afbcc41b359b"
                     },
                     {
                         "k": "734",
@@ -3041,14 +3429,54 @@
                     {
                         "k": "818",
                         "v": "76842171898bfb66e032d7a1c7f5d945"
+                    },
+                    {
+                        "k": "819",
+                        "v": "9d8d4baf0ea80294aa2e4cb182bec856"
+                    },
+                    {
+                        "k": "821",
+                        "v": "1ba5cfc76e8cb876931312e9fe4617df"
+                    },
+                    {
+                        "k": "822",
+                        "v": "69687c957af2744598c1eec475ccac06"
+                    },
+                    {
+                        "k": "824",
+                        "v": "e65dcde486b15625c409b31b240e434e"
+                    },
+                    {
+                        "k": "825",
+                        "v": "91148cd00901fa0698d4deed7dee3274"
+                    },
+                    {
+                        "k": "826",
+                        "v": "88162b5c811f9b79be486b348eb0aa2c"
+                    },
+                    {
+                        "k": "827",
+                        "v": "0c8dcfed2f50bb81ac5276a14967c005"
+                    },
+                    {
+                        "k": "828",
+                        "v": "7cdad14df68420555b08849c1e6beb24"
+                    },
+                    {
+                        "k": "829",
+                        "v": "9edf39448adcd18cde8d5f5cf52fc868"
+                    },
+                    {
+                        "k": "830",
+                        "v": "326ae5016896c54f28b70062768ca52c"
                     }
                 ],
                 "publicState": {
                     "tree": {
                         "isFolder": "true",
-                        "lastModified": "2019-10-10T16:13:07",
+                        "lastModified": "2019-10-17T17:46:43",
                         "name": "Public",
-                        "hash": "e7394777238d11707141c9decb9c53ba",
+                        "hash": "f40762cafc4ff6de38e855c36bb2c91d",
                         "children": [
                             {
                                 "isFolder": "false",
@@ -3073,9 +3501,9 @@
                             },
                             {
                                 "isFolder": "false",
-                                "lastModified": "2019-10-10T16:13:07",
+                                "lastModified": "2019-10-17T17:14:25",
                                 "name": "Diffuse.lsmat",
-                                "hash": "cf5f01de0fc3f417c39f95765b04132c",
+                                "hash": "561921f1ebcab882c03c9a17fd407ec4",
                                 "children": ""
                             },
                             {
@@ -3094,9 +3522,9 @@
                             },
                             {
                                 "isFolder": "false",
-                                "lastModified": "2019-10-10T18:47:59",
+                                "lastModified": "2019-10-17T17:33:56",
                                 "name": "DuneBuggy.js",
-                                "hash": "b56cf8c25913baff9956a538c6fa14f2",
+                                "hash": "5b9989397abd8cb17cced0a2e0c0d728",
                                 "children": ""
                             },
                             {
@@ -3118,6 +3546,13 @@
                                 "lastModified": "2019-07-09T14:29:08",
                                 "name": "folder.lock",
                                 "hash": "d41d8cd98f00b204e9800998ecf8427e",
+                                "children": ""
+                            },
+                            {
+                                "isFolder": "false",
+                                "lastModified": "2019-10-07T18:21:43",
+                                "name": "frame_outerOccluder.obj",
+                                "hash": "69687c957af2744598c1eec475ccac06",
                                 "children": ""
                             },
                             {
@@ -3720,6 +4155,13 @@
                             },
                             {
                                 "isFolder": "false",
+                                "lastModified": "2019-10-17T17:46:43",
+                                "name": "Occluder.lsmat",
+                                "hash": "326ae5016896c54f28b70062768ca52c",
+                                "children": ""
+                            },
+                            {
+                                "isFolder": "false",
                                 "lastModified": "2019-09-25T18:31:52",
                                 "name": "PBR.lsmat",
                                 "hash": "0f6f3bcaeaaf047fac2ddd3c528ebdd0",
@@ -3734,9 +4176,30 @@
                             },
                             {
                                 "isFolder": "false",
-                                "lastModified": "2019-10-10T18:38:09",
+                                "lastModified": "2019-10-17T17:40:50",
+                                "name": "sandbox 2.mtl",
+                                "hash": "9edf39448adcd18cde8d5f5cf52fc868",
+                                "children": ""
+                            },
+                            {
+                                "isFolder": "false",
+                                "lastModified": "2019-10-17T17:40:50",
+                                "name": "sandbox.obj",
+                                "hash": "9d8d4baf0ea80294aa2e4cb182bec856",
+                                "children": ""
+                            },
+                            {
+                                "isFolder": "false",
+                                "lastModified": "2019-10-17T17:35:36",
+                                "name": "SandBox_Unlit.lsmat",
+                                "hash": "7cdad14df68420555b08849c1e6beb24",
+                                "children": ""
+                            },
+                            {
+                                "isFolder": "false",
+                                "lastModified": "2019-10-17T17:05:04",
                                 "name": "shared.js",
-                                "hash": "2acd84b989e1a1cbe92e98fd7899c0bb",
+                                "hash": "078a8741fd88922ecbb4afbcc41b359b",
                                 "children": ""
                             },
                             {
@@ -3748,9 +4211,9 @@
                             },
                             {
                                 "isFolder": "true",
-                                "lastModified": "2019-09-30T16:11:24",
+                                "lastModified": "2019-10-17T17:34:17",
                                 "name": "Textures",
-                                "hash": "e5d463676faf7475c9fadb511a5934ab",
+                                "hash": "85943c715cc0653f86662180c4532808",
                                 "children": [
                                     {
                                         "isFolder": "false",
@@ -3761,9 +4224,23 @@
                                     },
                                     {
                                         "isFolder": "false",
+                                        "lastModified": "2019-10-17T17:34:17",
+                                        "name": "Base 3.png",
+                                        "hash": "0c8dcfed2f50bb81ac5276a14967c005",
+                                        "children": ""
+                                    },
+                                    {
+                                        "isFolder": "false",
                                         "lastModified": "2019-08-05T15:38:30",
                                         "name": "Base.png",
                                         "hash": "cb607d7b25a160872c49fb4d2635cc33",
+                                        "children": ""
+                                    },
+                                    {
+                                        "isFolder": "false",
+                                        "lastModified": "2019-10-17T16:56:06",
+                                        "name": "Desert_lightBaked.jpg",
+                                        "hash": "91148cd00901fa0698d4deed7dee3274",
                                         "children": ""
                                     },
                                     {
@@ -3786,6 +4263,13 @@
                                         "name": "Normal.png",
                                         "hash": "8a0173d0b987e1abfebd4ef9e3304c0b",
                                         "children": ""
+                                    },
+                                    {
+                                        "isFolder": "false",
+                                        "lastModified": "2019-10-16T14:06:21",
+                                        "name": "Sandbox.jpg",
+                                        "hash": "88162b5c811f9b79be486b348eb0aa2c",
+                                        "children": ""
                                     }
                                 ]
                             },
@@ -3798,9 +4282,9 @@
                             },
                             {
                                 "isFolder": "false",
-                                "lastModified": "2019-10-10T15:57:04",
+                                "lastModified": "2019-10-17T16:56:59",
                                 "name": "Unlit.lsmat",
-                                "hash": "0ffdcdedd527caf39bcc521332ff1726",
+                                "hash": "a5e33aa16dc937d6efe3b0fcd6f4fd15",
                                 "children": ""
                             },
                             {
@@ -3981,6 +4465,45 @@
                                 "fileId": "21",
                                 "originalId": "22",
                                 "publicId": "13",
+                                "source": "",
+                                "additional": ""
+                            },
+                            {
+                                "name": "Desert_lightBaked",
+                                "type": "1",
+                                "subtype": "9",
+                                "resourceId": "136",
+                                "dependency": "0",
+                                "uid": "1571356568954713:15213",
+                                "fileId": "159",
+                                "originalId": "160",
+                                "publicId": "825",
+                                "source": "",
+                                "additional": ""
+                            },
+                            {
+                                "name": "Sandbox",
+                                "type": "1",
+                                "subtype": "9",
+                                "resourceId": "137",
+                                "dependency": "0",
+                                "uid": "1571358784744231:79690",
+                                "fileId": "161",
+                                "originalId": "162",
+                                "publicId": "826",
+                                "source": "",
+                                "additional": ""
+                            },
+                            {
+                                "name": "Base 3",
+                                "type": "1",
+                                "subtype": "9",
+                                "resourceId": "139",
+                                "dependency": "0",
+                                "uid": "1571358857571503:83873",
+                                "fileId": "165",
+                                "originalId": "166",
+                                "publicId": "827",
                                 "source": "",
                                 "additional": ""
                             }
@@ -4321,7 +4844,7 @@
                         "fileId": "50",
                         "originalId": "18446744073709551615",
                         "publicId": "733",
-                        "source": "",
+                        "source": "C:\/Users\/jonat\/Documents\/Projects\/Internal\/DuneBuggyAR\/lensStudio\/Public\/shared.js",
                         "additional": ""
                     },
                     {
@@ -5545,19 +6068,288 @@
                                 "additional": ""
                             }
                         ]
+                    },
+                    {
+                        "name": "sandbox",
+                        "type": "18",
+                        "subtype": "-1",
+                        "resourceId": "-1",
+                        "dependency": "2",
+                        "uid": "-1:-1",
+                        "fileId": "151",
+                        "originalId": "18446744073709551615",
+                        "publicId": "819",
+                        "source": "C:\/Users\/jonat\/Documents\/Projects\/Internal\/DuneBuggyAR\/sparkAR\/objects\/sandbox(2)\/sandbox.obj",
+                        "additional": "",
+                        "resources": [
+                            {
+                                "name": "Meshes",
+                                "type": "0",
+                                "subtype": "-1",
+                                "resourceId": "-1",
+                                "dependency": "1",
+                                "uid": "-1:-1",
+                                "fileId": "18446744073709551615",
+                                "originalId": "18446744073709551615",
+                                "publicId": "18446744073709551615",
+                                "source": "",
+                                "additional": "",
+                                "resources": [
+                                    {
+                                        "name": "LowPolySandbox_Cube",
+                                        "type": "3",
+                                        "subtype": "0",
+                                        "resourceId": "129",
+                                        "dependency": "1",
+                                        "uid": "1571355918309574:9616",
+                                        "fileId": "146",
+                                        "originalId": "18446744073709551615",
+                                        "publicId": "18446744073709551615",
+                                        "source": "",
+                                        "additional": ""
+                                    },
+                                    {
+                                        "name": "LowPolySandbox_extension_Cube",
+                                        "type": "3",
+                                        "subtype": "0",
+                                        "resourceId": "130",
+                                        "dependency": "1",
+                                        "uid": "1571355918384754:9632",
+                                        "fileId": "147",
+                                        "originalId": "18446744073709551615",
+                                        "publicId": "18446744073709551615",
+                                        "source": "",
+                                        "additional": ""
+                                    },
+                                    {
+                                        "name": "LowPolySandbox",
+                                        "type": "3",
+                                        "subtype": "0",
+                                        "resourceId": "141",
+                                        "dependency": "1",
+                                        "uid": "1571359251838643:87987",
+                                        "fileId": "168",
+                                        "originalId": "18446744073709551615",
+                                        "publicId": "18446744073709551615",
+                                        "source": "",
+                                        "additional": ""
+                                    },
+                                    {
+                                        "name": "LowPolySandbox_extension",
+                                        "type": "3",
+                                        "subtype": "0",
+                                        "resourceId": "142",
+                                        "dependency": "1",
+                                        "uid": "1571359251886809:88003",
+                                        "fileId": "169",
+                                        "originalId": "18446744073709551615",
+                                        "publicId": "18446744073709551615",
+                                        "source": "",
+                                        "additional": ""
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Animations",
+                                "type": "0",
+                                "subtype": "-1",
+                                "resourceId": "-1",
+                                "dependency": "1",
+                                "uid": "-1:-1",
+                                "fileId": "18446744073709551615",
+                                "originalId": "18446744073709551615",
+                                "publicId": "18446744073709551615",
+                                "source": "",
+                                "additional": "",
+                                "resources": ""
+                            },
+                            {
+                                "name": "Materials",
+                                "type": "0",
+                                "subtype": "-1",
+                                "resourceId": "-1",
+                                "dependency": "0",
+                                "uid": "-1:-1",
+                                "fileId": "18446744073709551615",
+                                "originalId": "18446744073709551615",
+                                "publicId": "820",
+                                "source": "",
+                                "additional": "",
+                                "resources": [
+                                    {
+                                        "name": "Material",
+                                        "type": "2",
+                                        "subtype": "0",
+                                        "resourceId": "131",
+                                        "dependency": "0",
+                                        "uid": "1571355918445489:9645",
+                                        "fileId": "148",
+                                        "originalId": "149",
+                                        "publicId": "821",
+                                        "source": "",
+                                        "additional": ""
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "sandbox",
+                                "type": "12",
+                                "subtype": "-1",
+                                "resourceId": "132",
+                                "dependency": "1",
+                                "uid": "1571355918908888:9769",
+                                "fileId": "150",
+                                "originalId": "152",
+                                "publicId": "18446744073709551615",
+                                "source": "",
+                                "additional": ""
+                            }
+                        ]
+                    },
+                    {
+                        "name": "frame_outerOccluder",
+                        "type": "18",
+                        "subtype": "-1",
+                        "resourceId": "-1",
+                        "dependency": "2",
+                        "uid": "-1:-1",
+                        "fileId": "157",
+                        "originalId": "18446744073709551615",
+                        "publicId": "822",
+                        "source": "C:\/Users\/jonat\/Documents\/Projects\/Internal\/DuneBuggyAR\/sparkAR\/objects\/frame_outerOccluder(1)\/frame_outerOccluder.obj",
+                        "additional": "",
+                        "resources": [
+                            {
+                                "name": "Meshes",
+                                "type": "0",
+                                "subtype": "-1",
+                                "resourceId": "-1",
+                                "dependency": "1",
+                                "uid": "-1:-1",
+                                "fileId": "18446744073709551615",
+                                "originalId": "18446744073709551615",
+                                "publicId": "18446744073709551615",
+                                "source": "",
+                                "additional": "",
+                                "resources": [
+                                    {
+                                        "name": "Cube",
+                                        "type": "3",
+                                        "subtype": "0",
+                                        "resourceId": "133",
+                                        "dependency": "1",
+                                        "uid": "1571355945638778:12968",
+                                        "fileId": "153",
+                                        "originalId": "18446744073709551615",
+                                        "publicId": "18446744073709551615",
+                                        "source": "",
+                                        "additional": ""
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Animations",
+                                "type": "0",
+                                "subtype": "-1",
+                                "resourceId": "-1",
+                                "dependency": "1",
+                                "uid": "-1:-1",
+                                "fileId": "18446744073709551615",
+                                "originalId": "18446744073709551615",
+                                "publicId": "18446744073709551615",
+                                "source": "",
+                                "additional": "",
+                                "resources": ""
+                            },
+                            {
+                                "name": "Materials",
+                                "type": "0",
+                                "subtype": "-1",
+                                "resourceId": "-1",
+                                "dependency": "0",
+                                "uid": "-1:-1",
+                                "fileId": "18446744073709551615",
+                                "originalId": "18446744073709551615",
+                                "publicId": "823",
+                                "source": "",
+                                "additional": "",
+                                "resources": [
+                                    {
+                                        "name": "Material",
+                                        "type": "2",
+                                        "subtype": "0",
+                                        "resourceId": "134",
+                                        "dependency": "0",
+                                        "uid": "1571355945677654:12981",
+                                        "fileId": "154",
+                                        "originalId": "155",
+                                        "publicId": "824",
+                                        "source": "",
+                                        "additional": ""
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "frame_outerOccluder",
+                                "type": "12",
+                                "subtype": "-1",
+                                "resourceId": "135",
+                                "dependency": "1",
+                                "uid": "1571355945883153:13029",
+                                "fileId": "156",
+                                "originalId": "158",
+                                "publicId": "18446744073709551615",
+                                "source": "",
+                                "additional": ""
+                            }
+                        ]
+                    },
+                    {
+                        "name": "SandBox_Unlit",
+                        "type": "2",
+                        "subtype": "0",
+                        "resourceId": "138",
+                        "dependency": "0",
+                        "uid": "1571358857323613:83837",
+                        "fileId": "163",
+                        "originalId": "164",
+                        "publicId": "828",
+                        "source": "",
+                        "additional": ""
+                    },
+                    {
+                        "name": "sandbox 2",
+                        "type": "7",
+                        "subtype": "0",
+                        "resourceId": "140",
+                        "dependency": "0",
+                        "uid": "1571359251735076:87948",
+                        "fileId": "167",
+                        "originalId": "18446744073709551615",
+                        "publicId": "829",
+                        "source": "",
+                        "additional": ""
+                    },
+                    {
+                        "name": "Occluder",
+                        "type": "2",
+                        "subtype": "0",
+                        "resourceId": "143",
+                        "dependency": "0",
+                        "uid": "1571359603100146:95222",
+                        "fileId": "170",
+                        "originalId": "171",
+                        "publicId": "830",
+                        "source": "",
+                        "additional": ""
                     }
                 ]
             }
         },
         "InspectorController": {
             "selection": {
-                "resources": [
-                    {
-                        "uid": "1565044710434974:5157",
-                        "path_list": [
-                            "Diffuse"
-                        ]
-                    }
+                "objects": [
+                    "1517446348228144:84822"
                 ]
             }
         },
@@ -5584,7 +6376,90 @@
         },
         "ObjectPrefabController": {
             "state": {
-                "objectToInfo": ""
+                "objectToInfo": [
+                    {
+                        "k": "1571355919290267:9813",
+                        "v": {
+                            "prefab": "1571355918908888:9769",
+                            "isActive": "true",
+                            "mapping": [
+                                {
+                                    "k": "1571355918727863:9662",
+                                    "v": "1571355919290267:9813"
+                                },
+                                {
+                                    "k": "1571355918728804:9669",
+                                    "v": "1571355919290758:9822"
+                                },
+                                {
+                                    "k": "1571355918729114:9673",
+                                    "v": "1571355919291059:9826"
+                                },
+                                {
+                                    "k": "1571355918907134:9745",
+                                    "v": "1571355919292743:9852"
+                                },
+                                {
+                                    "k": "1571355918907450:9749",
+                                    "v": "1571355919293016:9856"
+                                },
+                                {
+                                    "k": "1571359251911946:88023",
+                                    "v": "1571359251930764:88192"
+                                },
+                                {
+                                    "k": "1571359251912351:88027",
+                                    "v": "1571359251930906:88197"
+                                },
+                                {
+                                    "k": "1571359251924317:88047",
+                                    "v": "1571359251933918:88217"
+                                },
+                                {
+                                    "k": "1571359251924583:88051",
+                                    "v": "1571359251934082:88222"
+                                },
+                                {
+                                    "k": "1571359251925402:88071",
+                                    "v": "1571359251934892:88242"
+                                },
+                                {
+                                    "k": "1571359251925638:88075",
+                                    "v": "1571359251935042:88247"
+                                },
+                                {
+                                    "k": "1571359251926422:88095",
+                                    "v": "1571359251935776:88267"
+                                },
+                                {
+                                    "k": "1571359251926717:88099",
+                                    "v": "1571359251935929:88272"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "k": "1571355946312665:13063",
+                        "v": {
+                            "prefab": "1571355945883153:13029",
+                            "isActive": "true",
+                            "mapping": [
+                                {
+                                    "k": "1571355945881488:12998",
+                                    "v": "1571355946312665:13063"
+                                },
+                                {
+                                    "k": "1571355945881943:13005",
+                                    "v": "1571355946313094:13071"
+                                },
+                                {
+                                    "k": "1571355945882170:13009",
+                                    "v": "1571355946313476:13075"
+                                }
+                            ]
+                        }
+                    }
+                ]
             },
             "importInfo": [
                 {
@@ -5868,6 +6743,89 @@
                                 "Origin"
                             ],
                             "v": "1570748380965876:26367"
+                        }
+                    ]
+                },
+                {
+                    "k": "1571355918908888:9769",
+                    "v": [
+                        {
+                            "k": "",
+                            "v": "1571359251911432:88016"
+                        },
+                        {
+                            "k": [
+                                "LowPolySandbox.002_Cube.003"
+                            ],
+                            "v": "1571359251925402:88071"
+                        },
+                        {
+                            "k": [
+                                "LowPolySandbox.002_Cube.003",
+                                "Component.MeshVisual"
+                            ],
+                            "v": "1571359251925638:88075"
+                        },
+                        {
+                            "k": [
+                                "LowPolySandbox_Cube.019"
+                            ],
+                            "v": "1571359251911946:88023"
+                        },
+                        {
+                            "k": [
+                                "LowPolySandbox_Cube.019",
+                                "Component.MeshVisual"
+                            ],
+                            "v": "1571359251912351:88027"
+                        },
+                        {
+                            "k": [
+                                "LowPolySandbox_extension.001_Cube.005"
+                            ],
+                            "v": "1571359251926422:88095"
+                        },
+                        {
+                            "k": [
+                                "LowPolySandbox_extension.001_Cube.005",
+                                "Component.MeshVisual"
+                            ],
+                            "v": "1571359251926717:88099"
+                        },
+                        {
+                            "k": [
+                                "LowPolySandbox_extension_Cube.004"
+                            ],
+                            "v": "1571359251924317:88047"
+                        },
+                        {
+                            "k": [
+                                "LowPolySandbox_extension_Cube.004",
+                                "Component.MeshVisual"
+                            ],
+                            "v": "1571359251924583:88051"
+                        }
+                    ]
+                },
+                {
+                    "k": "1571355945883153:13029",
+                    "v": [
+                        {
+                            "k": "",
+                            "v": "1571355945881488:12998"
+                        },
+                        {
+                            "k": [
+                                "Cube.001"
+                            ],
+                            "v": "1571355945881943:13005"
+                        },
+                        {
+                            "k": [
+                                "Cube.001",
+                                "Component.MeshVisual"
+                            ],
+                            "v": "1571355945882170:13009"
                         }
                     ]
                 }
