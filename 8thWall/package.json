@@ -4,17 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --colors --host=0.0.0.0 --env=\"development\"",
-    "build": "webpack --colors --env.NODE_ENV=production"
+    "dev": "webpack-dev-server --colors --host=0.0.0.0 --env.development",
+    "build": "webpack --colors --verbose --env.production"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "three": "^0.109.0",
-    "webpack": "^4.41.0",
-    "webpack-cli": "^3.3.9"
+    "three": "^0.109.0"
   },
   "devDependencies": {
-    "webpack-dev-server": "^3.8.1"
+    "webpack-dev-server": "^3.8.1",
+    "webpack": "^4.41.0",
+    "webpack-cli": "^3.3.9",
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "babel-loader": "^8.0.6"
   }
 }

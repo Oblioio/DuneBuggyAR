@@ -1,14 +1,15 @@
-const path = require('path');
+function buildConfig (env) {
 
-module.exports = {
-  entry: './src/index.js',
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'main.js'
-  },
-  devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-    compress: true,
-    port: 9000
+  let file;
+  if (env.development) {
+    file = 'dev';
+  } else if (env.production) {
+    file = 'prod';
+  } else {
+    throw new Error('You must set environment to either development or production in webpack call. e.g. webpack --env.production');
   }
-};
+
+  return require('./config/webpack.config.' + file + '.js');
+}
+
+module.exports = env => buildConfig(env);

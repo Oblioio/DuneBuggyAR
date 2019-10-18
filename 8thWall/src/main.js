@@ -1,24 +1,24 @@
 import { DynamicTerrain, DuneBuggy } from "./shared.js";
 import { Interaction} from "./interaction.js";
 
-import { 
-    Scene,
-    PerspectiveCamera, 
-    WebGLRenderer,
-    BufferGeometry,
-    BufferAttribute,
-    Float32BufferAttribute,
-    MeshBasicMaterial,
-    MeshStandardMaterial,
-    Mesh,
-    TextureLoader,
-    RepeatWrapping,
-    DirectionalLight,
-    Vector2,
-    Group,
-    PCFSoftShadowMap,
-    CameraHelper
-} from 'three';
+// import { 
+//     Scene,
+//     PerspectiveCamera, 
+//     WebGLRenderer,
+//     BufferGeometry,
+//     BufferAttribute,
+//     Float32BufferAttribute,
+//     MeshBasicMaterial,
+//     MeshStandardMaterial,
+//     Mesh,
+//     TextureLoader,
+//     RepeatWrapping,
+//     DirectionalLight,
+//     Vector2,
+//     Group,
+//     PCFSoftShadowMap,
+//     CameraHelper
+// } from 'three';
 
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
 
@@ -26,32 +26,35 @@ import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
 
 console.log(DynamicTerrain);
 
-function Main () {
+function Main (camera) {
     console.log("what up ")
     console.log(DynamicTerrain)
-    this.renderer = new WebGLRenderer( { antialias: true } );
+    this.renderer = new THREE.WebGLRenderer( { antialias: true } );
     this.renderer.setPixelRatio( window.devicePixelRatio );
     this.renderer.setSize( window.innerWidth, window.innerHeight );
     this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.type = PCFSoftShadowMap;
+    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     this.canvas = this.renderer.domElement;
-    document.body.appendChild(this.canvas);
+    // document.body.appendChild(this.canvas);
     console.log(document.body)
 
-    this.scene = new Scene();
-    this.camera = new PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 10000 );
-    this.camera.position.z = 100;
-    this.camera.position.y = 100;
-    // this.camera.rotation.x = -Math.PI/4;
-    this.camera.lookAt(0,0,0);
+    this.scene = new THREE.Group();//new Scene();
+    // this.scene.scale.set(0.25, 0.25, 0.25);
+
+    // this.camera = new PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 10000 );
+    // this.camera.position.z = 100;
+    // this.camera.position.y = 100;
+    // // this.camera.rotation.x = -Math.PI/4;
+    // this.camera.lookAt(0,0,0);
+    this.camera = camera;
 
     // this.camera.position.y = 0;
     // this.camera.rotation.x = 0;
     // this.camera.position.z = 150;
     window.addEventListener( 'resize', onWindowResize.bind(this), false );
 
-    var directionalLight = new DirectionalLight( 0xffffff, 1.5 );
+    var directionalLight = new THREE.DirectionalLight( 0xffffff, 1.5 );
     directionalLight.position.set(50,50,-50);
     directionalLight.castShadow = true;
     directionalLight.shadow.mapSize.width = 512;  // default
@@ -70,29 +73,29 @@ function Main () {
 
     this.terrain = new DynamicTerrain(Math.round(25*1.75), 50);
     // this.terrain = new DynamicTerrain(50, 100);
-    this.masterGroup = new Group();
+    this.masterGroup = new THREE.Group();
     this.masterGroup.scale.set(2,2,2);
 
     // console.log(this.terrain.returnIndiceArraySnap());
 
-    this.terrainGeo = new BufferGeometry();
-    this.terrainGeo.addAttribute( 'position', new Float32BufferAttribute( this.terrain.returnPtArray(), 3 ) );
-    this.terrainGeo.addAttribute( 'uv', new Float32BufferAttribute( this.terrain.returnUVArray(), 2 ) );
-    this.terrainGeo.addAttribute( 'normal', new Float32BufferAttribute( this.terrain.returnNormalArray(), 3 ) );
+    this.terrainGeo = new THREE.BufferGeometry();
+    this.terrainGeo.addAttribute( 'position', new THREE.Float32BufferAttribute( this.terrain.returnPtArray(), 3 ) );
+    this.terrainGeo.addAttribute( 'uv', new THREE.Float32BufferAttribute( this.terrain.returnUVArray(), 2 ) );
+    this.terrainGeo.addAttribute( 'normal', new THREE.Float32BufferAttribute( this.terrain.returnNormalArray(), 3 ) );
     this.geoPositions = this.terrainGeo.attributes.position;
     this.geoUVs = this.terrainGeo.attributes.uv;
     this.terrainGeo.setIndex( this.terrain.returnIndiceArraySnap() );
 
-    var texture = new TextureLoader().load( 'images/Desert_Albedo.png' );
-    texture.wrapS = RepeatWrapping;
-    texture.wrapT = RepeatWrapping;
-    var ntexture = new TextureLoader().load( 'images/Desert_Normal.png' );
-    ntexture.wrapS = RepeatWrapping;
-    ntexture.wrapT = RepeatWrapping;
-    this.terrainMat = new MeshStandardMaterial( {
+    var texture = new THREE.TextureLoader().load( 'images/Desert_Albedo.png' );
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    var ntexture = new THREE.TextureLoader().load( 'images/Desert_Normal.png' );
+    ntexture.wrapS = THREE.RepeatWrapping;
+    ntexture.wrapT = THREE.RepeatWrapping;
+    this.terrainMat = new THREE.MeshStandardMaterial( {
         map: texture,
         normalMap: ntexture,
-        normalScale: new Vector2( 0.8, 0.8 ),
+        normalScale: new THREE.Vector2( 0.8, 0.8 ),
         metalness: 0,
         roughness: 0.75
     } );
@@ -103,7 +106,7 @@ function Main () {
 
     this.buggyScale = 0.5;
 
-    this.terrainMesh = new Mesh(this.terrainGeo, this.terrainMat);
+    this.terrainMesh = new THREE.Mesh(this.terrainGeo, this.terrainMat);
     this.terrainMesh.receiveShadow = true;
     // this.terrainMesh.visible = false;
 
@@ -119,13 +122,17 @@ function Main () {
             this.buggy_frame = gltf.scene.getObjectByName("Frame");
 
             this.buggy_frontLeftWheel = gltf.scene.getObjectByName("FrontLeftWheel");
-            this.buggy_frontRightWheel = gltf.scene.getObjectByName("FrontRightWheel");
+            this.buggy_frontRightWheel = this.buggy_frontLeftWheel.clone(); // gltf.scene.getObjectByName("FrontRightWheel");
             this.buggy_backLeftWheel = gltf.scene.getObjectByName("BackLeftWheel");
-            this.buggy_backRightWheel = gltf.scene.getObjectByName("BackRightWheel");
-            this.buggy = new Group();
+            this.buggy_backRightWheel = this.buggy_backLeftWheel.clone(); // gltf.scene.getObjectByName("BackRightWheel");
+
+            console.log(this.buggy_frontRightWheel);
+            console.log(this.buggy_backRightWheel);
+
+            this.buggy = new THREE.Group();
             this.buggy.scale.set(this.buggyScale, this.buggyScale, this.buggyScale);
             this.masterGroup.add(this.buggy);
-            this.buggySpin = new Group();
+            this.buggySpin = new THREE.Group();
             this.buggySpin.add(this.buggy_frame);
             this.buggy.add(this.buggySpin);
             this.buggy.add(this.buggy_frontLeftWheel);
@@ -234,7 +241,7 @@ function animate() {
     this.geoUVs.set(this.terrain.returnUVArray(), 0);
     this.geoUVs.needsUpdate = true;
 
-    this.renderer.render( this.scene, this.camera );
+    // this.renderer.render( this.scene, this.camera );
 }
 
 function onDown(x, y){
@@ -252,10 +259,10 @@ function onUp(x, y, dX, dY){
 
 function onWindowResize() {
     this.size = [window.innerWidth, window.innerHeight]
-    this.camera.aspect = window.innerWidth / window.innerHeight;
-    this.camera.updateProjectionMatrix();
+    // this.camera.aspect = window.innerWidth / window.innerHeight;
+    // this.camera.updateProjectionMatrix();
 
-    this.renderer.setSize( window.innerWidth, window.innerHeight );
+    // this.renderer.setSize( window.innerWidth, window.innerHeight );
 
 }
 
