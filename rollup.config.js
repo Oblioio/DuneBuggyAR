@@ -11,7 +11,7 @@ export default [
     {
         input: 'shared/shared_lensStudio.js',
         output: {
-            file: 'lensStudio/Public/shared.js',
+            file: 'lensStudio/Public/scripts/shared.js',
             format: 'umd'
         }
     },

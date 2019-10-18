@@ -642,7 +642,6 @@ Patches.setVectorValue('scene_zAxis', ZAxisUnitConvert);
 const planeTracker = Scene.root.find('planeTracker0');
 const YAxisUnit_Cam = Scene.root.find('YAxisUnit_Cam');
 const duneBuggy_frameObj = Scene.root.find('duneBuggy_frame');
-const camOrigin = Scene.root.find('camOrigin');
 const cameraObj = Scene.root.find('Camera');
 
 

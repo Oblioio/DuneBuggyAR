@@ -3,7 +3,7 @@
     "document_id": "Z5nw-cwveArJnxY8fl9C",
     "original_document_id": "IFozyxVws_JbA89mUI9G",
     "version": "16",
-    "lastChanged": "1571360175597",
+    "lastChanged": "1571431526249",
     "preview": "",
     "videoPreview": "",
     "videoPreviewUpdateTime": "",
@@ -37,9 +37,6 @@
                     ],
                     [
                         "Diffuse"
-                    ],
-                    [
-                        "DuneBuggy"
                     ],
                     [
                         "Log_To_Screen"
@@ -514,6 +511,9 @@
                         "font_sheet"
                     ],
                     [
+                        "ManipulateMeshInvisible"
+                    ],
+                    [
                         "Matte Shadow"
                     ],
                     [
@@ -527,6 +527,18 @@
                     ],
                     [
                         "SandBox_Unlit"
+                    ],
+                    [
+                        "Scripts",
+                        "DuneBuggy"
+                    ],
+                    [
+                        "Scripts",
+                        "ShowHint"
+                    ],
+                    [
+                        "Scripts",
+                        "shared"
                     ],
                     [
                         "Sphere"
@@ -694,6 +706,31 @@
                         "frame_outerOccluder"
                     ],
                     [
+                        "manipulatemesh 2"
+                    ],
+                    [
+                        "manipulatemesh 2",
+                        "Animations"
+                    ],
+                    [
+                        "manipulatemesh 2",
+                        "Materials"
+                    ],
+                    [
+                        "manipulatemesh 2",
+                        "Materials",
+                        "None"
+                    ],
+                    [
+                        "manipulatemesh 2",
+                        "Meshes",
+                        "ManipulateMesh_Cube"
+                    ],
+                    [
+                        "manipulatemesh 2",
+                        "manipulatemesh"
+                    ],
+                    [
                         "sandbox"
                     ],
                     [
@@ -738,12 +775,6 @@
                         "sandbox"
                     ],
                     [
-                        "sandbox 2"
-                    ],
-                    [
-                        "shared"
-                    ],
-                    [
                         "unitCube"
                     ],
                     [
@@ -768,7 +799,10 @@
         },
         "SceneTreeUiComponent": {
             "collapsedList": [
-                ""
+                [
+                    "1571355946312665:13063",
+                    "1571358671068019:77377"
+                ]
             ]
         },
         "MetaInfoUIComponent": {
@@ -790,14 +824,15 @@
             "preview_videos_project_config": {
                 "front_preview_id": "bundle:PreviewPresets\/Videos\/Idle Person 1.webm",
                 "front_preview_is_favorite": "false",
-                "back_preview_id": "bundle:PreviewPresets\/Videos\/Tree.webm",
+                "back_preview_id": "bundle:PreviewPresets\/Videos\/Patio.webm",
                 "back_preview_is_favorite": "false"
             }
         },
         "InspectorUiComponent": {
             "collapsedList": [
                 [
-                    "1565047394629662:13802"
+                    "1565047394629662:13802",
+                    "1571418214070196:11448"
                 ],
                 ""
             ]
@@ -1807,14 +1842,6 @@
                     "flags": "1"
                 },
                 {
-                    "resId": "140",
-                    "uid": "1571359251735076:87948",
-                    "name": "Files\/File167.mtl",
-                    "sourceFilePath": "",
-                    "additionalProperties": "",
-                    "flags": "1"
-                },
-                {
                     "resId": "141",
                     "uid": "1571359251838643:87987",
                     "name": "Files\/File168.mesh",
@@ -1834,6 +1861,46 @@
                     "resId": "143",
                     "uid": "1571359603100146:95222",
                     "name": "Files\/File170",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
+                },
+                {
+                    "resId": "145",
+                    "uid": "1571418444293432:13520",
+                    "name": "Files\/File173.mesh",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
+                },
+                {
+                    "resId": "146",
+                    "uid": "1571418444329849:13533",
+                    "name": "Files\/File174",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
+                },
+                {
+                    "resId": "147",
+                    "uid": "1571418444576213:13581",
+                    "name": "manipulatemesh",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "0"
+                },
+                {
+                    "resId": "149",
+                    "uid": "1571418594832068:19542",
+                    "name": "Files\/File180",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
+                },
+                {
+                    "resId": "150",
+                    "uid": "1571431173980499:91420",
+                    "name": "Files\/File182.js",
                     "sourceFilePath": "",
                     "additionalProperties": "",
                     "flags": "1"
@@ -1858,19 +1925,22 @@
             "autoRenderOrder": {
                 "0": "1517446348227994:84813",
                 "1": "1517446348228144:84822",
-                "2": "1528843813151434:5126",
-                "3": "1565047275505479:12419",
-                "4": "1569885769020401:14877",
-                "5": "1570747966524862:15738",
-                "6": "1571355919290267:9813",
-                "7": "1571355946312665:13063",
-                "8": "1571355946313094:13071",
-                "9": "1571357834963448:59437",
-                "10": "1571358671068019:77377",
-                "11": "1571359251930764:88192",
-                "12": "1571359251933918:88217",
-                "13": "1571359251934892:88242",
-                "14": "1571359251935776:88267"
+                "2": "1565047275505479:12419",
+                "3": "1569885769020401:14877",
+                "4": "1570747966524862:15738",
+                "5": "1571355919290267:9813",
+                "6": "1571355946312665:13063",
+                "7": "1571355946313094:13071",
+                "8": "1571357834963448:59437",
+                "9": "1571358671068019:77377",
+                "10": "1571359251930764:88192",
+                "11": "1571359251933918:88217",
+                "12": "1571359251934892:88242",
+                "13": "1571359251935776:88267",
+                "14": "1571429860915976:55127",
+                "15": "1571430088726961:59522",
+                "16": "1571431174011254:91435",
+                "17": "1571431208167754:92775"
             }
         },
         "LayerComponent": {
@@ -2510,10 +2580,6 @@
                     "v": "Files\/File166.png"
                 },
                 {
-                    "k": "167",
-                    "v": "Files\/File167.mtl"
-                },
-                {
                     "k": "168",
                     "v": "Files\/File168.mesh"
                 },
@@ -2528,6 +2594,42 @@
                 {
                     "k": "171",
                     "v": "Files\/File171.lsmat"
+                },
+                {
+                    "k": "173",
+                    "v": "Files\/File173.mesh"
+                },
+                {
+                    "k": "174",
+                    "v": "Files\/File174"
+                },
+                {
+                    "k": "175",
+                    "v": "Files\/File175.lsmat"
+                },
+                {
+                    "k": "176",
+                    "v": "Files\/File176.oprfb"
+                },
+                {
+                    "k": "177",
+                    "v": "Files\/File177.obj"
+                },
+                {
+                    "k": "178",
+                    "v": "Files\/File178.oprfb"
+                },
+                {
+                    "k": "180",
+                    "v": "Files\/File180"
+                },
+                {
+                    "k": "181",
+                    "v": "Files\/File181.lsmat"
+                },
+                {
+                    "k": "182",
+                    "v": "Files\/File182.js"
                 }
             ]
         },
@@ -2594,7 +2696,7 @@
                     },
                     {
                         "k": "15",
-                        "v": "DuneBuggy.js"
+                        "v": "Scripts\/DuneBuggy.js"
                     },
                     {
                         "k": "17",
@@ -2622,7 +2724,7 @@
                     },
                     {
                         "k": "733",
-                        "v": "shared.js"
+                        "v": "Scripts\/shared.js"
                     },
                     {
                         "k": "734",
@@ -3005,12 +3107,24 @@
                         "v": "SandBox_Unlit.lsmat"
                     },
                     {
-                        "k": "829",
-                        "v": "sandbox 2.mtl"
-                    },
-                    {
                         "k": "830",
                         "v": "Occluder.lsmat"
+                    },
+                    {
+                        "k": "832",
+                        "v": "manipulatemesh 2.obj"
+                    },
+                    {
+                        "k": "834",
+                        "v": "ManipulateMeshInvisible.lsmat"
+                    },
+                    {
+                        "k": "835",
+                        "v": "Scripts"
+                    },
+                    {
+                        "k": "836",
+                        "v": "Scripts\/ShowHint.js"
                     }
                 ],
                 "hashes": [
@@ -3068,7 +3182,7 @@
                     },
                     {
                         "k": "15",
-                        "v": "5b9989397abd8cb17cced0a2e0c0d728"
+                        "v": "5b24a608a34cec9d77e4ec43e966dacb"
                     },
                     {
                         "k": "16",
@@ -3469,14 +3583,34 @@
                     {
                         "k": "830",
                         "v": "326ae5016896c54f28b70062768ca52c"
+                    },
+                    {
+                        "k": "831",
+                        "v": "6f92f1b678090e38350450a3a62b026d"
+                    },
+                    {
+                        "k": "832",
+                        "v": "668c509765353173d3588f1838a7dc8a"
+                    },
+                    {
+                        "k": "833",
+                        "v": "6f92f1b678090e38350450a3a62b026d"
+                    },
+                    {
+                        "k": "834",
+                        "v": "ba4a1376e83bc8637e28a22a5c13edb8"
+                    },
+                    {
+                        "k": "836",
+                        "v": "7d3fc87924048dc888fc14593acfc785"
                     }
                 ],
                 "publicState": {
                     "tree": {
                         "isFolder": "true",
-                        "lastModified": "2019-10-17T17:46:43",
+                        "lastModified": "2019-10-18T13:45:00",
                         "name": "Public",
-                        "hash": "f40762cafc4ff6de38e855c36bb2c91d",
+                        "hash": "7b59660b6aab1407106f02d21ccba58d",
                         "children": [
                             {
                                 "isFolder": "false",
@@ -3518,13 +3652,6 @@
                                 "lastModified": "2019-09-30T16:43:25",
                                 "name": "duneBuggy.glb",
                                 "hash": "b228bb01fcaaa8fd2127e397d1b7c7fc",
-                                "children": ""
-                            },
-                            {
-                                "isFolder": "false",
-                                "lastModified": "2019-10-17T17:33:56",
-                                "name": "DuneBuggy.js",
-                                "hash": "5b9989397abd8cb17cced0a2e0c0d728",
                                 "children": ""
                             },
                             {
@@ -4148,6 +4275,20 @@
                             },
                             {
                                 "isFolder": "false",
+                                "lastModified": "2019-10-18T10:08:57",
+                                "name": "manipulatemesh 2.obj",
+                                "hash": "668c509765353173d3588f1838a7dc8a",
+                                "children": ""
+                            },
+                            {
+                                "isFolder": "false",
+                                "lastModified": "2019-10-18T10:10:18",
+                                "name": "ManipulateMeshInvisible.lsmat",
+                                "hash": "ba4a1376e83bc8637e28a22a5c13edb8",
+                                "children": ""
+                            },
+                            {
+                                "isFolder": "false",
                                 "lastModified": "2019-08-05T15:40:19",
                                 "name": "Matte Shadow.lsmat",
                                 "hash": "a444b5e2f27cf17acbeae175efcf32e9",
@@ -4177,13 +4318,6 @@
                             {
                                 "isFolder": "false",
                                 "lastModified": "2019-10-17T17:40:50",
-                                "name": "sandbox 2.mtl",
-                                "hash": "9edf39448adcd18cde8d5f5cf52fc868",
-                                "children": ""
-                            },
-                            {
-                                "isFolder": "false",
-                                "lastModified": "2019-10-17T17:40:50",
                                 "name": "sandbox.obj",
                                 "hash": "9d8d4baf0ea80294aa2e4cb182bec856",
                                 "children": ""
@@ -4196,11 +4330,40 @@
                                 "children": ""
                             },
                             {
-                                "isFolder": "false",
-                                "lastModified": "2019-10-17T17:05:04",
-                                "name": "shared.js",
-                                "hash": "078a8741fd88922ecbb4afbcc41b359b",
-                                "children": ""
+                                "isFolder": "true",
+                                "lastModified": "2019-10-18T13:45:00",
+                                "name": "Scripts",
+                                "hash": "5cfce61e2da0fb485b4722567ab086d8",
+                                "children": [
+                                    {
+                                        "isFolder": "false",
+                                        "lastModified": "2019-10-18T13:37:20",
+                                        "name": "DuneBuggy.js",
+                                        "hash": "5b24a608a34cec9d77e4ec43e966dacb",
+                                        "children": ""
+                                    },
+                                    {
+                                        "isFolder": "false",
+                                        "lastModified": "2019-10-18T13:39:34",
+                                        "name": "folder.lock",
+                                        "hash": "d41d8cd98f00b204e9800998ecf8427e",
+                                        "children": ""
+                                    },
+                                    {
+                                        "isFolder": "false",
+                                        "lastModified": "2019-10-18T13:44:51",
+                                        "name": "shared.js",
+                                        "hash": "078a8741fd88922ecbb4afbcc41b359b",
+                                        "children": ""
+                                    },
+                                    {
+                                        "isFolder": "false",
+                                        "lastModified": "2019-10-18T13:39:33",
+                                        "name": "ShowHint.js",
+                                        "hash": "7d3fc87924048dc888fc14593acfc785",
+                                        "children": ""
+                                    }
+                                ]
                             },
                             {
                                 "isFolder": "false",
@@ -4549,19 +4712,6 @@
                         "additional": ""
                     },
                     {
-                        "name": "DuneBuggy",
-                        "type": "4",
-                        "subtype": "0",
-                        "resourceId": "21",
-                        "dependency": "0",
-                        "uid": "1565047286308020:12764",
-                        "fileId": "23",
-                        "originalId": "18446744073709551615",
-                        "publicId": "15",
-                        "source": "",
-                        "additional": ""
-                    },
-                    {
                         "name": "unitCube",
                         "type": "18",
                         "subtype": "-1",
@@ -4832,19 +4982,6 @@
                         "originalId": "49",
                         "publicId": "24",
                         "source": "",
-                        "additional": ""
-                    },
-                    {
-                        "name": "shared",
-                        "type": "4",
-                        "subtype": "0",
-                        "resourceId": "38",
-                        "dependency": "0",
-                        "uid": "1569885552369271:12007",
-                        "fileId": "50",
-                        "originalId": "18446744073709551615",
-                        "publicId": "733",
-                        "source": "C:\/Users\/jonat\/Documents\/Projects\/Internal\/DuneBuggyAR\/lensStudio\/Public\/shared.js",
                         "additional": ""
                     },
                     {
@@ -6318,19 +6455,6 @@
                         "additional": ""
                     },
                     {
-                        "name": "sandbox 2",
-                        "type": "7",
-                        "subtype": "0",
-                        "resourceId": "140",
-                        "dependency": "0",
-                        "uid": "1571359251735076:87948",
-                        "fileId": "167",
-                        "originalId": "18446744073709551615",
-                        "publicId": "829",
-                        "source": "",
-                        "additional": ""
-                    },
-                    {
                         "name": "Occluder",
                         "type": "2",
                         "subtype": "0",
@@ -6342,16 +6466,177 @@
                         "publicId": "830",
                         "source": "",
                         "additional": ""
+                    },
+                    {
+                        "name": "manipulatemesh 2",
+                        "type": "18",
+                        "subtype": "-1",
+                        "resourceId": "-1",
+                        "dependency": "2",
+                        "uid": "-1:-1",
+                        "fileId": "177",
+                        "originalId": "18446744073709551615",
+                        "publicId": "832",
+                        "source": "C:\/Users\/jonat\/Documents\/Projects\/Internal\/DuneBuggyAR\/lensStudio\/Public\/manipulatemesh.obj",
+                        "additional": "",
+                        "resources": [
+                            {
+                                "name": "Meshes",
+                                "type": "0",
+                                "subtype": "-1",
+                                "resourceId": "-1",
+                                "dependency": "1",
+                                "uid": "-1:-1",
+                                "fileId": "18446744073709551615",
+                                "originalId": "18446744073709551615",
+                                "publicId": "18446744073709551615",
+                                "source": "",
+                                "additional": "",
+                                "resources": [
+                                    {
+                                        "name": "ManipulateMesh_Cube",
+                                        "type": "3",
+                                        "subtype": "0",
+                                        "resourceId": "145",
+                                        "dependency": "1",
+                                        "uid": "1571418444293432:13520",
+                                        "fileId": "173",
+                                        "originalId": "18446744073709551615",
+                                        "publicId": "18446744073709551615",
+                                        "source": "",
+                                        "additional": ""
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Animations",
+                                "type": "0",
+                                "subtype": "-1",
+                                "resourceId": "-1",
+                                "dependency": "1",
+                                "uid": "-1:-1",
+                                "fileId": "18446744073709551615",
+                                "originalId": "18446744073709551615",
+                                "publicId": "18446744073709551615",
+                                "source": "",
+                                "additional": "",
+                                "resources": ""
+                            },
+                            {
+                                "name": "Materials",
+                                "type": "0",
+                                "subtype": "-1",
+                                "resourceId": "-1",
+                                "dependency": "0",
+                                "uid": "-1:-1",
+                                "fileId": "18446744073709551615",
+                                "originalId": "18446744073709551615",
+                                "publicId": "18446744073709551615",
+                                "source": "",
+                                "additional": "",
+                                "resources": [
+                                    {
+                                        "name": "None",
+                                        "type": "2",
+                                        "subtype": "0",
+                                        "resourceId": "146",
+                                        "dependency": "0",
+                                        "uid": "1571418444329849:13533",
+                                        "fileId": "174",
+                                        "originalId": "175",
+                                        "publicId": "18446744073709551615",
+                                        "source": "",
+                                        "additional": ""
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "manipulatemesh",
+                                "type": "12",
+                                "subtype": "-1",
+                                "resourceId": "147",
+                                "dependency": "1",
+                                "uid": "1571418444576213:13581",
+                                "fileId": "176",
+                                "originalId": "178",
+                                "publicId": "18446744073709551615",
+                                "source": "",
+                                "additional": ""
+                            }
+                        ]
+                    },
+                    {
+                        "name": "ManipulateMeshInvisible",
+                        "type": "2",
+                        "subtype": "0",
+                        "resourceId": "149",
+                        "dependency": "0",
+                        "uid": "1571418594832068:19542",
+                        "fileId": "180",
+                        "originalId": "181",
+                        "publicId": "834",
+                        "source": "",
+                        "additional": ""
+                    },
+                    {
+                        "name": "Scripts",
+                        "type": "0",
+                        "subtype": "-1",
+                        "resourceId": "-1",
+                        "dependency": "0",
+                        "uid": "-1:-1",
+                        "fileId": "18446744073709551615",
+                        "originalId": "18446744073709551615",
+                        "publicId": "835",
+                        "source": "",
+                        "additional": "",
+                        "resources": [
+                            {
+                                "name": "ShowHint",
+                                "type": "4",
+                                "subtype": "0",
+                                "resourceId": "150",
+                                "dependency": "0",
+                                "uid": "1571431173980499:91420",
+                                "fileId": "182",
+                                "originalId": "18446744073709551615",
+                                "publicId": "836",
+                                "source": "",
+                                "additional": ""
+                            },
+                            {
+                                "name": "shared",
+                                "type": "4",
+                                "subtype": "0",
+                                "resourceId": "38",
+                                "dependency": "0",
+                                "uid": "1569885552369271:12007",
+                                "fileId": "50",
+                                "originalId": "18446744073709551615",
+                                "publicId": "733",
+                                "source": "C:\/Users\/jonat\/Documents\/Projects\/Internal\/DuneBuggyAR\/lensStudio\/Public\/shared.js",
+                                "additional": ""
+                            },
+                            {
+                                "name": "DuneBuggy",
+                                "type": "4",
+                                "subtype": "0",
+                                "resourceId": "21",
+                                "dependency": "0",
+                                "uid": "1565047286308020:12764",
+                                "fileId": "23",
+                                "originalId": "18446744073709551615",
+                                "publicId": "15",
+                                "source": "",
+                                "additional": ""
+                            }
+                        ]
                     }
                 ]
             }
         },
         "InspectorController": {
-            "selection": {
-                "objects": [
-                    "1517446348228144:84822"
-                ]
-            }
+            "selection": ""
         },
         "EffectsController": {
             "1": "",
@@ -6826,6 +7111,28 @@
                                 "Component.MeshVisual"
                             ],
                             "v": "1571355945882170:13009"
+                        }
+                    ]
+                },
+                {
+                    "k": "1571418444576213:13581",
+                    "v": [
+                        {
+                            "k": "",
+                            "v": "1571418538287652:17218"
+                        },
+                        {
+                            "k": [
+                                "ManipulateMesh_Cube.006"
+                            ],
+                            "v": "1571418538288120:17225"
+                        },
+                        {
+                            "k": [
+                                "ManipulateMesh_Cube.006",
+                                "Component.MeshVisual"
+                            ],
+                            "v": "1571418538288541:17229"
                         }
                     ]
                 }
