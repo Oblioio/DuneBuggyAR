@@ -61,8 +61,8 @@ function Main (camera) {
     directionalLight.shadow.mapSize.height = 512; // default
     directionalLight.shadow.camera.near = 0.5;    // default    
     directionalLight.shadow.camera.far = 100;     // default
-    directionalLight.shadow.camera.left = directionalLight.shadow.camera.bottom = -30;    // default    
-    directionalLight.shadow.camera.right = directionalLight.shadow.camera.top = 30;    // default
+    directionalLight.shadow.camera.left = directionalLight.shadow.camera.bottom = -5;    // default    
+    directionalLight.shadow.camera.right = directionalLight.shadow.camera.top = 5;    // default
     this.directionalLight = directionalLight;
     
     // var helper = new CameraHelper( directionalLight.shadow.camera );
@@ -70,11 +70,13 @@ function Main (camera) {
 
     // directionalLight.rotation.z = Math.PI/4;
     this.scene.add( directionalLight );
+    directionalLight.target = this.scene;
+    // this.scene.add( directionalLight.target );
 
     this.terrain = new DynamicTerrain(Math.round(25*1.75), 50);
     // this.terrain = new DynamicTerrain(50, 100);
     this.masterGroup = new THREE.Group();
-    this.masterGroup.scale.set(2,2,2);
+    // this.masterGroup.scale.set(2,2,2);
 
     // console.log(this.terrain.returnIndiceArraySnap());
 
@@ -165,16 +167,41 @@ function Main (camera) {
     this.dragVector = [0,0];
     this.touching = false;
 
-    // this is a class I often reuse to capture user input
-    this.interaction = new Interaction({
-        onDown: onDown.bind(this),
-        onDrag: onDown.bind(this),
-        onUp: onUp.bind(this)
-    });
+    // // this is a class I often reuse to capture user input
+    // this.interaction = new Interaction({
+    //     onDown: onDown.bind(this),
+    //     onDrag: onDown.bind(this),
+    //     onUp: onUp.bind(this)
+    // });
 }
 
 function clamp(min, max, val){
     return Math.min(max, Math.max(min, val));
+}
+
+const camPos = new THREE.Vector3();
+const masterPos = new THREE.Vector3();
+const CamUpVector = new THREE.Vector3();
+const YAxisPlane = new THREE.Vector3();
+const CamToScene_ForwardVec = new THREE.Vector3();
+const CamToScene_SideVec = new THREE.Vector3();
+const CamToScene_UpVec = new THREE.Vector3();
+
+function getCameraRotation () {
+    camPos.setFromMatrixPosition(this.camera.matrixWorld);
+    masterPos.setFromMatrixPosition(this.masterGroup.matrixWorld);
+
+    CamUpVector.set(0,1,0).applyMatrix4(this.camera.matrixWorld).sub(camPos);
+    YAxisPlane.set(0,1,0).applyMatrix4(this.scene.matrixWorld).sub(masterPos);
+
+    CamToScene_ForwardVec.setFromMatrixPosition(this.buggy_frame.matrixWorld).sub(camPos);
+    CamToScene_SideVec.crossVectors(CamToScene_ForwardVec, YAxisPlane);
+    CamToScene_UpVec.crossVectors(CamToScene_ForwardVec, CamToScene_SideVec);
+
+    let CamSceneRotationPtX = CamUpVector.dot(CamToScene_SideVec);
+    let CamSceneRotationPtY = CamUpVector.dot(CamToScene_UpVec);
+
+    return Math.atan(CamSceneRotationPtX / Math.abs(CamSceneRotationPtY));
 }
 
 var frameIndex = 0;
@@ -196,9 +223,13 @@ function animate() {
         this.duneBuggy.accelerationXY_Mult = 1;
         this.duneBuggy.rotate(((Math.sin(3+this.currTime/8000)+Math.sin(this.currTime/800))*0.65)*_elapsedTime/1000);
     } else {
-        
-        this.duneBuggy.accelerationXY_Mult = ((this.touching)?1:0)+(this.interaction.arrows.up?1:0)-(this.interaction.arrows.down?1:0);
-        this.duneBuggy.rotate( (this.dragVector[0]/20)+((this.interaction.arrows.left?-1:0)+(this.interaction.arrows.right?1:0))/20 );
+        this.duneBuggy.accelerationXY_Mult = 1; // ((this.touching)?1:0)+(this.interaction.arrows.up?1:0)-(this.interaction.arrows.down?1:0);
+        let rot = getCameraRotation.call(this);
+
+        let rotValue = Math.min(1, rot*1.75 );
+        // console.log(rotValue);
+        if (!isNaN(rotValue)) this.duneBuggy.rotate( rotValue );
+        // this.duneBuggy.rotate( (this.dragVector[0]/20)+((this.interaction.arrows.left?-1:0)+(this.interaction.arrows.right?1:0))/20 );
     }
     // this.terrain.setPosition(Math.sin((this.currTime-(Math.PI/4))/100), Math.sin(this.currTime/100));
     // this.terrain.setPosition(95, Math.sin(this.currTime/100));
@@ -234,7 +265,7 @@ function animate() {
     // this keeps the shadow from clipping
     this.directionalLight.position.y = 50+this.buggy_frame.position.y;
     this.directionalLight.target.y = this.buggy_frame.position.y;
-    
+
     ////////// Update terrain geometry //////////
     this.geoPositions.set(this.terrain.returnPtArray(), 0);
     this.geoPositions.needsUpdate = true;
@@ -244,16 +275,16 @@ function animate() {
     // this.renderer.render( this.scene, this.camera );
 }
 
-function onDown(x, y){
-    this.touching = true;
-    this.dragVector[0] = (2*x/window.innerWidth)-1;
-    // this.dragVector[1] -= dY;
-}
+// function onDown(x, y){
+//     this.touching = true;
+//     this.dragVector[0] = (2*x/window.innerWidth)-1;
+//     // this.dragVector[1] -= dY;
+// }
 
-function onUp(x, y, dX, dY){
-    this.touching = false;
-    this.dragVector = [0,0];
-}
+// function onUp(x, y, dX, dY){
+//     this.touching = false;
+//     this.dragVector = [0,0];
+// }
 
 
 

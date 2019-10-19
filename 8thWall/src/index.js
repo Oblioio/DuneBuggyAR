@@ -38,7 +38,11 @@ const placeObject = (pointX, pointZ) => {
     main.scene.position.set(pointX, 0.0, pointZ)
     // debugger;
     main.scene.scale.set(0.05, 0.05, 0.05)
-    XR.Threejs.xrScene().scene.add(main.scene)
+
+    let xrScene = XR.Threejs.xrScene();
+    xrScene.scene.add(main.scene)
+    xrScene.renderer.shadowMap.enabled = true;
+    // xrScene.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 }
 
 const placeObjectTouchHandler = (e) => {
