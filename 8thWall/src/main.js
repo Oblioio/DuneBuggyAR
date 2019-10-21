@@ -20,7 +20,7 @@ import { Interaction} from "./interaction.js";
 //     CameraHelper
 // } from 'three';
 
-import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
+// import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
 
 'use strict';
 
@@ -115,48 +115,48 @@ function Main (camera) {
     this.scene.add(this.masterGroup);
     this.masterGroup.add(this.terrainMesh);
 
-    var loader = new GLTFLoader();
-    loader.load(
-        'models/duneBuggy.glb',
-        function ( gltf ) {
-            window.gltf = gltf;
-            this.buggy_frame = gltf.scene.getObjectByName("Frame");
+    // var loader = new GLTFLoader();
+    // loader.load(
+    //     'models/duneBuggy.glb',
+    //     function ( gltf ) {
+    //         window.gltf = gltf;
+    //         this.buggy_frame = gltf.scene.getObjectByName("Frame");
 
-            this.buggy_frontLeftWheel = gltf.scene.getObjectByName("FrontLeftWheel");
-            this.buggy_frontRightWheel = this.buggy_frontLeftWheel.clone(); // gltf.scene.getObjectByName("FrontRightWheel");
-            this.buggy_backLeftWheel = gltf.scene.getObjectByName("BackLeftWheel");
-            this.buggy_backRightWheel = this.buggy_backLeftWheel.clone(); // gltf.scene.getObjectByName("BackRightWheel");
+    //         this.buggy_frontLeftWheel = gltf.scene.getObjectByName("FrontLeftWheel");
+    //         this.buggy_frontRightWheel = this.buggy_frontLeftWheel.clone(); // gltf.scene.getObjectByName("FrontRightWheel");
+    //         this.buggy_backLeftWheel = gltf.scene.getObjectByName("BackLeftWheel");
+    //         this.buggy_backRightWheel = this.buggy_backLeftWheel.clone(); // gltf.scene.getObjectByName("BackRightWheel");
 
-            console.log(this.buggy_frontRightWheel);
-            console.log(this.buggy_backRightWheel);
+    //         console.log(this.buggy_frontRightWheel);
+    //         console.log(this.buggy_backRightWheel);
 
-            this.buggy = new THREE.Group();
-            this.buggy.scale.set(this.buggyScale, this.buggyScale, this.buggyScale);
-            this.masterGroup.add(this.buggy);
-            this.buggySpin = new THREE.Group();
-            this.buggySpin.add(this.buggy_frame);
-            this.buggy.add(this.buggySpin);
-            this.buggy.add(this.buggy_frontLeftWheel);
-            this.buggy.add(this.buggy_frontRightWheel);
-            this.buggy.add(this.buggy_backLeftWheel);
-            this.buggy.add(this.buggy_backRightWheel);
+    //         this.buggy = new THREE.Group();
+    //         this.buggy.scale.set(this.buggyScale, this.buggyScale, this.buggyScale);
+    //         this.masterGroup.add(this.buggy);
+    //         this.buggySpin = new THREE.Group();
+    //         this.buggySpin.add(this.buggy_frame);
+    //         this.buggy.add(this.buggySpin);
+    //         this.buggy.add(this.buggy_frontLeftWheel);
+    //         this.buggy.add(this.buggy_frontRightWheel);
+    //         this.buggy.add(this.buggy_backLeftWheel);
+    //         this.buggy.add(this.buggy_backRightWheel);
             
-            this.buggy_frame.castShadow = true;
-            this.buggy_frontLeftWheel.castShadow = true;
-            this.buggy_frontRightWheel.castShadow = true;
-            this.buggy_backLeftWheel.castShadow = true;
-            this.buggy_backRightWheel.castShadow = true;
+    //         this.buggy_frame.castShadow = true;
+    //         this.buggy_frontLeftWheel.castShadow = true;
+    //         this.buggy_frontRightWheel.castShadow = true;
+    //         this.buggy_backLeftWheel.castShadow = true;
+    //         this.buggy_backRightWheel.castShadow = true;
 
-            this.buggy_frontLeftWheel.position.y = this.duneBuggy.frontWheelX;
-            this.buggy_frontRightWheel.position.y = this.duneBuggy.frontWheelX;
-            this.buggy_frontLeftWheel.position.x = -this.duneBuggy.frontWheelSpace;
-            this.buggy_frontRightWheel.position.x = this.duneBuggy.frontWheelSpace;
-            this.buggy_backLeftWheel.position.y = this.duneBuggy.backWheelX;
-            this.buggy_backRightWheel.position.y = this.duneBuggy.backWheelX;
+    //         this.buggy_frontLeftWheel.position.y = this.duneBuggy.frontWheelX;
+    //         this.buggy_frontRightWheel.position.y = this.duneBuggy.frontWheelX;
+    //         this.buggy_frontLeftWheel.position.x = -this.duneBuggy.frontWheelSpace;
+    //         this.buggy_frontRightWheel.position.x = this.duneBuggy.frontWheelSpace;
+    //         this.buggy_backLeftWheel.position.y = this.duneBuggy.backWheelX;
+    //         this.buggy_backRightWheel.position.y = this.duneBuggy.backWheelX;
 
-            this.animate();
-        }.bind(this)
-    );
+    //         this.animate();
+    //     }.bind(this)
+    // );
 
     this.currTime = new Date().getTime();
     
@@ -172,6 +172,57 @@ function Main (camera) {
     //     onDrag: onDown.bind(this),
     //     onUp: onUp.bind(this)
     // });
+}
+
+function addBuggy (buggy) {
+    console.log('BUGGY!', buggy);
+    this.buggy_frame = buggy.children.find((child) => {
+        return child.name === 'Frame';
+    });
+
+    this.buggy_frontLeftWheel = buggy.children.find((child) => {
+        return child.name === 'FrontLeftWheel';
+    });
+    this.buggy_frontRightWheel = this.buggy_frontLeftWheel.clone();
+    this.buggy_backLeftWheel = this.buggy_frontLeftWheel.clone();
+    this.buggy_backRightWheel = this.buggy_frontLeftWheel.clone();
+
+    // this.buggy_backLeftWheel = buggy.children.find((child) => {
+    //     return child.name === 'BackLeftWheel';
+    // });
+    // this.buggy_backRightWheel = this.buggy_backLeftWheel.clone();
+
+    // debugger;
+    // window.gltf = gltf;
+    // this.buggy_frame = gltf.scene.getObjectByName("Frame");
+    // this.buggy_frontLeftWheel = gltf.scene.getObjectByName("FrontLeftWheel");
+    // this.buggy_frontRightWheel = this.buggy_frontLeftWheel.clone(); // gltf.scene.getObjectByName("FrontRightWheel");
+    // this.buggy_backLeftWheel = gltf.scene.getObjectByName("BackLeftWheel");
+    // this.buggy_backRightWheel = this.buggy_backLeftWheel.clone(); // gltf.scene.getObjectByName("BackRightWheel");
+    // console.log(this.buggy_frontRightWheel);
+    // console.log(this.buggy_backRightWheel);
+    this.buggy = new THREE.Group();
+    this.buggy.scale.set(this.buggyScale, this.buggyScale, this.buggyScale);
+    this.masterGroup.add(this.buggy);
+    this.buggySpin = new THREE.Group();
+    this.buggySpin.add(this.buggy_frame);
+    this.buggy.add(this.buggySpin);
+    this.buggy.add(this.buggy_frontLeftWheel);
+    this.buggy.add(this.buggy_frontRightWheel);
+    this.buggy.add(this.buggy_backLeftWheel);
+    this.buggy.add(this.buggy_backRightWheel);
+    this.buggy_frame.castShadow = true;
+    this.buggy_frontLeftWheel.castShadow = true;
+    this.buggy_frontRightWheel.castShadow = true;
+    this.buggy_backLeftWheel.castShadow = true;
+    this.buggy_backRightWheel.castShadow = true;
+    this.buggy_frontLeftWheel.position.y = this.duneBuggy.frontWheelX;
+    this.buggy_frontRightWheel.position.y = this.duneBuggy.frontWheelX;
+    this.buggy_frontLeftWheel.position.x = -this.duneBuggy.frontWheelSpace;
+    this.buggy_frontRightWheel.position.x = this.duneBuggy.frontWheelSpace;
+    this.buggy_backLeftWheel.position.y = this.duneBuggy.backWheelX;
+    this.buggy_backRightWheel.position.y = this.duneBuggy.backWheelX;
+    this.animate();
 }
 
 function clamp(min, max, val){
@@ -297,6 +348,7 @@ function onWindowResize() {
 }
 
 Main.prototype.animate = animate;
+Main.prototype.addBuggy = addBuggy;
 Main.prototype.onWindowResize = onWindowResize;
 
 export { Main };
