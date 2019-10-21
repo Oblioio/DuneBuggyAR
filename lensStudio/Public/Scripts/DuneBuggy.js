@@ -1,5 +1,3 @@
-//@input Asset.RenderMesh unitCube
-//@input Asset.Material terrainMat
 //@input Asset.RenderMesh DuneBuggy_Frame
 //@input Asset.RenderMesh DuneBuggy_FL
 //@input Asset.RenderMesh DuneBuggy_FR
@@ -9,6 +7,11 @@
 //@input Component.ScriptComponent sharedScript
 //@input SceneObject YAxisPlaneTracker
 //@input SceneObject YAxisUnit_Cam
+//@input SceneObject terrainContainer
+//@input SceneObject terrain_NE
+//@input SceneObject terrain_NW
+//@input SceneObject terrain_SE
+//@input SceneObject terrain_SW
 
 var DynamicTerrain = script.sharedScript.api.DynamicTerrain;
 var DuneBuggy = script.sharedScript.api.DuneBuggy;
@@ -16,8 +19,8 @@ var DuneBuggy = script.sharedScript.api.DuneBuggy;
 function init(){
     // FIND THE MASTER GROUP OBJECT
     for(var i=0; i<global.scene.getRootObjectsCount(); i++){
-        if(global.scene.getRootObject(i).name == "masterGroup")
-            this.masterGroup = global.scene.getRootObject(i);
+        if(global.scene.getRootObject(i).name == "WorldObjectController")
+            this.masterGroup = global.scene.getRootObject(i).getChild(0);
         if(global.scene.getRootObject(i).name == "Camera")
             this.camera = global.scene.getRootObject(i);
     }
@@ -44,37 +47,35 @@ function init(){
 
     
     // TERRAIN
-    // this.terrain = new DynamicTerrain(50, 50)
     this.terrain = new DynamicTerrain(Math.round(25*1.75), 50);
-    // this.terrain = new DynamicTerrain(25, 50);
     this.terrain.setPosition(0,0);
 
-    this.terrainObj = createEmptyObject("terrain", this.masterGroup);
-    this.terrainObj.mv = this.terrainObj.obj.createComponent("Component.MeshVisual");
-    this.terrainObj.mv.addMaterial(script.terrainMat);
-    this.terrainObj.mv.meshShadowMode = 2;
+    // this.terrainObj = createEmptyObject("terrain", this.masterGroup);
+    // this.terrainObj.mv = this.terrainObj.obj.createComponent("Component.MeshVisual");
+    // this.terrainObj.mv.meshShadowMode = 2;
     
-    this.terrainObj.mb = new MeshBuilder([
-        { name: "position", components: 3 },
-        { name: "normal", components: 3, normalized: true },
-        { name: "texture0", components: 2 }
-    ]);
-    this.terrainObj.mb.topology = MeshTopology.Triangles;
-    this.terrainObj.mb.indexType = MeshIndexType.UInt16;
-    this.terrainObj.mb.appendVerticesInterleaved(this.terrain.returnPackedArray());
-    this.terrainObj.mb.appendIndices(this.terrain.returnIndiceArraySnap());
+    // this.terrainObj.mb = new MeshBuilder([
+    //     { name: "position", components: 3 },
+    //     { name: "normal", components: 3, normalized: true },
+    //     { name: "texture0", components: 2 }
+    // ]);
+    // this.terrainObj.mb.topology = MeshTopology.Triangles;
+    // this.terrainObj.mb.indexType = MeshIndexType.UInt16;
+    // this.terrainObj.mb.appendVerticesInterleaved(this.terrain.returnPackedArray());
+    // this.terrainObj.mb.appendIndices(this.terrain.returnIndiceArraySnap());
 
-    if(this.terrainObj.mb.isValid()){
-        this.terrainObj.mv.mesh = this.terrainObj.mb.getMesh();
-        this.terrainObj.mb.updateMesh();
-        // terrainObj.obj.enabled = false;
+    // if(this.terrainObj.mb.isValid()){
+    //     this.terrainObj.mv.mesh = this.terrainObj.mb.getMesh();
+    //     this.terrainObj.mb.updateMesh();
+    //     // terrainObj.obj.enabled = false;
         
-        var event = script.createEvent("UpdateEvent");
-        event.bind( onUpdate.bind(this) );
 
-    } else{
-        print("Mesh data invalid!");
-    }
+    // } else{
+    //     print("Mesh data invalid!");
+    // }
+
+    var event = script.createEvent("UpdateEvent");
+    event.bind( onUpdate.bind(this) );
     
     this.currTime = 0;
     this.autoDrive = true;
@@ -85,14 +86,6 @@ function init(){
     this.accelerate = 1;
     this.dragVector = [0,0];
     this.touching = false;
-
-    this.hintComponent = script.getSceneObject().createComponent( "Component.HintsComponent" );
-
-    // var camEvent = script.createEvent("UpdateEvent");
-    script.createEvent("CameraFrontEvent").bind( setVisibilities.bind(this) );
-    script.createEvent("CameraBackEvent").bind( setVisibilities.bind(this) );
-    script.createEvent("SurfaceTrackingResetEvent").bind( setVisibilities.bind(this) );   
-
 }
 
 function createEmptyObject(id, parent){
@@ -119,10 +112,6 @@ function createObject(id, meshObj, mat, parent){
     }
 }
 
-function setVisibilities(eventData){
-    global.logToScreen(eventData);
-}
-
 function getCameraRotation(){
     var camPos = this.camera.getTransform().getWorldPosition();
     var YAxisPlane = script.YAxisPlaneTracker.getTransform().getWorldPosition().sub(this.masterGroup.getTransform().getWorldPosition()).normalize();
@@ -136,6 +125,24 @@ function getCameraRotation(){
     var CamSceneRotationPtY = CamUpVector.dot(CamToScene_UpVec);
 
     return Math.atan(CamSceneRotationPtX/Math.abs(CamSceneRotationPtY));
+}
+
+function moveTerrain(x, y){
+    var X1 = (x>25)?-100:0;
+    var X2 = (x<-25)?100:0;
+    var Y1 = (y>25)?-100:0;
+    var Y2 = (y<-25)?100:0;
+    script.terrainContainer.getTransform().setLocalPosition(new vec3(x,0,y) );
+    script.terrain_NE.getTransform().setLocalPosition( new vec3(X1,0,Y1) );
+    script.terrain_NW.getTransform().setLocalPosition( new vec3(X2,0,Y1) );
+    script.terrain_SE.getTransform().setLocalPosition( new vec3(X1,0,Y2) );
+    script.terrain_SW.getTransform().setLocalPosition( new vec3(X2,0,Y2) );
+
+    var divider = 100;
+    script.terrain_NE.getFirstComponent("Component.MeshVisual").mainPass.uv2Offset = new vec2(0.5+((X1+x)/divider), 0.5+((Y1+y)/divider));
+    script.terrain_NW.getFirstComponent("Component.MeshVisual").mainPass.uv2Offset = new vec2(((X2+x)/divider), 0.5+((Y1+y)/divider));
+    script.terrain_SE.getFirstComponent("Component.MeshVisual").mainPass.uv2Offset = new vec2(0.5+((X1+x)/divider), ((Y2+y)/divider));
+    script.terrain_SW.getFirstComponent("Component.MeshVisual").mainPass.uv2Offset = new vec2(((X2+x)/divider), ((Y2+y)/divider));
 }
 
 
@@ -163,9 +170,11 @@ function onUpdate(e){
 
     }
 
-    this.terrainObj.mb.eraseVertices(0, this.terrainObj.mb.getVerticesCount());
-    this.terrainObj.mb.appendVerticesInterleaved(this.terrain.returnPackedArray());
-    this.terrainObj.mb.updateMesh()
+    moveTerrain( -(wrapVal(this.terrain.currentPosition[0], 100)-50), (wrapVal(this.terrain.currentPosition[1], 100)-50) );
+
+    // this.terrainObj.mb.eraseVertices(0, this.terrainObj.mb.getVerticesCount());
+    // this.terrainObj.mb.appendVerticesInterleaved(this.terrain.returnPackedArray());
+    // this.terrainObj.mb.updateMesh()
 
 
     // next set wheelHeights
@@ -204,7 +213,18 @@ function onUpdate(e){
 
 }
 
-
-
-
 init();
+
+
+
+//////////////////// HELPER FUNCTIONS ////////////////////
+// (I put these at the bottom to keep them out of the way)
+
+// this is basically Modulo, but it works with negative numbers
+function wrapVal(val, range){
+    if(val >=0){
+        return val%range;
+    } else {
+        return range-(Math.abs(val)%range)
+    }
+}
