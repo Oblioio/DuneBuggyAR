@@ -24,11 +24,10 @@ import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
 
 'use strict';
 
-console.log(DynamicTerrain);
+// console.log(DynamicTerrain);
 
 function Main (camera) {
     console.log("what up ")
-    console.log(DynamicTerrain)
     this.renderer = new THREE.WebGLRenderer( { antialias: true } );
     this.renderer.setPixelRatio( window.devicePixelRatio );
     this.renderer.setSize( window.innerWidth, window.innerHeight );
@@ -205,7 +204,7 @@ function getCameraRotation () {
 }
 
 var frameIndex = 0;
-function animate() {    
+function animate() {
     requestAnimationFrame( animate.bind(this) );
 
     // get elapsed time

@@ -4,14 +4,49 @@
 
     <head>
         <link rel="stylesheet" type="text/css" href="index.css">
-        <link rel="stylesheet" href="css/main.css">    
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="//cdn.8thwall.com/web/aframe/8frame-0.8.2.min.js"></script>
+        <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/three.js/109/three.js"></script> -->
+        <script src="//cdn.8thwall.com/web/xrextras/xrextras.js"></script>
+        <script async src="https://apps.8thwall.com/xrweb?appKey=vQZlnxtVDbBD0xDrYqCjT4XxkWXP7vjeemCTDy4vgpfwPR1RVDHwLQksVbHmSx2pgmSdnE"></script>
+
     </head>
 
     <body class="dev">
-        <canvas id="camerafeed"></canvas>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/three.js/109/three.js"></script>
-        <script src="//cdn.8thwall.com/web/xrextras/xrextras.js"></script>
-        <script defer src="https://apps.8thwall.com/xrweb?appKey=vQZlnxtVDbBD0xDrYqCjT4XxkWXP7vjeemCTDy4vgpfwPR1RVDHwLQksVbHmSx2pgmSdnE"></script>
+        <a-scene
+            xrweb
+            tap-place
+            xrextras-almost-there
+            xrextras-loading
+            xrextras-runtime-error>
+
+            <!-- The raycaster will emit mouse events on scene objects specified with the cantap class -->
+            <a-camera
+            position="0 8 0"
+            raycaster="objects: .cantap"
+            cursor="
+                fuse: false;
+                rayOrigin: mouse;">
+            </a-camera>
+    
+            <a-entity
+            light="type: directional;
+                    intensity: 0.8;"
+            position="1 4.3 2.5">
+            </a-entity>
+
+            <!-- Adding the cantap class allows the ground to be clicked -->
+            <a-entity
+            id="ground"
+            class="cantap"
+            geometry="primitive: box"
+            material="color: #ffffff; transparent: true; opacity: 0.0"
+            scale="1000 2 1000"
+            position="0 -1 0">
+            </a-entity>
+        </a-scene>
+
         <script type="text/javascript" src="main.js"></script>
     </body>
 </html>
