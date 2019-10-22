@@ -97,64 +97,6 @@ function addBuggy (buggy) {
     this.buggy_backLeftWheel.position.y = this.duneBuggy.backWheelX;
     this.buggy_backRightWheel.position.y = this.duneBuggy.backWheelX;
 
-    // new OBJLoader2().load("models/terrain_NE.obj", function(terrainNEGroup){
-    //     new OBJLoader2().load("models/terrain_NW.obj", function(terrainNWGroup){
-    //         new OBJLoader2().load("models/terrain_SE.obj", function(terrainSEGroup){
-    //             new OBJLoader2().load("models/terrain_SW.obj", function(terrainSWGroup){
-    //                 console.log(terrainSWGroup);
-    //                 var setupObj = function(obj, textureURL){
-    //                     // obj.material = new THREE.MeshLambertMaterial({
-    //                         // map: new THREE.TextureLoader().load( textureURL ),
-    //                         // alphaMap: new THREE.TextureLoader().load( 'images/alphaMask.jpg', function(texture){
-    //                         //     texture.wrapS = texture.wrapT = THREE.ClampToEdgeWrapping;
-    //                         //     texture.magFilter = THREE.NearestFilter;
-    //                         //     texture.repeat = new THREE.Vector2(2.5, 2.5);
-    //                         // } ),
-    //                         // alphaTest: 0.5
-    //                     // })
-                        
-    //                     // materials only use on set of UV offsets so I'm manually adding
-    //                     // UV2 and a uniform to adjust UV2
-    //                     // obj.material.onBeforeCompile = function ( shader ) {
-    //                     //     // i binded the function scope to the material so "this" is the material
-    //                     //     // lets save the shader as variable so we can mod values later
-    //                     //     this.shader = shader;
-
-    //                     //     shader.uniforms.uv2Offset = { value: new THREE.Vector2(0,0) };
-    //                     //     shader.vertexShader = 'uniform vec2 uv2Offset;\n' + shader.vertexShader;
-
-    //                     //     shader.vertexShader = shader.vertexShader.replace('#include <uv2_pars_vertex>', 'varying vec2 vUv2; \n');
-    //                     //     shader.vertexShader = shader.vertexShader.replace('#include <uv2_vertex>', 'vUv2 = (uv*0.5)+uv2Offset; \n');
-    //                     //     shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', '#include <begin_vertex> \n');                             
-                            
-    //                     //     shader.fragmentShader = shader.fragmentShader.replace('#include <uv2_pars_fragment>','varying vec2 vUv2; \n');
-    //                     //     shader.fragmentShader = shader.fragmentShader.replace('#include <alphamap_fragment>', 'diffuseColor.a *= texture2D( alphaMap, vUv2 ).g; \n');
-    //                     // }.bind(obj.material);
-
-    //                     obj.receiveShadow = true;
-    //                     this.terrainContainer.add(obj);
-    //                 }
-
-    //                 this.terrain_NE = terrainNEGroup.children[0];
-    //                 setupObj.call(this, this.terrain_NE, 'images/albedo_NE.jpg');
-
-    //                 this.terrain_NW = terrainNWGroup.children[0];
-    //                 setupObj.call(this, this.terrain_NW, 'images/albedo_NW.jpg');
-
-    //                 this.terrain_SE = terrainSEGroup.children[0];
-    //                 setupObj.call(this, this.terrain_SE, 'images/albedo_SE.jpg');
-
-    //                 this.terrain_SW = terrainSWGroup.children[0];
-    //                 setupObj.call(this, this.terrain_SW, 'images/albedo_SW.jpg');
-
-    //                 this.animate();
-
-    //             }.bind(this))
-    //         }.bind(this))
-    //     }.bind(this))
-    // }.bind(this))
-
-    // // this.animate();
 }
 
 function setupObj (obj, textureURL) {

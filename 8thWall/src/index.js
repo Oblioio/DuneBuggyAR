@@ -230,9 +230,9 @@ AFRAME.registerComponent('hold-drag', {
       this.el.sceneEl.addEventListener('onefingerend', this.fingerUp)
     },
     tick: function() {
-        let newnow = Date.now();
-        console.log(newnow - now);
-        now = newnow;
+        // let newnow = Date.now();
+        // console.log(newnow - now);
+        // now = newnow;
       if (this.internalState.dragging) {
         let desiredPosition = null
         if (this.internalState.positionRaw) {
