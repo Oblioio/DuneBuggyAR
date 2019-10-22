@@ -5,19 +5,13 @@ import {
     Scene,
     PerspectiveCamera, 
     WebGLRenderer,
-    BufferGeometry,
-    BufferAttribute,
-    Float32BufferAttribute,
     MeshLambertMaterial,
-    MeshStandardMaterial,
     Mesh,
     TextureLoader,
-    RepeatWrapping,
     DirectionalLight,
     Vector2,
     Group,
     PCFSoftShadowMap,
-    CameraHelper,
     ClampToEdgeWrapping,
     NearestFilter
 } from 'three';
@@ -77,7 +71,6 @@ function Main () {
     this.scene.add( directionalLight );
 
     this.terrain = new DynamicTerrain(Math.round(25*1.75), 50);
-    // this.terrain = new DynamicTerrain(50, 100);
     this.masterGroup = new Group();
     this.masterGroup.scale.set(2,2,2);
     
@@ -98,8 +91,7 @@ function Main () {
     this.masterGroup.add(this.terrainContainer);
     // this.masterGroup.add(this.terrainMesh);
 
-    var loader = new GLTFLoader();
-    loader.load(
+    new GLTFLoader().load(
         'models/duneBuggy.glb',
         function ( gltf ) {
             window.gltf = gltf;
@@ -134,7 +126,7 @@ function Main () {
             this.buggy_backLeftWheel.position.y = this.duneBuggy.backWheelX;
             this.buggy_backRightWheel.position.y = this.duneBuggy.backWheelX;
 
-            
+            // Load the terrain model peices
             new OBJLoader2().load("models/terrain_NE.obj", function(terrainNEGroup){
                 new OBJLoader2().load("models/terrain_NW.obj", function(terrainNWGroup){
                     new OBJLoader2().load("models/terrain_SE.obj", function(terrainSEGroup){
@@ -191,7 +183,6 @@ function Main () {
                     }.bind(this))
                 }.bind(this))
             }.bind(this))
-
         }.bind(this)
     );
 
