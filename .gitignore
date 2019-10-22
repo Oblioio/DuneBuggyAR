@@ -1,4 +1,5 @@
 .DS_Store
 /node_modules
 /web/node_modules
+/8thWall/node_modules
 /sparkAR/export
