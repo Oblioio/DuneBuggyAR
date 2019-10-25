@@ -23,6 +23,7 @@ import { AmbientLight } from "three/build/three.module";
 'use strict';
 
 function Main () {
+    console.log('HEY MAIN!!!!!');
     this.renderer = new WebGLRenderer( { antialias: true } );
     this.renderer.setPixelRatio( window.devicePixelRatio );
     this.renderer.setSize( window.innerWidth, window.innerHeight );

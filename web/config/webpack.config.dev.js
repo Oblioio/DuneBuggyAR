@@ -16,8 +16,9 @@ module.exports = {
   },
   devServer: {
     // disableHostCheck: true,
-    contentBase: appDir,
-    publicPath: '/',
+    // contentBase: distDir,
+    // publicPath: '/',
+    contentBase: [appDir, distDir],
     historyApiFallback: true,
     port: 3000,
     https: true

@@ -7,7 +7,7 @@ module.exports = {
   context: appDir,
   entry: path.resolve(__dirname, '../src', 'index.js'),
   output: {
-    filename: 'js/[name].js',
+    filename: '[name].js',
     path: distDir,
     publicPath: '/'
   },
