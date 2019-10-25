@@ -7,7 +7,44 @@
     </head>
 
     <body class="dev">
+        <div id="canvasContainer"></div>
+        <div id="prepreloader"></div>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/TweenLite.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/TimelineLite.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/plugins/CSSPlugin.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/easing/EasePack.min.js"></script>
+        <script src="js/ringsSVG.js"></script>
+        <script>
 
+            var bodyFontSize = parseInt(window.getComputedStyle(document.body).getPropertyValue('font-size')),
+                winWidth = window.innerWidth,
+                maxRadius,
+                minRadius;
+
+            minRadius = Math.round(4.3 * bodyFontSize);
+
+            maxRadius = minRadius * 1.1;
+
+            var bg = document.createElement('div');
+            bg.id = 'loader_bg';
+            window.oblio = window.oblio || {};
+            oblio.app = oblio.app || {};
+            oblio.app.rings = this.rings = new oblio.app.RingsSVG({
+                loader: true,
+                maxRadius: maxRadius, // 63
+                radius: minRadius, // 43
+                bg: bg,
+                wrapper: document.getElementById('prepreloader')
+            });
+
+            oblio.app.rings.startLoading();
+            window.requestAnimationFrame(function () {
+                document.getElementById('prepreloader').className = 'loading';
+            });
+        </script>
+        
         <script type="text/javascript" src="main.js"></script>
+        
     </body>
 </html>
