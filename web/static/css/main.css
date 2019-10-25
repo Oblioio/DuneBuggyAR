@@ -25,6 +25,12 @@ body.fixed {
     overflow: hidden;
 }
 
+#canvasContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
 #prepreloader {
     pointer-events: none;
     position: fixed;
@@ -34,37 +40,36 @@ body.fixed {
     top: 0;
     left: 0;
     opacity: 0;
-    z-index: 10;
     transition: background .5s ease-in-out;
     transform: translateZ(2px)
 }
 
-#prepreloader svg {
-    position: absolute;
-    visibility: visible;
-    display: block;
-    top: 50%;
-    left: 50%;
-    transform: translate3d(-50%,-50%,10px);
-    z-index: 1
-}
+    #prepreloader svg {
+        position: absolute;
+        visibility: visible;
+        display: block;
+        top: 50%;
+        left: 50%;
+        transform: translate3d(-50%,-50%,10px);
+        z-index: 1
+    }
 
-#prepreloader.pointer svg {
-    cursor: pointer
-}
+    #prepreloader.pointer svg {
+        cursor: pointer
+    }
 
-#prepreloader.loading {
-    opacity: 1
-}
+    #prepreloader.loading {
+        opacity: 1
+    }
 
-.rings .ring {
-    stroke: #fff;
-    fill: transparent
-}
+        .rings .ring {
+            stroke: #fff;
+            fill: transparent
+        }
 
-.rings #loader {
-    fill: #fff
-}
+        .rings #loader {
+            fill: #fff
+        }
 
 @-ms-viewport {
     width: device-width;
