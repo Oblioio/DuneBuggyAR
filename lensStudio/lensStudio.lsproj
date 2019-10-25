@@ -3,7 +3,7 @@
     "document_id": "tdYIuvmjubigzL48VLhy",
     "original_document_id": "IFozyxVws_JbA89mUI9G",
     "version": "16",
-    "lastChanged": "1571449091443",
+    "lastChanged": "1571942775581",
     "preview": "C:\/Users\/jonat\/Documents\/Projects\/Internal\/DuneBuggyAR\/lensStudio\/icon.png",
     "videoPreview": "",
     "videoPreviewUpdateTime": "",
@@ -989,10 +989,6 @@
                     ],
                     [
                         "Textures",
-                        "Desert_lightBaked"
-                    ],
-                    [
-                        "Textures",
                         "MaterialParams"
                     ],
                     [
@@ -1002,6 +998,10 @@
                     [
                         "Textures",
                         "Sandbox"
+                    ],
+                    [
+                        "Textures",
+                        "Sandbox_striped"
                     ],
                     [
                         "Textures",
@@ -1042,8 +1042,7 @@
             "collapsedList": [
                 [
                     "1517446348227994:84813",
-                    "1571355946312665:13063",
-                    "1571358671068019:77377"
+                    "1571355946312665:13063"
                 ]
             ]
         },
@@ -1969,14 +1968,6 @@
                     "flags": "0"
                 },
                 {
-                    "resId": "136",
-                    "uid": "1571356568954713:15213",
-                    "name": "Files\/File159.jpg",
-                    "sourceFilePath": "",
-                    "additionalProperties": "",
-                    "flags": "1"
-                },
-                {
                     "resId": "137",
                     "uid": "1571358784744231:79690",
                     "name": "Files\/File161.jpg",
@@ -2316,6 +2307,14 @@
                     "resId": "183",
                     "uid": "1571447158747813:491588",
                     "name": "Files\/File240.jpg",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
+                },
+                {
+                    "resId": "184",
+                    "uid": "1571941674518332:15042",
+                    "name": "Files\/File242.jpg",
                     "sourceFilePath": "",
                     "additionalProperties": "",
                     "flags": "1"
@@ -2954,14 +2953,6 @@
                     "v": "Files\/File158.oprfb"
                 },
                 {
-                    "k": "159",
-                    "v": "Files\/File159.jpg"
-                },
-                {
-                    "k": "160",
-                    "v": "Files\/File160.jpg"
-                },
-                {
                     "k": "161",
                     "v": "Files\/File161.jpg"
                 },
@@ -3268,6 +3259,14 @@
                 {
                     "k": "241",
                     "v": "Files\/File241.jpg"
+                },
+                {
+                    "k": "242",
+                    "v": "Files\/File242.jpg"
+                },
+                {
+                    "k": "243",
+                    "v": "Files\/File243.jpg"
                 }
             ]
         },
@@ -3299,10 +3298,6 @@
                     {
                         "k": "5",
                         "v": "Textures\/MaterialParams.png"
-                    },
-                    {
-                        "k": "6",
-                        "v": "Textures\/Desert_lightBaked.jpg"
                     },
                     {
                         "k": "7",
@@ -3867,6 +3862,10 @@
                     {
                         "k": "147",
                         "v": "Materials\/TerrainDiffuse_SW.lsmat"
+                    },
+                    {
+                        "k": "148",
+                        "v": "Textures\/Sandbox_striped.jpg"
                     }
                 ],
                 "hashes": [
@@ -3912,19 +3911,19 @@
                     },
                     {
                         "k": "12",
-                        "v": "6e87d2e7a6af58707e31af88fff8cd5b"
+                        "v": "baea7be905fb4d1d40a4eee2d6dc6fc2"
                     },
                     {
                         "k": "13",
-                        "v": "22b2119f2457fe0341bdec6fc8ac0cfa"
+                        "v": "12a52b056345efb775d3d1e6aaefe33c"
                     },
                     {
                         "k": "14",
-                        "v": "222f068f5ec3532721ae89d7ed646524"
+                        "v": "60d39c84a5a2d24d568c970e4aebc639"
                     },
                     {
                         "k": "15",
-                        "v": "3f035dcd1f6814e8d56d229eb4af6e1b"
+                        "v": "2b0919898868b320895a94328fb6721b"
                     },
                     {
                         "k": "16",
@@ -4368,7 +4367,7 @@
                     },
                     {
                         "k": "142",
-                        "v": "5ec6c7781569a02d380b510c64f204cc"
+                        "v": "906bb961b691bb230a4ced010f3e5afa"
                     },
                     {
                         "k": "143",
@@ -4389,6 +4388,10 @@
                     {
                         "k": "147",
                         "v": "5fd30415c003f97f13eb991417230e58"
+                    },
+                    {
+                        "k": "148",
+                        "v": "760e9b67aa0ad9c3889a6ca3fd7c0c3f"
                     }
                 ],
                 "publicState": {
@@ -4396,7 +4399,7 @@
                         "isFolder": "true",
                         "lastModified": "2019-10-18T17:36:40",
                         "name": "Public",
-                        "hash": "f8d971c118dd39b8f81f957621b8fe1b",
+                        "hash": "4e933731887d9c059f83fdc2acc65d6f",
                         "children": [
                             {
                                 "isFolder": "false",
@@ -4998,9 +5001,9 @@
                             },
                             {
                                 "isFolder": "true",
-                                "lastModified": "2019-10-18T18:23:56",
+                                "lastModified": "2019-10-24T11:28:15",
                                 "name": "Materials",
-                                "hash": "9216c0dbae4a66ed10ba3936f797d98d",
+                                "hash": "320c52c31f34c64522ec63486780be57",
                                 "children": [
                                     {
                                         "isFolder": "false",
@@ -5039,9 +5042,9 @@
                                     },
                                     {
                                         "isFolder": "false",
-                                        "lastModified": "2019-10-18T17:34:17",
+                                        "lastModified": "2019-10-24T11:28:15",
                                         "name": "SandBox_Unlit.lsmat",
-                                        "hash": "5ec6c7781569a02d380b510c64f204cc",
+                                        "hash": "906bb961b691bb230a4ced010f3e5afa",
                                         "children": ""
                                     },
                                     {
@@ -5230,7 +5233,7 @@
                                     },
                                     {
                                         "isFolder": "false",
-                                        "lastModified": "2019-10-18T13:44:51",
+                                        "lastModified": "2019-10-21T11:25:54",
                                         "name": "shared.js",
                                         "hash": "078a8741fd88922ecbb4afbcc41b359b",
                                         "children": ""
@@ -5246,36 +5249,36 @@
                             },
                             {
                                 "isFolder": "true",
-                                "lastModified": "2019-10-18T18:09:12",
+                                "lastModified": "2019-10-24T11:27:52",
                                 "name": "Textures",
-                                "hash": "86d8f78d55485af2a6584e3da5ed7b53",
+                                "hash": "41a59c2e1e6a7768dd6ba413c8012b5d",
                                 "children": [
                                     {
                                         "isFolder": "false",
-                                        "lastModified": "2019-10-07T17:30:31",
+                                        "lastModified": "2019-10-24T10:12:51",
                                         "name": "albedo_NE.jpg",
-                                        "hash": "6e87d2e7a6af58707e31af88fff8cd5b",
+                                        "hash": "baea7be905fb4d1d40a4eee2d6dc6fc2",
                                         "children": ""
                                     },
                                     {
                                         "isFolder": "false",
-                                        "lastModified": "2019-10-07T17:30:20",
+                                        "lastModified": "2019-10-24T10:12:46",
                                         "name": "albedo_NW.jpg",
-                                        "hash": "22b2119f2457fe0341bdec6fc8ac0cfa",
+                                        "hash": "12a52b056345efb775d3d1e6aaefe33c",
                                         "children": ""
                                     },
                                     {
                                         "isFolder": "false",
-                                        "lastModified": "2019-10-07T17:30:07",
+                                        "lastModified": "2019-10-24T10:12:36",
                                         "name": "albedo_SE.jpg",
-                                        "hash": "222f068f5ec3532721ae89d7ed646524",
+                                        "hash": "60d39c84a5a2d24d568c970e4aebc639",
                                         "children": ""
                                     },
                                     {
                                         "isFolder": "false",
-                                        "lastModified": "2019-10-07T17:30:46",
+                                        "lastModified": "2019-10-24T10:12:41",
                                         "name": "albedo_SW.jpg",
-                                        "hash": "3f035dcd1f6814e8d56d229eb4af6e1b",
+                                        "hash": "2b0919898868b320895a94328fb6721b",
                                         "children": ""
                                     },
                                     {
@@ -5304,13 +5307,6 @@
                                         "lastModified": "2019-08-05T15:38:30",
                                         "name": "Base.png",
                                         "hash": "cb607d7b25a160872c49fb4d2635cc33",
-                                        "children": ""
-                                    },
-                                    {
-                                        "isFolder": "false",
-                                        "lastModified": "2019-10-17T16:56:06",
-                                        "name": "Desert_lightBaked.jpg",
-                                        "hash": "91148cd00901fa0698d4deed7dee3274",
                                         "children": ""
                                     },
                                     {
@@ -5360,6 +5356,13 @@
                                         "lastModified": "2019-10-16T14:06:21",
                                         "name": "Sandbox.jpg",
                                         "hash": "88162b5c811f9b79be486b348eb0aa2c",
+                                        "children": ""
+                                    },
+                                    {
+                                        "isFolder": "false",
+                                        "lastModified": "2019-10-24T10:15:41",
+                                        "name": "Sandbox_striped.jpg",
+                                        "hash": "760e9b67aa0ad9c3889a6ca3fd7c0c3f",
                                         "children": ""
                                     }
                                 ]
@@ -5470,19 +5473,6 @@
                                 "fileId": "21",
                                 "originalId": "22",
                                 "publicId": "5",
-                                "source": "",
-                                "additional": ""
-                            },
-                            {
-                                "name": "Desert_lightBaked",
-                                "type": "1",
-                                "subtype": "9",
-                                "resourceId": "136",
-                                "dependency": "0",
-                                "uid": "1571356568954713:15213",
-                                "fileId": "159",
-                                "originalId": "160",
-                                "publicId": "6",
                                 "source": "",
                                 "additional": ""
                             },
@@ -5613,6 +5603,19 @@
                                 "fileId": "240",
                                 "originalId": "241",
                                 "publicId": "16",
+                                "source": "",
+                                "additional": ""
+                            },
+                            {
+                                "name": "Sandbox_striped",
+                                "type": "1",
+                                "subtype": "9",
+                                "resourceId": "184",
+                                "dependency": "0",
+                                "uid": "1571941674518332:15042",
+                                "fileId": "242",
+                                "originalId": "243",
+                                "publicId": "148",
                                 "source": "",
                                 "additional": ""
                             }
@@ -8084,10 +8087,10 @@
             "selection": {
                 "resources": [
                     {
-                        "uid": "1571445292669937:440115",
+                        "uid": "1571358857323613:83837",
                         "path_list": [
                             "Materials",
-                            "TerrainDiffuse_NE"
+                            "SandBox_Unlit"
                         ]
                     }
                 ]

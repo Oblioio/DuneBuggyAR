@@ -4,16 +4,6 @@ import {OBJLoader2} from 'three/examples/jsm/loaders/OBJLoader2'
 'use strict';
 
 function Main (camera) {
-    console.log("what up ")
-    this.renderer = new THREE.WebGLRenderer( { antialias: true } );
-    this.renderer.setPixelRatio( window.devicePixelRatio );
-    this.renderer.setSize( window.innerWidth, window.innerHeight );
-    this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-
-    this.canvas = this.renderer.domElement;
-    // document.body.appendChild(this.canvas);
-    console.log(document.body)
 
     this.scene = new THREE.Group();//new Scene();
     this.camera = camera;
@@ -28,19 +18,12 @@ function Main (camera) {
     directionalLight.shadow.camera.left = directionalLight.shadow.camera.bottom = -5;    // default    
     directionalLight.shadow.camera.right = directionalLight.shadow.camera.top = 5;    // default
     this.directionalLight = directionalLight;
-    
-    // var helper = new CameraHelper( directionalLight.shadow.camera );
-    // this.scene.add( helper );
 
-    // directionalLight.rotation.z = Math.PI/4;
     this.scene.add( directionalLight );
     directionalLight.target = this.scene;
-    // this.scene.add( directionalLight.target );
 
     this.terrain = new DynamicTerrain(Math.round(25*1.75), 50);
-    // this.terrain = new DynamicTerrain(50, 100);
     this.masterGroup = new THREE.Group();
-    // this.masterGroup.scale.set(2,2,2);
 
 
     this.duneBuggy = new DuneBuggy();
@@ -156,6 +139,7 @@ function addTerrain (terrain_id, terrain) {
 
     if (this.terrain_NE, this.terrain_NW, this.terrain_SE, this.terrain_SW) {
         console.log('ANIMATE!!!');
+        this.index.el.renderer.render(this.index.el.sceneEl.object3D, this.camera)
         this.animate();
     }
 }
@@ -235,14 +219,11 @@ function animate() {
         this.duneBuggy.accelerationXY_Mult = 1;
         this.duneBuggy.rotate(((Math.sin(3+this.currTime/8000)+Math.sin(this.currTime/800))*0.65)*_elapsedTime/1000);
     } else {
-        let timescale = (1/60) / (_elapsedTime / 1000);
         this.duneBuggy.accelerationXY_Mult = 1; // ((this.touching)?1:0)+(this.interaction.arrows.up?1:0)-(this.interaction.arrows.down?1:0);
         let rot = getCameraRotation.call(this);
-
+        
         let rotValue = Math.min(1, rot*1.75 );
-        // console.log(rotValue);
-        if (!isNaN(rotValue)) this.duneBuggy.rotate( rotValue * timescale );
-        // this.duneBuggy.rotate( (this.dragVector[0]/20)+((this.interaction.arrows.left?-1:0)+(this.interaction.arrows.right?1:0))/20 );
+        if (!isNaN(rotValue)) this.duneBuggy.rotate( rot * _elapsedTime/1000 );
     }
 
     // next set wheelHeights

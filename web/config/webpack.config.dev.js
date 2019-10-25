@@ -19,7 +19,7 @@ module.exports = {
     contentBase: appDir,
     publicPath: '/',
     historyApiFallback: true,
-    port: 9000,
+    port: 3000,
     https: true
   },
   resolve: {

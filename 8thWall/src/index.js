@@ -8,9 +8,11 @@ AFRAME.registerComponent('tap-place', {
         newElement.setAttribute('gltf-model', '#buggy')
         this.el.sceneEl.appendChild(newElement)
         const main = new Main(this.el.camera);
+        main.index = this;
         this.el.camera.el.id = 'camera';
 
         this.el.renderer.shadowMap.enabled = true;
+
         newElement.addEventListener('model-loaded', () => {
             console.log('MODEL LOAD#EDDD!!!');
             // // Once the model is loaded, we are ready to show it popping in using an animation
@@ -21,6 +23,7 @@ AFRAME.registerComponent('tap-place', {
             const buggyElement = document.createElement('a-entity');
             buggyElement.classList.add('cantap');
             buggyElement.setAttribute('hold-drag', '');
+            buggyElement.setAttribute('two-finger-spin', '');
             buggyElement.setAttribute('pinch-scale', '')
             buggyElement.setAttribute('visible', 'false')
             buggyElement.object3D.add(main.scene);
@@ -55,6 +58,7 @@ AFRAME.registerComponent('tap-place', {
         this.el.sceneEl.appendChild(nw)
         nw.addEventListener('model-loaded', () => {
             console.log('TERRAIN2 MODEL LOAD#EDDD!!!');
+            main.index = this;
             main.addTerrain('nw', nw.object3D.children[0]);
         });
 
@@ -200,6 +204,23 @@ AFRAME.registerComponent('gesture-detector', {
   })
 
 let now = Date.now();
+
+AFRAME.registerComponent('two-finger-spin', {
+  schema: {
+    factor: {default: 5}
+  },
+  init: function() {
+    this.handleEvent = this.handleEvent.bind(this)
+    this.el.sceneEl.addEventListener('twofingermove', this.handleEvent)
+  },
+  remove: function() {
+    this.el.sceneEl.removeEventListener('twofingermove', this.handleEvent)
+  },
+  handleEvent: function(event) {    
+    this.el.object3D.rotation.y += event.detail.positionChange.x * this.data.factor
+  }
+})
+
 // Component that uses the gesture-detector and raycaster to drag and drop an object
 AFRAME.registerComponent('hold-drag', {
     schema: {

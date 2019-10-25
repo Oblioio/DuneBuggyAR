@@ -22,11 +22,7 @@ import { AmbientLight } from "three/build/three.module";
 
 'use strict';
 
-console.log(DynamicTerrain);
-
 function Main () {
-    console.log("what up ")
-    console.log(DynamicTerrain)
     this.renderer = new WebGLRenderer( { antialias: true } );
     this.renderer.setPixelRatio( window.devicePixelRatio );
     this.renderer.setSize( window.innerWidth, window.innerHeight );
@@ -35,18 +31,12 @@ function Main () {
 
     this.canvas = this.renderer.domElement;
     document.body.appendChild(this.canvas);
-    console.log(document.body)
 
     this.scene = new Scene();
-    this.camera = new PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 10000 );
-    this.camera.position.z = 100;
-    this.camera.position.y = 100;
-    // this.camera.rotation.x = -Math.PI/4;
+    this.camera = new PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
+    this.camera.position.set(0, 100, 100);
     this.camera.lookAt(0,0,0);
 
-    // this.camera.position.y = 0;
-    // this.camera.rotation.x = 0;
-    // this.camera.position.z = 150;
     window.addEventListener( 'resize', onWindowResize.bind(this), false );
 
     var directionalLight = new DirectionalLight( 0xffffff, 1 );
@@ -134,33 +124,9 @@ function Main () {
                             
                             var setupObj = function(obj, textureURL){
                                 obj.material = new MeshLambertMaterial({
-                                    map: new TextureLoader().load( textureURL ),
-                                    alphaMap: new TextureLoader().load( 'images/alphaMask.jpg', function(texture){
-                                        texture.wrapS = texture.wrapT = ClampToEdgeWrapping;
-                                        texture.magFilter = NearestFilter;
-                                        texture.repeat = new Vector2(2.5, 2.5);
-                                    } ),
-                                    alphaTest: 0.5
+                                    map: new TextureLoader().load( textureURL )
                                 })
                                 
-                                // materials only use on set of UV offsets so I'm manually adding
-                                // UV2 and a uniform to adjust UV2
-                                obj.material.onBeforeCompile = function ( shader ) {
-                                    // i binded the function scope to the material so "this" is the material
-                                    // lets save the shader as variable so we can mod values later
-                                    this.shader = shader;
-    
-                                    shader.uniforms.uv2Offset = { value: new Vector2(0,0) };
-                                    shader.vertexShader = 'uniform vec2 uv2Offset;\n' + shader.vertexShader;
-    
-                                    shader.vertexShader = shader.vertexShader.replace('#include <uv2_pars_vertex>', 'varying vec2 vUv2; \n');
-                                    shader.vertexShader = shader.vertexShader.replace('#include <uv2_vertex>', 'vUv2 = (uv*0.5)+uv2Offset; \n');
-                                    shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', '#include <begin_vertex> \n');                             
-                                    
-                                    shader.fragmentShader = shader.fragmentShader.replace('#include <uv2_pars_fragment>','varying vec2 vUv2; \n');
-                                    shader.fragmentShader = shader.fragmentShader.replace('#include <alphamap_fragment>', 'diffuseColor.a *= texture2D( alphaMap, vUv2 ).g; \n');
-                                }.bind(obj.material);
-
                                 obj.receiveShadow = true;
                                 this.terrainContainer.add(obj);
                             }
@@ -176,6 +142,24 @@ function Main () {
 
                             this.terrain_SW = terrainSWGroup.children[0];
                             setupObj.call(this, this.terrain_SW, 'images/albedo_SW.jpg');
+                            
+                            // we want to fill the screen... lets make clones
+                            this.terrainContainer1 = this.terrainContainer.clone();
+                            this.masterGroup.add(this.terrainContainer1);
+                            this.terrainContainer2 = this.terrainContainer.clone();
+                            this.masterGroup.add(this.terrainContainer2);
+                            this.terrainContainer3 = this.terrainContainer.clone();
+                            this.masterGroup.add(this.terrainContainer3);
+                            this.terrainContainer4 = this.terrainContainer.clone();
+                            this.masterGroup.add(this.terrainContainer4);
+                            this.terrainContainer5 = this.terrainContainer.clone();
+                            this.masterGroup.add(this.terrainContainer5);
+                            this.terrainContainer6 = this.terrainContainer.clone();
+                            this.masterGroup.add(this.terrainContainer6);
+                            this.terrainContainer7 = this.terrainContainer.clone();
+                            this.masterGroup.add(this.terrainContainer7);
+                            this.terrainContainer8 = this.terrainContainer.clone();
+                            this.masterGroup.add(this.terrainContainer8);
 
                             this.animate();
 
@@ -189,7 +173,7 @@ function Main () {
     this.currTime = new Date().getTime();
     
     this.terrain.setPosition(50,50);
-    this.autoDrive = false;
+    this.autoDrive = true;
     this.accelerate = 1;
     this.dragVector = [0,0];
     this.touching = false;
@@ -214,23 +198,16 @@ function moveTerrain(x, y){
     var Y1 = (y>25)?-100:0;
     var Y2 = (y<-25)?100:0;
 
-    // move the terrain container and peices
+    // move the terrain container and clones
     this.terrainContainer.position.set(x,0,y);
-    this.terrain_NE.position.set(X1,0,Y1);
-    this.terrain_NW.position.set(X2,0,Y1);
-    this.terrain_SE.position.set(X1,0,Y2);
-    this.terrain_SW.position.set(X2,0,Y2);
-
-    // update the uv offset for the alpha texture
-    var divider = 100;    
-    if(this.terrain_NE.material.shader)
-        this.terrain_NE.material.shader.uniforms.uv2Offset.value.set(0.5+((X1+x)/divider), 0.5+((Y1+y)/divider));
-    if(this.terrain_NW.material.shader)
-        this.terrain_NW.material.shader.uniforms.uv2Offset.value.set(((X2+x)/divider), 0.5+((Y1+y)/divider));
-    if(this.terrain_SE.material.shader)
-        this.terrain_SE.material.shader.uniforms.uv2Offset.value.set(0.5+((X1+x)/divider), ((Y2+y)/divider));
-    if(this.terrain_SW.material.shader)
-        this.terrain_SW.material.shader.uniforms.uv2Offset.value.set(((X2+x)/divider), ((Y2+y)/divider));
+    this.terrainContainer1.position.set(x+100,0,y);
+    this.terrainContainer2.position.set(x-100,0,y);
+    this.terrainContainer3.position.set(x,0,y+100);
+    this.terrainContainer4.position.set(x,0,y-100);
+    this.terrainContainer5.position.set(x+100,0,y+100);
+    this.terrainContainer6.position.set(x-100,0,y-100);
+    this.terrainContainer7.position.set(x+100,0,y-100);
+    this.terrainContainer8.position.set(x-100,0,y+100);
 }
 
 var frameIndex = 0;
@@ -253,9 +230,8 @@ function animate() {
         this.duneBuggy.accelerationXY_Mult = 1;
         this.duneBuggy.rotate(((Math.sin(3+this.currTime/8000)+Math.sin(this.currTime/800))*0.65)*_elapsedTime/1000);
     } else {
-        let timescale = (1/60) / (_elapsedTime / 1000);
         this.duneBuggy.accelerationXY_Mult = ((this.touching)?1:0)+(this.interaction.arrows.up?1:0)-(this.interaction.arrows.down?1:0);
-        this.duneBuggy.rotate( ((this.dragVector[0]/20)+((this.interaction.arrows.left?-1:0)+(this.interaction.arrows.right?1:0))/20)*timescale );
+        this.duneBuggy.rotate( ((this.dragVector[0])+((this.interaction.arrows.left?-1:0)+(this.interaction.arrows.right?1:0)))*_elapsedTime/500 );
     }
 
     // next set wheelHeights
