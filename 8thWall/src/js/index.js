@@ -1,4 +1,4 @@
-import { Main } from "./main.js";
+import { Main as ARScene } from "./arscene";
 
 // Component that places trees where the ground is clicked
 AFRAME.registerComponent('tap-place', {
@@ -7,8 +7,8 @@ AFRAME.registerComponent('tap-place', {
         newElement.setAttribute('visible', 'false')
         newElement.setAttribute('gltf-model', '#buggy')
         this.el.sceneEl.appendChild(newElement)
-        const main = new Main(this.el.camera);
-        main.index = this;
+        const arscene = new ARScene(this.el.camera);
+        arscene.index = this;
         this.el.camera.el.id = 'camera';
 
         this.el.renderer.shadowMap.enabled = true;
@@ -18,7 +18,7 @@ AFRAME.registerComponent('tap-place', {
             // // Once the model is loaded, we are ready to show it popping in using an animation
             // newElement.setAttribute('visible', 'true')
 
-            main.addBuggy(newElement.object3D.children[0]);
+            arscene.addBuggy(newElement.object3D.children[0]);
 
             const buggyElement = document.createElement('a-entity');
             buggyElement.classList.add('cantap');
@@ -26,7 +26,7 @@ AFRAME.registerComponent('tap-place', {
             buggyElement.setAttribute('two-finger-spin', '');
             buggyElement.setAttribute('pinch-scale', '')
             buggyElement.setAttribute('visible', 'false')
-            buggyElement.object3D.add(main.scene);
+            buggyElement.object3D.add(arscene.scene);
             
             this.el.sceneEl.appendChild(buggyElement)
 
@@ -49,7 +49,7 @@ AFRAME.registerComponent('tap-place', {
         this.el.sceneEl.appendChild(ne)
         ne.addEventListener('model-loaded', () => {
             console.log('TERRAIN MODEL LOAD#EDDD!!!');
-            main.addTerrain('ne', ne.object3D.children[0]);
+            arscene.addTerrain('ne', ne.object3D.children[0]);
         });
 
         let nw = document.createElement('a-entity');
@@ -58,8 +58,8 @@ AFRAME.registerComponent('tap-place', {
         this.el.sceneEl.appendChild(nw)
         nw.addEventListener('model-loaded', () => {
             console.log('TERRAIN2 MODEL LOAD#EDDD!!!');
-            main.index = this;
-            main.addTerrain('nw', nw.object3D.children[0]);
+            arscene.index = this;
+            arscene.addTerrain('nw', nw.object3D.children[0]);
         });
 
         let se = document.createElement('a-entity');
@@ -68,7 +68,7 @@ AFRAME.registerComponent('tap-place', {
         this.el.sceneEl.appendChild(se)
         se.addEventListener('model-loaded', () => {
             console.log('TERRAIN3 MODEL LOAD#EDDD!!!');
-            main.addTerrain('se', se.object3D.children[0]);
+            arscene.addTerrain('se', se.object3D.children[0]);
         });
 
         let sw = document.createElement('a-entity');
@@ -77,7 +77,7 @@ AFRAME.registerComponent('tap-place', {
         this.el.sceneEl.appendChild(sw)
         sw.addEventListener('model-loaded', () => {
             console.log('TERRAIN4 MODEL LOAD#EDDD!!!');
-            main.addTerrain('sw', sw.object3D.children[0]);
+            arscene.addTerrain('sw', sw.object3D.children[0]);
         });
     }
 })

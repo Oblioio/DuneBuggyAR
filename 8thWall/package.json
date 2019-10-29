@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --colors --host=0.0.0.0 --env.development",
-    "build": "rm -rf ./dist && webpack --colors --verbose --env.production"
+    "build": "rimraf ./dist && webpack --colors --verbose --env.production"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "rimraf": "^3.0.0",
     "three": "^0.109.0"
   },
   "devDependencies": {

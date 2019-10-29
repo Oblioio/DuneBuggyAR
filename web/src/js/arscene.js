@@ -1,5 +1,6 @@
 import { DynamicTerrain, DuneBuggy} from "./shared.js";
 import { Interaction} from "./interaction.js";
+import { TiltShiftVignetteShader } from "./tiltShiftVignetteShader";
 
 import { 
     Scene,
@@ -9,6 +10,7 @@ import {
     Mesh,
     TextureLoader,
     DirectionalLight,
+    AmbientLight,
     Vector2,
     Group,
     PCFSoftShadowMap,
@@ -18,11 +20,14 @@ import {
 
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
 import {OBJLoader2} from 'three/examples/jsm/loaders/OBJLoader2'
-import { AmbientLight } from "three/build/three.module";
+
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 
 'use strict';
 
-function ARScene () {
+function ARScene (callbackFn) {
     console.log('HEY MAIN!!!!!');
     this.renderer = new WebGLRenderer( { antialias: true } );
     this.renderer.setPixelRatio( window.devicePixelRatio );
@@ -31,35 +36,28 @@ function ARScene () {
     this.renderer.shadowMap.type = PCFSoftShadowMap;
 
     this.canvas = this.renderer.domElement;
-    document.getElementById("canvasContainer").appendChild(this.canvas);
 
     this.scene = new Scene();
     this.camera = new PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
     this.camera.position.set(0, 100, 100);
-    this.camera.lookAt(0,0,0);
+    this.camera.lookAt(0,11,0);
 
     window.addEventListener( 'resize', onWindowResize.bind(this), false );
 
     var directionalLight = new DirectionalLight( 0xffffff, 1 );
     directionalLight.position.set(50,50,50);
     directionalLight.castShadow = true;
-    directionalLight.shadow.mapSize.width = 512;  // default
-    directionalLight.shadow.mapSize.height = 512; // default
-    directionalLight.shadow.camera.near = 0.5;    // default
-    directionalLight.shadow.camera.far = 1000;     // default
-    directionalLight.shadow.camera.left = directionalLight.shadow.camera.bottom = -30;    // default    
-    directionalLight.shadow.camera.right = directionalLight.shadow.camera.top = 30;    // default
+    directionalLight.shadow.mapSize.width = 512;
+    directionalLight.shadow.mapSize.height = 512;
+    directionalLight.shadow.camera.near = 0.5;
+    directionalLight.shadow.camera.far = 1000; 
+    directionalLight.shadow.camera.left = directionalLight.shadow.camera.bottom = -30;    
+    directionalLight.shadow.camera.right = directionalLight.shadow.camera.top = 30;
     this.directionalLight = directionalLight;
+    this.scene.add( directionalLight );
 
     var ambientLight = new AmbientLight( 0xffffff, 0.5 );
     this.scene.add( ambientLight );
-
-    
-    // var helper = new CameraHelper( directionalLight.shadow.camera );
-    // this.scene.add( helper );
-
-    // directionalLight.rotation.z = Math.PI/4;
-    this.scene.add( directionalLight );
 
     this.terrain = new DynamicTerrain(Math.round(25*1.75), 50);
     this.masterGroup = new Group();
@@ -73,14 +71,12 @@ function ARScene () {
 
     this.terrainMesh = new Mesh(this.terrainGeo, this.terrainMat);
     this.terrainMesh.receiveShadow = true;
-    // this.terrainMesh.visible = false;
 
 
     this.scene.add(this.masterGroup);
     this.terrainContainer = new Group();
     this.terrainContainer.scale.y = 1.1333333;
     this.masterGroup.add(this.terrainContainer);
-    // this.masterGroup.add(this.terrainMesh);
 
     new GLTFLoader().load(
         'models/duneBuggy.glb',
@@ -162,7 +158,8 @@ function ARScene () {
                             this.terrainContainer8 = this.terrainContainer.clone();
                             this.masterGroup.add(this.terrainContainer8);
 
-                            this.animate();
+                            // this.animate();
+                            if(callbackFn)callbackFn();
 
                         }.bind(this))
                     }.bind(this))
@@ -185,12 +182,29 @@ function ARScene () {
         onDrag: onDown.bind(this),
         onUp: onUp.bind(this)
     });
+
+    // lets add some post processing to pretty it up a bit
+
+    var renderPass = new RenderPass( this.scene, this.camera  );
+
+    var TiltShiftVignetteShaderPass = new ShaderPass(TiltShiftVignetteShader);
+    TiltShiftVignetteShaderPass.uniforms.r.value = 0.625;
+    TiltShiftVignetteShaderPass.uniforms.v.value = 3.5/512;
+    TiltShiftVignetteShaderPass.uniforms.offset.value = 1;
+    TiltShiftVignetteShaderPass.uniforms.darkness.value = 2.5; 
+
+    this.composer = new EffectComposer( this.renderer );
+    this.composer.addPass( renderPass );
+    this.composer.addPass( TiltShiftVignetteShaderPass );
+
+    
+    this.renderPass = renderPass;
+
 }
 
 function clamp(min, max, val){
     return Math.min(max, Math.max(min, val));
 }
-
 
 function moveTerrain(x, y){
     // terrain peices need to wrap around when panning
@@ -265,7 +279,8 @@ function animate() {
     // this keeps the shadow from clipping
     this.directionalLight.position.y = 50+this.buggy_frame.position.y;
     
-    this.renderer.render( this.scene, this.camera );
+    // this.renderer.render( this.scene, this.camera );
+    this.composer.render( 0.1 );
 }
 
 function onDown(x, y){

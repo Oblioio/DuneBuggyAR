@@ -3,13 +3,126 @@
 <!--[if gt IE 9]><!--><html itemscope itemtype="http://schema.org/Movie"><!--<![endif]-->
 
     <head>
-        <link rel="stylesheet" href="css/main.css">    
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+
+        <link rel="stylesheet" href="css/main.css">
+        <link href="https://fonts.googleapis.com/css?family=Barlow+Condensed:400,500,800i&display=swap" rel="stylesheet">
     </head>
 
     <body class="fixed">
-        <div id="canvasContainer"></div>
         <div id="prepreloader"></div>
-        
+        <div id="canvasContainer"></div>
+        <div id="aboveTheFold">
+            <div id="titleCard">
+                <!-- <img id="duneBuggyLogoTitle" src="images/duneBuggyLogo.png" /> -->
+            </div>
+            <div id="darken"></div>
+            <div id="popUp">
+                <a href="#" id="popUpCloseIcon">
+                    <svg 
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        viewBox="0 0 60 60">
+                        <path fill-rule="evenodd"  fill="rgb(255, 255, 255)"
+                        d="M59.948,57.452 L57.452,59.948 L30.000,32.496 L2.548,59.948 L0.052,57.452 L27.504,30.000 L0.052,2.548 L2.548,0.052 L30.000,27.504 L57.452,0.052 L59.948,2.548 L32.496,30.000 L59.948,57.452 Z"/>
+                    </svg>
+                </a>
+                <div id="popUpContent">
+                    <p>Scan with your camera</p>
+                    <a id="popUpLink" href="#" target="_blank">
+                        <img id="QRImage" width="100" height="100" src="" />
+                        <p>OR CLICK HERE</p>
+                    </a>
+                </div>
+                <div id="popUpComingSoon">
+                    <h1>LINK COMING SOON</h1>
+                    <p>The filter has been submitted and we are awaiting approval. In the mean time, if you'd like to try it in Instagram you can download our project files and create your own.</p>
+                    <a href="https://github.com/Oblioio/DuneBuggyAR" target="_blank">DOWNLOAD THE SOURCE</a>
+
+                </div>
+            </div>
+            <div id="leftContent">
+                <img id="duneBuggyLogo" src="images/duneBuggyLogo.png" />
+                <a href="#" id="AboutBtn">PROJECT<br/>INFO</a>
+                <div id="AboutContent">
+                    <a href="#" id="aboutCloseIcon">
+                        <svg 
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                            viewBox="0 0 60 60">
+                            <path fill-rule="evenodd"  fill="rgb(255, 255, 255)"
+                            d="M59.948,57.452 L57.452,59.948 L30.000,32.496 L2.548,59.948 L0.052,57.452 L27.504,30.000 L0.052,2.548 L2.548,0.052 L30.000,27.504 L57.452,0.052 L59.948,2.548 L32.496,30.000 L59.948,57.452 Z"/>
+                        </svg>
+                    </a>
+                    <p>DUNE BUGGY AR is an experiement in creating a single dynamic experience that can launch across all of the current AR platforms. Along the way we learned so much about the abilities and constraints of each platform. The project is open source so feel free to lear from it, extend it, whatever. If you do, please share, we’d love to see what you make.</p>
+                    <a href="https://github.com/Oblioio/DuneBuggyAR" target="_blank" >DOWNLOAD THE SOURCE</a>
+                </div>
+            </div>
+            <div id="rightContent">
+                <div id="AR">
+                    <svg  id="ARIcon"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        viewBox="0 0 94 109">
+                    <path fill-rule="evenodd"  fill="rgb(255, 255, 255)"
+                        d="M89.962,44.143 C93.542,51.093 93.297,59.401 89.226,66.167 L85.016,63.605 C87.954,58.725 88.339,52.817 86.175,47.667 L83.312,50.331 L80.383,37.340 L93.036,41.284 L89.962,44.143 ZM74.684,27.694 L74.684,101.079 C74.684,105.363 71.231,108.837 66.970,108.837 L28.278,108.837 C24.018,108.837 20.564,105.363 20.564,101.079 L20.564,40.558 C20.021,40.558 19.580,40.115 19.580,39.568 L19.580,34.951 C19.580,34.404 20.021,33.961 20.564,33.961 L20.564,33.301 C20.021,33.301 19.580,32.858 19.580,32.312 L19.580,27.694 C19.580,27.147 20.021,26.704 20.564,26.704 L20.564,24.395 C20.021,24.395 19.580,23.952 19.580,23.406 L19.580,22.086 C19.580,21.540 20.021,21.097 20.564,21.097 L20.564,8.733 C20.564,4.449 24.018,0.976 28.278,0.976 L66.970,0.976 C71.231,0.976 74.684,4.449 74.684,8.733 L74.684,21.097 C75.228,21.097 75.668,21.540 75.668,22.086 L75.668,26.704 C75.668,27.251 75.228,27.694 74.684,27.694 ZM47.788,106.528 C49.962,106.528 51.724,104.755 51.724,102.569 C51.724,100.383 49.962,98.611 47.788,98.611 C45.614,98.611 43.852,100.383 43.852,102.569 C43.852,104.755 45.614,106.528 47.788,106.528 ZM52.380,6.254 L43.196,6.254 C42.653,6.254 42.212,6.697 42.212,7.243 C42.212,7.790 42.653,8.233 43.196,8.233 L52.380,8.233 C52.924,8.233 53.364,7.790 53.364,7.243 C53.364,6.697 52.924,6.254 52.380,6.254 ZM56.644,5.924 C55.920,5.924 55.332,6.515 55.332,7.243 C55.332,7.972 55.920,8.563 56.644,8.563 C57.369,8.563 57.956,7.972 57.956,7.243 C57.956,6.515 57.369,5.924 56.644,5.924 ZM71.677,15.954 C71.677,14.969 70.883,14.170 69.904,14.170 L25.344,14.170 C24.365,14.170 23.571,14.969 23.571,15.954 L23.571,93.859 C23.571,94.844 24.365,95.643 25.344,95.643 L69.904,95.643 C70.883,95.643 71.677,94.844 71.677,93.859 L71.677,15.954 ZM7.793,47.667 C5.630,52.817 6.015,58.725 8.952,63.605 L4.743,66.167 C0.671,59.401 0.426,51.093 4.006,44.143 L0.933,41.284 L13.585,37.340 L10.657,50.331 L7.793,47.667 Z"/>
+                    </svg>
+                    <p class="rightCopy">Choose your AR platform</p>
+                    <ul class="rightLinks">
+                        <li><a href="#" id="fbLink">FACEBOOK</a></li>
+                        <li><a href="#" id="instaLink">INSTAGRAM</a></li>
+                        <li><a href="#" id="snapLink">SNAPCHAT</a></li>
+                        <li><a href="#" id="webARLink">WEB AR</a></li>
+                    </ul>
+                </div>
+                <p id="ORDivider" class="rightCopy">OR</p>
+                <div id="DriveHere">
+                    <svg 
+                        id="driveIcon"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        viewBox="0 0 84 84">
+                    <path fill-rule="evenodd"  fill="rgb(255, 255, 255)"
+                        d="M41.981,0.242 C19.022,0.242 0.409,18.855 0.409,41.814 C0.409,64.774 19.022,83.386 41.981,83.386 C64.940,83.386 83.552,64.774 83.552,41.814 C83.552,18.855 64.940,0.242 41.981,0.242 ZM11.910,25.614 C13.468,22.729 15.455,20.055 17.838,17.671 C24.289,11.221 32.866,7.669 41.988,7.671 C50.720,7.673 59.160,11.035 65.488,17.052 C68.175,19.607 70.389,22.519 72.089,25.683 C73.775,28.821 71.755,32.672 68.216,33.083 L51.515,35.022 C49.392,32.047 45.914,30.105 41.981,30.105 C38.056,30.105 34.585,32.038 32.460,35.002 L15.756,33.062 C12.194,32.649 10.205,28.769 11.910,25.614 ZM66.024,40.274 C64.845,40.476 63.727,39.684 63.525,38.505 C63.324,37.327 64.116,36.208 65.294,36.007 C66.473,35.806 67.591,36.598 67.793,37.776 C67.994,38.954 67.202,40.073 66.024,40.274 ZM57.286,41.718 C56.108,41.919 54.989,41.127 54.788,39.949 C54.587,38.770 55.379,37.652 56.557,37.450 C57.736,37.249 58.854,38.041 59.055,39.219 C59.257,40.398 58.465,41.516 57.286,41.718 ZM27.255,39.162 C27.053,40.340 25.935,41.132 24.756,40.931 C23.578,40.729 22.786,39.611 22.987,38.432 C23.189,37.254 24.307,36.462 25.486,36.663 C26.664,36.864 27.456,37.983 27.255,39.162 ZM18.517,37.718 C18.316,38.897 17.197,39.689 16.019,39.487 C14.841,39.286 14.049,38.167 14.250,36.989 C14.451,35.810 15.570,35.018 16.748,35.220 C17.927,35.421 18.719,36.540 18.517,37.718 ZM31.175,74.219 C26.204,72.567 21.650,69.769 17.838,65.957 C11.390,59.508 7.838,50.934 7.838,41.814 C7.838,41.792 7.838,41.771 7.838,41.749 C7.840,40.766 8.772,40.050 9.726,40.284 L30.855,45.465 C31.837,48.458 33.991,50.918 36.776,52.303 L37.826,69.114 C38.050,72.694 34.579,75.350 31.175,74.219 ZM42.030,69.463 C40.834,69.463 39.865,68.494 39.865,67.299 C39.865,66.103 40.834,65.134 42.030,65.134 C43.225,65.134 44.195,66.103 44.195,67.299 C44.195,68.494 43.225,69.463 42.030,69.463 ZM39.816,58.443 C39.816,57.248 40.785,56.278 41.981,56.278 C43.176,56.278 44.145,57.248 44.145,58.443 C44.145,59.639 43.176,60.608 41.981,60.608 C40.785,60.608 39.816,59.639 39.816,58.443 ZM42.030,48.806 C38.268,48.806 35.218,45.757 35.218,41.994 C35.218,38.232 38.268,35.182 42.030,35.182 C45.792,35.182 48.842,38.232 48.842,41.994 C48.842,45.757 45.792,48.806 42.030,48.806 ZM66.123,65.957 C62.375,69.705 57.908,72.474 53.034,74.135 C49.619,75.299 46.111,72.648 46.336,69.047 L47.389,52.199 C50.060,50.805 52.124,48.412 53.089,45.514 L74.250,40.326 C75.203,40.092 76.123,40.814 76.123,41.795 L76.123,41.814 C76.123,50.934 72.572,59.508 66.123,65.957 Z"/>
+                    </svg>
+                    <p class="rightCopy">Experience in browser</p>
+                    <ul class="rightLinks">
+                        <li><a href="#" id="driveHereBtn">DRIVE HERE</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="belowTheFold">
+            <a id="upperLeftContent" href="#">
+                <svg id="backArrow" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    viewBox="0 0 35.3 42.7" style="enable-background:new 0 0 35.3 42.7;" xml:space="preserve">
+                    <style type="text/css">.st0{fill:#FFFFFF;}</style>
+                    <path class="st0" d="M29.61,17.86L18.36,6.61c-0.39-0.39-1.02-0.39-1.41,0c-0.01,0.01-0.02,0.03-0.03,0.05
+                    c-0.01,0.01-0.03,0.02-0.05,0.03L5.69,17.86c-0.39,0.39-0.39,1.02,0,1.41c0.2,0.2,0.45,0.29,0.71,0.29s0.51-0.1,0.71-0.29l9.5-9.5
+                    v25.61c0,0.55,0.45,1,1,1s1-0.45,1-1V9.69l9.58,9.58c0.2,0.2,0.45,0.29,0.71,0.29s0.51-0.1,0.71-0.29C30,18.88,30,18.25,29.61,17.86
+                    z"/>
+               </svg>
+                <img id="duneBuggyLogoBackButton" src="images/duneBuggyLogo.png" />
+            </a>
+            <ul id="drivingInstructions">
+                <li id="inst_1">
+                    <img src="images/finger_01.png" />
+                    <p>TAP/CLICK<br/>TO ACCELERATE</p>
+                </li>
+                <li id="inst_2">
+                    <img src="images/finger_02.png" />
+                    <p>MOVE <br/>LEFT/RIGHT <br/>TO STEER</p>
+                </li>
+                <li id="inst_3">
+                    <img src="images/keys_01.png" />
+                    <p>USE THE<br/>UP/DOWN KEYS<br/>TO ACCELERATE</p>
+                </li>
+                <li id="inst_4">
+                    <img src="images/keys_02.png" />
+                    <p>USE THE<br/>LEFT/RIGHT KEYS<br/>TO STEER</p>
+                </li>
+            </ul>
+        </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/TweenLite.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/TimelineLite.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/plugins/CSSPlugin.min.js"></script>
