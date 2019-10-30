@@ -1,3 +1,5 @@
+[logo]: https://github.com/Oblioio/DuneBuggyAR/raw/master/web/static/images/og.jpg "Dune Buggy AR Logo"
+
 # DuneBuggyAR
 A cross platform digital AR Toy. This project started as a quick demo for Lens Studio and experienced massive scope creep as we kept porting to other platforms. WARNING: some of the projects are a thrown together in a messy way. If we were to do it again we would change a ton of stuff. With that said. It's free! Take it, extend it, make a commercial project... whatever you feel like doing. If along the way you clean up our project structures please submit a pull request and we'll update the repo for everyone to enjoy.
 
