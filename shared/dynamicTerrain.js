@@ -1,26 +1,4 @@
 import {TerrainHeights as terrainHeights} from './terrainHeights256.js';
-// import * as noise from './perlin.js';
-// let noise = require('./perlin.js');
-/*
-
-NOTES for what I'm planning to do and how it's going to work
-
-This class will create a sliding chunk of dynamic terrain.
-The main peice will be a plane comprised by a grid of vertices
-One main difference is that as the position of the grid changes the inner vertices will slide around
-but the outer vertices will stay locked to the edge, becuase of that, there will always be an extra set of vertices
-
-
-WHAT I WAS DOING
-
-I was working on the slide function
-The wrap around functions need to be implemented
-Code needs to be added so the proper rows are set to update
-
-Need to write code to generate mesh indices
-
-
-*/
 
 var DynamicTerrain = (function(){
   function DynamicTerrain(size, resolution) {
