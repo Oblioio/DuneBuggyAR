@@ -6,24 +6,30 @@ import {OBJLoader2} from 'three/examples/jsm/loaders/OBJLoader2'
 function ARScene (camera) {
 
     this.scene = new THREE.Group();//new Scene();
+    this.scene.position.y = -15;
     this.camera = camera;
+    this.masterGroup = new THREE.Group();
 
-    var directionalLight = new THREE.DirectionalLight( 0xffffff, 1.5 );
-    directionalLight.position.set(50,50,-50);
+    var directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
+    // directionalLight.position.set(50,50,-50);
+    directionalLight.position.set(-15,25,-15);
+    directionalLight.position.set(-15,25,-15);
     directionalLight.castShadow = true;
     directionalLight.shadow.mapSize.width = 512;  // default
     directionalLight.shadow.mapSize.height = 512; // default
     directionalLight.shadow.camera.near = 0.5;    // default    
     directionalLight.shadow.camera.far = 100;     // default
-    directionalLight.shadow.camera.left = directionalLight.shadow.camera.bottom = -5;    // default    
-    directionalLight.shadow.camera.right = directionalLight.shadow.camera.top = 5;    // default
+    directionalLight.shadow.camera.left = directionalLight.shadow.camera.bottom = -3.2;    // default    
+    directionalLight.shadow.camera.right = directionalLight.shadow.camera.top = 3.2;    // default
     this.directionalLight = directionalLight;
 
-    this.scene.add( directionalLight );
-    directionalLight.target = this.scene;
+    var ambientLight = new THREE.AmbientLight( 0xffffff, 0.75 );
+    this.masterGroup.add( ambientLight );
+
+    this.masterGroup.add( directionalLight );
+    directionalLight.target = this.masterGroup;
 
     this.terrain = new DynamicTerrain(Math.round(25*1.75), 50);
-    this.masterGroup = new THREE.Group();
 
 
     this.duneBuggy = new DuneBuggy();
@@ -34,6 +40,7 @@ function ARScene (camera) {
     this.scene.add(this.masterGroup);
     this.terrainContainer = new THREE.Group();
     this.terrainContainer.scale.y = 1.1333333;
+    this.terrainContainer.renderOrder = 2;
     this.masterGroup.add(this.terrainContainer);
 
     this.currTime = new Date().getTime();
@@ -60,6 +67,7 @@ function addBuggy (buggy) {
 
     this.buggy = new THREE.Group();
     this.buggy.scale.set(this.buggyScale, this.buggyScale, this.buggyScale);
+    this.buggy.renderOrder = 2;
     this.masterGroup.add(this.buggy);
     this.buggySpin = new THREE.Group();
     this.buggySpin.add(this.buggy_frame);
@@ -92,12 +100,12 @@ function setupObj (obj, textureURL) {
         } ),
         alphaTest: 0.5
     })
-    
+    obj.material.transparent = true;
     // materials only use on set of UV offsets so I'm manually adding
     // UV2 and a uniform to adjust UV2
     obj.material.onBeforeCompile = function ( shader ) {
-        // i binded the function scope to the material so "this" is the material
-        // lets save the shader as variable so we can mod values later
+    //     // i binded the function scope to the material so "this" is the material
+    //     // lets save the shader as variable so we can mod values later
         this.shader = shader;
 
         shader.uniforms.uv2Offset = { value: new THREE.Vector2(0,0) };
@@ -112,12 +120,12 @@ function setupObj (obj, textureURL) {
     }.bind(obj.material);
 
     obj.receiveShadow = true;
+    obj.renderOrder = 3;
     this.terrainContainer.add(obj);
 }
 
 function addTerrain (terrain_id, terrain) {
     
-
     switch (terrain_id) {
         case 'ne':
             this.terrain_NE = terrain.children[0];
@@ -140,7 +148,7 @@ function addTerrain (terrain_id, terrain) {
     if (this.terrain_NE, this.terrain_NW, this.terrain_SE, this.terrain_SW) {
         console.log('ANIMATE!!!');
         this.index.el.renderer.render(this.index.el.sceneEl.object3D, this.camera)
-        this.animate();
+        // this.animate();
     }
 }
 
@@ -257,7 +265,9 @@ function animate() {
     // this keeps the shadow from clipping
     this.directionalLight.position.y = 50+this.buggy_frame.position.y;
     this.directionalLight.target.y = this.buggy_frame.position.y;
-
+    var masterScale = (this.masterGroup.parent.scale.x/0.1);
+    this.directionalLight.shadow.camera.zoom = 1/masterScale;
+    this.directionalLight.shadow.camera.updateProjectionMatrix();
 }
 
 ARScene.prototype.animate = animate;

@@ -5,7 +5,6 @@
     <head>
         <meta name="viewport" content="width=device-width,initial-scale=1">
 
-        <link rel="stylesheet" type="text/css" href="index.css">
         <link rel="stylesheet" href="css/main.css">
 
         
@@ -26,7 +25,8 @@
             tap-place
             xrextras-almost-there
             xrextras-loading
-            xrextras-runtime-error>
+            xrextras-runtime-error
+            >
 
             <!-- The raycaster will emit mouse events on scene objects specified with the cantap class -->
             <a-camera
@@ -38,7 +38,8 @@
             </a-camera>
     
             <a-assets>
-                <!-- Credit to Poly by Google for the model: https://poly.google.com/view/6pwiq7hSrHr -->
+                <a-asset-item id="frame_outerOccluder" src="models/frame_outerOccluder.obj"></a-asset-item>
+                <a-asset-item id="sandbox" src="models/sandbox.obj"></a-asset-item>
                 <a-asset-item id="buggy" src="models/duneBuggy.glb"></a-asset-item>
                 <a-asset-item id="terrain_ne" src="models/terrain_NE.obj"></a-asset-item>
                 <a-asset-item id="terrain_nw" src="models/terrain_NW.obj"></a-asset-item>
@@ -56,16 +57,6 @@
                 position="0 0 0">
             </a-entity>
         </a-scene>
-
-        <script>
-        // let now = Date.now();
-        // function tick () {
-        //     window.requestAnimationFrame(tick);
-        //     let newnow = Date.now();
-        //     console.log(newnow - now);
-        //     now = newnow;
-        // }
-        // tick();
-        </script>
+        
     </body>
 </html>

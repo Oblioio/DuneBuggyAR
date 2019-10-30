@@ -1,32 +1,36 @@
-import { Main as ARScene } from "./arscene";
+import { ARScene } from "./arscene";
 
 // Component that places trees where the ground is clicked
 AFRAME.registerComponent('tap-place', {
     init: function() {
-        const newElement = document.createElement('a-entity')
-        newElement.setAttribute('visible', 'false')
-        newElement.setAttribute('gltf-model', '#buggy')
-        this.el.sceneEl.appendChild(newElement)
+        const buggyModel = document.createElement('a-entity')
+        buggyModel.setAttribute('visible', 'false')
+        buggyModel.setAttribute('gltf-model', '#buggy')
         const arscene = new ARScene(this.el.camera);
         arscene.index = this;
         this.el.camera.el.id = 'camera';
+        window.scene = this;
 
         this.el.renderer.shadowMap.enabled = true;
+        this.el.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        // this.el.renderer.sortObjects = false;
 
-        newElement.addEventListener('model-loaded', () => {
+        buggyModel.addEventListener('model-loaded', () => {
+          buggyModel.loaded = true;
             console.log('MODEL LOAD#EDDD!!!');
             // // Once the model is loaded, we are ready to show it popping in using an animation
             // newElement.setAttribute('visible', 'true')
 
-            arscene.addBuggy(newElement.object3D.children[0]);
+            arscene.addBuggy(buggyModel.object3D.children[0]);
 
             const buggyElement = document.createElement('a-entity');
             buggyElement.classList.add('cantap');
             buggyElement.setAttribute('hold-drag', '');
-            buggyElement.setAttribute('two-finger-spin', '');
+            // buggyElement.setAttribute('two-finger-spin', '');
             buggyElement.setAttribute('pinch-scale', '')
             buggyElement.setAttribute('visible', 'false')
-            buggyElement.object3D.add(arscene.scene);
+            buggyElement.object3D.add(arscene.masterGroup);
+
             
             this.el.sceneEl.appendChild(buggyElement)
 
@@ -41,45 +45,145 @@ AFRAME.registerComponent('tap-place', {
                 const touchPoint = event.detail.intersection.point
                 buggyElement.setAttribute('position', touchPoint)
             })
+            checkLoad();
         })
 
-        let ne = document.createElement('a-entity');
-        ne.setAttribute('visible', 'false');
-        ne.setAttribute('obj-model', 'obj: #terrain_ne')
-        this.el.sceneEl.appendChild(ne)
-        ne.addEventListener('model-loaded', () => {
+        let terrain_ne = document.createElement('a-entity');
+        terrain_ne.setAttribute('visible', 'false');
+        terrain_ne.setAttribute('obj-model', 'obj: #terrain_ne')
+        terrain_ne.addEventListener('model-loaded', () => {
+          terrain_ne.loaded = true;
             console.log('TERRAIN MODEL LOAD#EDDD!!!');
-            arscene.addTerrain('ne', ne.object3D.children[0]);
+            terrain_ne.object3D.children[0].renderOrder = 1;
+            arscene.addTerrain('ne', terrain_ne.object3D.children[0]);
+            checkLoad();
         });
 
-        let nw = document.createElement('a-entity');
-        nw.setAttribute('visible', 'false');
-        nw.setAttribute('obj-model', 'obj: #terrain_nw')
-        this.el.sceneEl.appendChild(nw)
-        nw.addEventListener('model-loaded', () => {
+        let terrain_nw = document.createElement('a-entity');
+        terrain_nw.setAttribute('visible', 'false');
+        terrain_nw.setAttribute('obj-model', 'obj: #terrain_nw')
+        terrain_nw.addEventListener('model-loaded', () => {
+          terrain_nw.loaded = true;
             console.log('TERRAIN2 MODEL LOAD#EDDD!!!');
-            arscene.index = this;
-            arscene.addTerrain('nw', nw.object3D.children[0]);
+            terrain_nw.object3D.children[0].renderOrder = 1;
+            arscene.addTerrain('nw', terrain_nw.object3D.children[0]);
+            checkLoad();
         });
 
-        let se = document.createElement('a-entity');
-        se.setAttribute('visible', 'false');
-        se.setAttribute('obj-model', 'obj: #terrain_se')
-        this.el.sceneEl.appendChild(se)
-        se.addEventListener('model-loaded', () => {
+        let terrain_se = document.createElement('a-entity');
+        terrain_se.setAttribute('visible', 'false');
+        terrain_se.setAttribute('obj-model', 'obj: #terrain_se')
+        terrain_se.addEventListener('model-loaded', () => {
+          terrain_se.loaded = true;
             console.log('TERRAIN3 MODEL LOAD#EDDD!!!');
-            arscene.addTerrain('se', se.object3D.children[0]);
+            terrain_se.object3D.children[0].renderOrder = 1;
+            arscene.addTerrain('se', terrain_se.object3D.children[0]);
+            checkLoad();
         });
 
-        let sw = document.createElement('a-entity');
-        sw.setAttribute('visible', 'false');
-        sw.setAttribute('obj-model', 'obj: #terrain_sw')
-        this.el.sceneEl.appendChild(sw)
-        sw.addEventListener('model-loaded', () => {
+        let terrain_sw = document.createElement('a-entity');
+        terrain_sw.setAttribute('visible', 'false');
+        terrain_sw.setAttribute('obj-model', 'obj: #terrain_sw')
+        terrain_sw.addEventListener('model-loaded', () => {
+          terrain_sw.loaded = true;
             console.log('TERRAIN4 MODEL LOAD#EDDD!!!');
-            arscene.addTerrain('sw', sw.object3D.children[0]);
+            terrain_sw.object3D.children[0].renderOrder = 1;
+            arscene.addTerrain('sw', terrain_sw.object3D.children[0]);
+            checkLoad();
         });
+
+        
+        let occluder = document.createElement('a-entity');
+        occluder.setAttribute('visible', 'true');
+        occluder.setAttribute('obj-model', 'obj: #frame_outerOccluder')
+        // occluder.setAttribute('hider-material', '');
+        occluder.addEventListener('model-loaded', () => {
+          occluder.loaded = true;
+            console.log('occluder MODEL LOAD#EDDD!!!');
+            var occluderMat = new THREE.MeshBasicMaterial();
+            occluderMat.side = THREE.DoubleSide;
+            occluderMat.color.set( 0x0000ff ); //blue
+            occluderMat.colorWrite = false;
+
+            var occluderMesh = occluder.object3D.children[0].children[0];
+            occluderMesh.renderOrder = 1;
+            occluderMesh.position.y = 15;
+            occluderMesh.scale.set(1.75,1.75,1.75);
+            occluderMesh.material = occluderMat;
+            console.log(occluderMesh.material);
+            arscene.masterGroup.add(occluderMesh);
+
+            checkLoad();
+        });
+
+        let sandbox = document.createElement('a-entity');
+        sandbox.setAttribute('visible', 'true');
+        sandbox.setAttribute('obj-model', 'obj: #sandbox')
+        let sandboxContainer = new THREE.Group();
+        sandbox.addEventListener('model-loaded', () => {
+            console.log('sandbox MODEL LOAD#EDDD!!!');
+            
+            var sandBoxMat = new THREE.MeshBasicMaterial({
+              map: new THREE.TextureLoader().load( "images/Sandbox_striped.jpg" ),
+            });
+
+            sandbox.loaded = true;
+            sandboxContainer.position.y = 16.67;
+            sandboxContainer.scale.set(1.75,1.75,1.75);
+            arscene.masterGroup.add(sandboxContainer);
+            // for(var i=0; i<sandbox.object3D.children.length; i++){
+            console.log(sandbox.object3D);
+            for(var i=sandbox.object3D.children[0].children.length-1; i>=0; i--){
+              sandbox.object3D.children[0].children[i].position.y = -15.20;
+              sandbox.object3D.children[0].children[i].renderOrder = 1;
+              sandbox.object3D.children[0].children[i].material = sandBoxMat;
+              sandbox.object3D.children[0].children[i].castShadow = true;
+              sandboxContainer.add(sandbox.object3D.children[0].children[i]);
+            }
+
+            checkLoad();
+        });
+        
+        this.el.sceneEl.appendChild(occluder)
+        this.el.sceneEl.appendChild(sandbox);
+        this.el.sceneEl.appendChild(terrain_sw)
+        this.el.sceneEl.appendChild(terrain_ne)
+        this.el.sceneEl.appendChild(terrain_nw)
+        this.el.sceneEl.appendChild(terrain_se)
+        this.el.sceneEl.appendChild(buggyModel)
+        
+        var checkLoad = function(){
+          console.log("checkLoad!",
+            occluder.loaded ,
+            sandbox.loaded,
+            terrain_sw.loaded ,
+            terrain_ne.loaded ,
+            terrain_nw.loaded ,
+            terrain_se.loaded ,
+            buggyModel.loaded)
+          if(
+            occluder.loaded &&
+            sandbox.loaded &&
+            terrain_sw.loaded &&
+            terrain_ne.loaded &&
+            terrain_nw.loaded &&
+            terrain_se.loaded &&
+            buggyModel.loaded
+            )
+          {
+            arscene.animate();
+          }
+        }
     }
+})
+
+
+// This component gives the invisible hider walls the property they need
+AFRAME.registerComponent('hider-material', {
+  init: function() {
+    const mesh = this.el.getObject3D('mesh')
+    mesh.material.colorWrite = false
+  },
 })
 
 // Component that detects and emits events for touch gestures
