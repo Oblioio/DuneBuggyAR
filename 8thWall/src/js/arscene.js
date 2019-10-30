@@ -1,5 +1,4 @@
 import { DynamicTerrain, DuneBuggy } from "./shared.js";
-import {OBJLoader2} from 'three/examples/jsm/loaders/OBJLoader2'
 
 'use strict';
 
@@ -230,8 +229,11 @@ function animate() {
         this.duneBuggy.accelerationXY_Mult = 1; // ((this.touching)?1:0)+(this.interaction.arrows.up?1:0)-(this.interaction.arrows.down?1:0);
         let rot = getCameraRotation.call(this);
         
-        let rotValue = Math.min(1, rot*1.75 );
-        if (!isNaN(rotValue)) this.duneBuggy.rotate( rot * _elapsedTime/1000 );
+        let rotValue = Math.min(1, rot*1.75 )*10;
+        if (!isNaN(rotValue)){
+            console.log(rotValue, _elapsedTime, -rotValue * _elapsedTime/1000)
+            this.duneBuggy.rotate( -rotValue * _elapsedTime/1000 );
+        }
     }
 
     // next set wheelHeights

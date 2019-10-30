@@ -125,8 +125,10 @@ function animate(_currTime2, snapshot) {
 
         this.duneBuggy.accelerationXY_Mult = 1;
         if(CamSceneRotationPtX.pinLastValue() != NaN && CamSceneRotationPtY.pinLastValue() != NaN){
-            var rotValue = Math.min(1, getCameraRotation.call(this)*1.75 );
-            if(rotValue) this.duneBuggy.rotate( rotValue*_elapsedTime );
+            
+            var rotValue = Math.min(1, Math.atan(CamSceneRotationPtX.pinLastValue()/Math.abs(CamSceneRotationPtY.pinLastValue()))*1.75 )*1.5;
+            if(rotValue) this.duneBuggy.rotate( rotValue*_elapsedTime/1000 );
+
 
         }
         

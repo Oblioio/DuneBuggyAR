@@ -710,19 +710,16 @@ function animate(_currTime2, snapshot) {
         this.duneBuggy.accelerationXY_Mult = 1;
         this.duneBuggy.rotate(((Math.sin(3+this.currTime/8000)+Math.sin(this.currTime/800))*0.65)*_elapsedTime/1000);
     } else {
-        // Diagnostics.log(TouchGestures.Gesture.State.BEGAN)
-        // TouchGestures.Gesture.state == TouchGestures.Gesture.State.BEGAN
-        // this.duneBuggy.accelerationXY_Mult = ((this.touching)?1:0);
 
         this.duneBuggy.accelerationXY_Mult = 1;
         if(CamSceneRotationPtX.pinLastValue() != NaN && CamSceneRotationPtY.pinLastValue() != NaN){
-            // this.duneBuggy.rotate( Patches.getScalarValue("touchRotation").pinLastValue()/20 );
+            
+            var rotValue = Math.min(1, Math.atan(CamSceneRotationPtX.pinLastValue()/Math.abs(CamSceneRotationPtY.pinLastValue()))*1.75 )*1.5;
+            if(rotValue) this.duneBuggy.rotate( rotValue*_elapsedTime/1000 );
 
-            var rotValue = Math.min(1, Math.atan(CamSceneRotationPtX.pinLastValue()/Math.abs(CamSceneRotationPtY.pinLastValue()))*1.75 )/20;
-            if(rotValue) this.duneBuggy.rotate( rotValue );
 
         }
-
+        
     }
 
     // we need to adjust the coordinate
