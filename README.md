@@ -5,6 +5,6 @@ A cross platform digital AR Toy. This project started as a quick demo for Lens S
 
 `npm install` will install the required dependencies
 
-`npm run watch` will compile all of the shared code within the "shared" folder and write shared.js within each separate project folder.
+`npm run watch` will compile all of the shared code within the `shared` folder and will write `shared.js` within each separate project folder.
 
 Each individual project may have their own sets of dependencies which can be install inside of their subdirectory.
