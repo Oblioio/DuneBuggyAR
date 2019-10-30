@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --colors --host=0.0.0.0 --env.development",
-    "build": "rimraf ./dist && webpack --colors --verbose --env.production",
-    "build:stats": "webpack --env.production --json > stats.json"
+    "build": "rimraf ./dist && webpack --colors --verbose --env.production"
   },
   "author": "",
   "license": "ISC",

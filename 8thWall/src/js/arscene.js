@@ -9,7 +9,7 @@ function ARScene (camera) {
     this.camera = camera;
     this.masterGroup = new THREE.Group();
 
-    var directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
+    var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.75 );
     // directionalLight.position.set(50,50,-50);
     directionalLight.position.set(-15,25,-15);
     directionalLight.position.set(-15,25,-15);
@@ -229,9 +229,8 @@ function animate() {
         this.duneBuggy.accelerationXY_Mult = 1; // ((this.touching)?1:0)+(this.interaction.arrows.up?1:0)-(this.interaction.arrows.down?1:0);
         let rot = getCameraRotation.call(this);
         
-        let rotValue = Math.min(1, rot*1.75 )*10;
+        let rotValue = Math.min(1, rot*1.75 )*15;
         if (!isNaN(rotValue)){
-            console.log(rotValue, _elapsedTime, -rotValue * _elapsedTime/1000)
             this.duneBuggy.rotate( -rotValue * _elapsedTime/1000 );
         }
     }

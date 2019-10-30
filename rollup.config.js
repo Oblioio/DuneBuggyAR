@@ -3,10 +3,13 @@ import { terser } from "rollup-plugin-terser";
 export default [
     {
         input: 'shared/shared_web.js',
-        output: {
-            file: 'web/src/shared.js',
+        output: [{
+            file: 'web/src/js/shared.js',
             format: 'esm'
-        }
+        }, {
+            file: '8thWall/src/js/shared.js',
+            format: 'esm'
+        }]
     },
     {
         input: 'shared/shared_lensStudio.js',
