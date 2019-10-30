@@ -1,6 +1,6 @@
 # SHARED
 
-This folder contains code that is reused across all of the platforms. 
+This folder contains code that is reused across all of the platforms. "shared_lensStudio.js" "shared_sparkAR.js" and "shared_web.js" are used by rollup to create the file that is written to each project folder.
 
 # Terrain Heights
 
