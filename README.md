@@ -1,3 +1,5 @@
+![alt text][logo]
+
 [logo]: https://github.com/Oblioio/DuneBuggyAR/raw/master/web/static/images/og.jpg "Dune Buggy AR Logo"
 
 # DuneBuggyAR
