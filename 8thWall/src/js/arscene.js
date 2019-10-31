@@ -8,6 +8,7 @@ function ARScene (camera) {
     this.scene.position.y = -15;
     this.camera = camera;
     this.masterGroup = new THREE.Group();
+    this.masterGroup.position.y = -15;
 
     var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.75 );
     // directionalLight.position.set(50,50,-50);

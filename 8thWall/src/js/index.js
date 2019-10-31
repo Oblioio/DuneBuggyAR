@@ -38,11 +38,14 @@ AFRAME.registerComponent('tap-place', {
             buggyElement.setAttribute('scale', '0.1 0.1 0.1')
 
             const ground = document.getElementById('ground')
+            ground.object3D.children[0].material.depthWrite = false;
             ground.addEventListener('click', event => {
                 buggyElement.setAttribute('visible', 'true')
 
                 // The raycaster gives a location of the touch in the scene
-                const touchPoint = event.detail.intersection.point
+                const touchPoint = event.detail.intersection.point;
+                // console.log(touchPoint.x+" "+touchPoint.y+" "+touchPoint.z);
+                // buggyElement.setAttribute('position', touchPoint.x+" "+(touchPoint.y-0.15)+" "+touchPoint.z)
                 buggyElement.setAttribute('position', touchPoint)
             })
             checkLoad();

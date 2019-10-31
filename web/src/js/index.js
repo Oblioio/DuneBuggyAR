@@ -92,8 +92,9 @@ function showPopUp(imgURL, linkURL){
 
     document.getElementById("QRImage").src = imgURL;
     document.getElementById("popUpLink").href = linkURL;
-
-    if(linkURL == "#"){
+    
+    // if(linkURL == "#"){
+    if(imgURL == "images/Insta_QRCode.png"){
         // coming soon
         document.getElementById("popUpContent").style.display = "none";
         document.getElementById("popUpComingSoon").style.display = "block";
